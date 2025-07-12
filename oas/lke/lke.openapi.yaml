@@ -193,7 +193,7 @@ paths:
       x-apidog-status: developing
       x-apidog-maintainer: Fernando Seguim
       x-run-in-apidog: https://app.apidog.com/web/project/719079/apis/api-11718079-run
-  /v1/ledgers/{entity_id}:
+  /v1/ledgers/{entity_identifier}:
     get:
       summary: Obtém um ledger específico
       deprecated: false
@@ -406,7 +406,7 @@ paths:
       x-apidog-status: developing
       x-apidog-maintainer: Fernando Seguim
       x-run-in-apidog: https://app.apidog.com/web/project/719079/apis/api-11718082-run
-  /v1/ledgers/{entity_id}/assets:
+  /v1/ledgers/{entity_identifier}/assets:
     post:
       summary: Adiciona um asset ao ledger
       description: Associa um asset existente ao ledger especificado através do código do asset.
@@ -720,7 +720,7 @@ paths:
       x-apidog-status: developing
       x-apidog-maintainer: Fernando Seguim
       x-run-in-apidog: https://app.apidog.com/web/project/719079/apis/api-11718083-run
-  /v1/chapters/{entity_id}:
+  /v1/chapters/{entity_identifier}:
     get:
       summary: Obtém um chapter específico
       deprecated: false
@@ -1142,7 +1142,7 @@ paths:
       x-apidog-status: developing
       x-apidog-maintainer: Fernando Seguim
       x-run-in-apidog: https://app.apidog.com/web/project/719079/apis/api-14888484-run
-  /v1/assets/{entity_id}:
+  /v1/assets/{entity_identifier}:
     get:
       summary: Obtém um asset específico
       deprecated: false
@@ -1508,7 +1508,7 @@ paths:
       x-apidog-status: developing
       x-apidog-maintainer: Fernando Seguim
       x-run-in-apidog: https://app.apidog.com/web/project/719079/apis/api-14888487-run
-  /v1/books/{entity_id}:
+  /v1/books/{entity_identifier}:
     get:
       summary: Obtém um book específico
       description: Obtém os detalhes de um book específico usando seu entity_id ou external_entity_id.
