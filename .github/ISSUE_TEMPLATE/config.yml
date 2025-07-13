@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Developer Hub
+    url: https://hub.guardia.finance
+    about: See the Developer Hub for more information.
+  - name: Open a Discussion
+    url: https://github.com/orgs/guardiafinance/discussions
+    about: Open a discussion to discuss the issue.

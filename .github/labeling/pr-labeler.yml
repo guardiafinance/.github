@@ -1,0 +1,29 @@
+'documentation 📃':
+  - head-branch: ['^docs', 'docs/', 'documentation', 'documentation/']
+
+'bugfix 🔧':
+  - head-branch: ['^bugfix', 'bugfix/', 'hotfix', 'hotfix/', 'fix', 'fix/']
+
+'ci 🏗️':
+  - head-branch: ['^ci', 'ci/']
+
+'codex ✨':
+  - head-branch: ['^codex', 'codex/']
+
+'copilot ✨':
+  - head-branch: ['^copilot', 'copilot/']
+
+'cursor ✨':
+  - head-branch: ['^cursor', 'cursor/']
+
+'enhancement 🔝':
+  - head-branch: ['^enhancement', 'enhancement/']
+
+'evolvability ♻️':
+  - head-branch: ['^task', 'task/', '^chore', 'chore/', '^refactor', 'refactor/', 'refactoring/', '^clean', 'clean/', '^cleanup', 'cleanup/']
+
+'feature ➕':
+  - head-branch: ['^feature', 'feature/', 'feat', 'feat/']
+
+'release ↗️':
+  - head-branch: ['^release', 'release/']

@@ -1,0 +1,27 @@
+'documentation 📃':
+  - '/\b(docs?|documentations?|specs?|specifications?|readme|manual|guide|tutorial)\b/gi'
+
+'ci 🏗️':
+  - '/\b(ci|ci[-/]cd|ci[-/]cds?|continuous\s+integration|continuous\s+delivery|continuous\s+deployment|pipeline|pipelines)\b/gi'
+
+'release ↗️':
+  - '/\b(release|releases?)\b/gi'
+
+'rejected ❌':
+  - '/\b(rejected|rejected\s+issue|rejected\s+pull\s+request)\b/gi'
+
+'question ✋':
+  - '/\b(question|questions?|need\s+help|doubts?)\b/gi'
+
+'vulnerability 🚨':
+  - '/\b(vulnerability|vulnerabilities?|security\s+alert)\b/gi'
+
+'dependabot 🤖':
+  - '/\b(dependabot|dependabot\s+alert)\b/gi'
+
+'enhancement 🔝':
+  - '/\b(enhancement|enhancements?|improvement|improvements?)\b/gi'
+
+'evolvability ♻️':
+  - '/\b(evolvability|evolvability\s+issue|evolvability\s+pull\s+request|refactoring|refactorings?|clean\s+code|clean\s+codes?)\b/gi'
+

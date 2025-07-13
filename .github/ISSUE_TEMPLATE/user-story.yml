@@ -1,0 +1,299 @@
+name: "User story 🎯"
+description: "Template for creating detailed user stories with acceptance criteria, API specs, and metrics"
+title: "{{ summarize the user story here }}"
+type: Feature
+labels: 
+  - "user story 🎯"
+projects:
+  - "guardiafinance/13"
+
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: "Objective"
+      description: "What is the objective of this story?"
+      placeholder: "e.g.: As a developer, I want to create a new user story so that I can track the progress of the story"
+      value: |
+        **As** a {user_role},  
+        **I want** {specific_objective},  
+        **So that** {benefit_and_value}.
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Acceptance Criteria
+
+  - type: textarea
+    id: happy_path
+    attributes:
+      label: "Happy Path Scenario"
+      description: "Describe the success scenario using Gherkin format"
+      value: |
+        ```gherkin
+        Scenario: {success_scenario_name}
+          Given {pre_condition}
+          And {additional_pre_condition}
+          When {action}
+          Then {expected_result}
+          And {additional_result}
+          And {result_details}:
+            | field  | value  |
+            | field1 | value1 |
+            | field2 | value2 |
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    id: corner_cases
+    attributes:
+      label: "Corner Cases"
+      description: "Describe edge case scenarios using Gherkin format"
+      value: |
+        ```gherkin
+        Scenario: {edge_case_name}
+          Given {pre_condition}
+          When {action}
+          Then {expected_result}
+          And error code {error_code}
+          And reason {error_reason}
+        ```
+
+  - type: textarea
+    id: error_cases
+    attributes:
+      label: "Error Cases"
+      description: "Describe system error scenarios"
+      value: |
+        ```gherkin
+        Scenario: Internal server error when {operation}
+          Given the service is unstable
+          When I try to {operation}
+          Then the system should return error 500 Internal Server Error
+          And error code ERR500_INTERNAL_ERROR
+          And reason INTERNAL_SERVER_ERROR
+        ```
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Domain Entities and Schemas
+
+  - type: textarea
+    id: domain_entities
+    attributes:
+      label: "Domain Entities"
+      description: "Define the entities and their fields"
+      value: |
+        ### Entity: {Entity_Name}
+        
+        | Field  | Type  | Description  |
+        |--------|-------|--------------|
+        | field1 | type1 | description1 |
+        | field2 | type2 | description2 |
+        | field3 | type3 | description3 |
+
+  - type: markdown
+    attributes:
+      value: |
+        ## API Specification
+
+  - type: dropdown
+    id: http_method
+    attributes:
+      label: "HTTP Method"
+      description: "Select the HTTP method"
+      options:
+        - GET
+        - POST
+        - PUT
+        - PATCH
+        - DELETE
+    validations:
+      required: true
+
+  - type: input
+    id: api_path
+    attributes:
+      label: "API Path"
+      description: "e.g.: /v1/resource/{identifier}"
+      placeholder: "/v1/resource/{identifier}"
+      value: "/v1/resource/{identifier}"
+    validations:
+      required: true
+
+  - type: input
+    id: api_scopes
+    attributes:
+      label: "API Scopes"
+      description: "e.g.: entity1:action1, entity2:action2"
+      placeholder: "entity1:action1, entity2:action2"
+      value: "entity1:action1, entity2:action2"
+    validations:
+      required: true
+
+  - type: textarea
+    id: request_headers
+    attributes:
+      label: "Request Headers"
+      description: "Define the required headers"
+      value: |
+        | Field                 | Type    | Required | Value                          | Description                                         |
+        |-----------------------|---------|----------|--------------------------------|-----------------------------------------------------|
+        | Accept                | string  | no       | application/vnd.guardia.v1+json| Expected contract type in response.                 |
+        | Content-Type          | string  | no       | application/vnd.guardia.v1+json| Contract type sent in the request.                  |
+        | Idempotency-Key       | string  | yes/no   | uuid                           | Idempotency key for the request.                    |
+        | X-Grd-Correlation-Id  | string  | no       | uuid                           | Correlation ID for distributed tracing.             |
+    validations:
+      required: true
+
+  - type: textarea
+    id: query_parameters
+    attributes:
+      label: "Query Parameters"
+      description: "Define the query parameters"
+      value: |
+        | Field  | Type  | Required | Default        | Description  |
+        |--------|-------|----------|----------------|--------------|
+        | field1 | type1 | yes/no   | default_value  | description1 |
+
+  - type: textarea
+    id: request_body
+    attributes:
+      label: "Request Body"
+      description: "JSON schema for request body (if applicable)"
+      value: |
+        ```json
+        {
+          "field1": "value1",
+          "field2": "value2"
+        }
+        ```
+
+  - type: textarea
+    id: response_schema
+    attributes:
+      label: "Response Schema"
+      description: "Define the response schema for success and error"
+      value: |
+        **Success:**
+        ```json
+        {
+          "data": {
+            "field1": "value1",
+            "field2": "value2",
+            "field3": "value3"
+          }
+        }
+        ```
+        
+        **Error:**
+        ```json
+        {
+          "errors": [
+            {
+              "code": "{{code}}",
+              "reason": "{{reason}}",
+              "message": "{{message}}"
+            }
+          ],
+          "reference": "https://docs.guardia.finance/api/known-errors/{entity_type}"
+        }
+        ```
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Metrics
+
+  - type: textarea
+    id: business_metrics
+    attributes:
+      label: "Business Metrics"
+      description: "Define the business metrics to be collected"
+      value: |
+        - Success rate for {operation}
+        - Total number of {operation} operations
+        - Error distribution by type (400, 404, 409, 500, 503)
+
+  - type: textarea
+    id: performance_metrics
+    attributes:
+      label: "Performance Metrics"
+      description: "Define the performance metrics"
+      value: |
+        - Average request latency (p50, p90, p95, p99)
+        - Database response time
+        - Throughput rate (requests per second)
+        - Error rate (%)
+
+  - type: textarea
+    id: infrastructure_metrics
+    attributes:
+      label: "Infrastructure Metrics"
+      description: "Define the infrastructure metrics"
+      value: |
+        - CPU usage
+        - Memory usage
+        - Number of concurrent database connections
+        - Cache hit/miss rate (if applicable)
+
+  - type: textarea
+    id: sli_slo
+    attributes:
+      label: "SLIs / SLOs"
+      description: "Define the Service Level Indicators and Objectives"
+      value: |
+        - Service availability: 99.99%
+        - Maximum latency (p99): 50ms
+        - Maximum error rate: 0.01%
+
+  - type: textarea
+    id: sequence_diagram
+    attributes:
+      label: "Sequence Diagram"
+      description: "Mermaid code for the sequence diagram"
+      value: |
+        ```mermaid
+        %%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#333333', 'primaryTextColor': '#17171b', 'primaryBorderColor': '#1a1a1a', 'lineColor': '#1a1a1a', 'fontFamily': 'arial', 'noteBkgColor': '#4f186d', 'noteTextColor': '#dbd0e1', 'actorBkg': '#e07400', 'actorTextColor': '#17171b' }}}%%
+        sequenceDiagram
+            participant Client
+            participant API
+            participant Service
+            participant Cache
+            participant Database
+
+            Client->>API: {HTTP_METHOD} {endpoint}
+            API->>Service: {operation}
+            Service->>Database: {database_operation}
+            Database-->>Service: {database_response}
+            Service-->>API: {service_response}
+            API-->>Client: {status_code} + {response_data}
+        ```
+
+  - type: textarea
+    id: use_cases
+    attributes:
+      label: "Use Cases"
+      description: "Describe the main use cases"
+      value: |
+        ### {Use_Case_Title}
+        
+        **Scenario:** {scenario_description}  
+        **Challenge:** {challenge_description}  
+        **Solution:** {solution_description}  
+        **Benefit:** {benefit_description}
+
+  - type: textarea
+    id: references
+    attributes:
+      label: "References"
+      description: "Links to relevant documentation"
+      value: |
+        - [OpenAPI Specification](https://raw.githubusercontent.com/guardiafinance/hub/refs/heads/main/docs/api/{project}/{project}.openapi.yaml)
+        - [Guardia Documentation](https://docs.guardia.finance/)
+
+ 

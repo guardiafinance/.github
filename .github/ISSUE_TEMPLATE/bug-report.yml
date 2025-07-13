@@ -1,0 +1,68 @@
+name: "Bug report 🐞"
+description: Create a report to help us improve
+title: bug/ {{ summarize the reported bug here }}
+type: Bug
+labels: 
+  - "bug report 🐞"
+assignees:
+  - commitybyguardia
+projects:
+  - "guardiafinance/13"
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+      value: |
+        **Describe the bug**
+
+        A clear and concise description of what the bug is.
+
+        **To Reproduce**
+        
+        Steps to reproduce the behavior:
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+
+        **Expected behavior**
+        A clear and concise description of what you expected to happen.
+
+        **Screenshots**
+        If applicable, add screenshots to help explain your problem.
+
+        **Additional context**
+        Add any other context about the problem here.
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        In some cases we may need more details, so please consider sharing this information with us below.
+
+        > [!NOTE]
+        > We will only contact you if it is absolutely necessary. To follow the progress of the issue, you can follow it here on Github
+  - type: input
+    id: slack-username
+    attributes:
+      label: Slack Username
+      description: We will use this Slack username onto [Comm.ity by Guardia](https://commitybyguardia.slack.com) to contact you if we need more info.
+      placeholder: ex. @joao.silva
+    validations:
+      required: false
+  - type: input
+    id: email
+    attributes:
+      label: Email for contact
+      description: We will use this email to contact you if we need more info.
+      placeholder: ex. email@example.com
+    validations:
+      required: false

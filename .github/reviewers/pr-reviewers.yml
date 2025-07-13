@@ -1,0 +1,8 @@
+addAssignees: author
+addReviewers: true
+numberOfReviewers: 1
+reviewers:
+  - "dopic"
+  - "fernandoseguim"
+  - "garcia-victor-fin"
+  - "brunneus"

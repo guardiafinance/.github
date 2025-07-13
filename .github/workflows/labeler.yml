@@ -1,0 +1,28 @@
+name: "Labeler"
+on:
+  issues:
+    types: 
+      - opened
+      - reopened
+      - edited
+  pull_request_target:
+    types: 
+      - opened
+      - reopened
+      - synchronize
+
+permissions:
+  issues: write
+  pull-requests: write
+  packages: read
+  contents: read
+
+jobs:
+  auto-labeler:
+    uses: guardiafinance/project-automations/.github/workflows/reusable-labeler.yml@main
+    with:
+      issue_labeler_config: ".github/labeling/issue-labeler.yml"
+      pr_labeler_config: ".github/labeling/pr-labeler.yml"
+      pr_reviewers_config: ".github/reviewers/pr-reviewers.yml"
+      enable_size_labeling: true
+      size_config: '{"0": "XS", "10": "S", "30": "M", "100": "L", "500": "XL", "1000": "XXL"}'   

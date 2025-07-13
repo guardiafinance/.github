@@ -1,0 +1,28 @@
+name: Project automations
+
+on:
+  issues:
+    types:
+      - opened
+      - reopened
+      - closed
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - closed
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  project-automations:
+    uses: guardiafinance/project-automations/.github/workflows/reusable-project-automations.yml@main
+    with:
+      organization: ${{ vars.ORGANIZATION_NAME }}
+      project_id: ${{ vars.GH_PROJECT_ID }}
+    secrets:
+      gh_project_token: ${{ secrets.GH_PROJECT_TOKEN }}
+
+

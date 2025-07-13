@@ -1,0 +1,132 @@
+name: "Feature Request ➕"
+description: Suggest a new feature for the project
+title: "feat/{{ brief feature summary }}"
+labels: 
+  - "feature request ➕"
+type: Feature
+assignees:
+  - commitybyguardia
+projects:
+  - "guardiafinance/13"
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for contributing with an improvement idea! Please fill out the fields below clearly and objectively.
+
+  - type: textarea
+    id: user-story
+    attributes:
+      label: Objective
+      description: "What is the objective of this story?"
+      placeholder: ex. As a developer, I want to create a new user story so that I can track the progress of the story
+      value: |
+        **As** {user_role},
+        **I want** {specific_objective},
+        **So that** {benefit_and_value}.
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: How does it work today?
+      description: Describe how the functionality behaves today (if applicable).
+      placeholder: The system only allows one webhook per client...
+      value: |
+        How does it work today?
+    validations:
+      required: false
+
+  - type: textarea
+    id: desired-behavior
+    attributes:
+      label: How should it work?
+      description: Explain how you would like it to work.
+      placeholder: Allow multiple webhooks, categorized by type or environment...
+      value: |
+        How should it work?
+    validations:
+      required: true
+
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Why is this important?
+      description: What is the impact of this functionality? Does it help with operations, scalability, security or compliance?
+      placeholder: Facilitates integrations with partners and reduces failure risk in segregated environments.
+      value: |
+        Why is this important?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: How can it be implemented?
+      description: Detail your implementation suggestion, even if it's an initial idea.
+      placeholder: Add new `WebhookGroup` model, adapt /webhooks endpoint, etc.
+      value: |
+        How can it be implemented?
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: impact-areas
+    attributes:
+      label: Impact Areas
+      description: Check the areas that will likely need adjustments.
+      options:
+        - label: Frontend
+        - label: Backend
+        - label: Database
+        - label: Observability
+        - label: Public API
+        - label: SDK
+        - label: Documentation
+        - label: CI/CD
+        - label: Security
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: List other approaches you considered, with pros and cons.
+      placeholder: ex. Use a single endpoint with query params to filter webhooks; use a single endpoint with path params to filter webhooks; etc.
+      value: |
+        Alternatives considered:
+        1) ...
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Screenshots, links, examples or any other additional context.
+    validations:
+      required: false
+
+  - type: input
+    id: slack-username
+    attributes:
+      label: Slack (Comm.ity)
+      description: Your username on Guardia's Slack, for contact (optional).
+      placeholder: ex. @joao.silva
+    validations:
+      required: false
+
+  - type: input
+    id: email
+    attributes:
+      label: Contact email
+      description: Only if direct contact is necessary (optional).
+      placeholder: ex. you@company.com
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        > To track progress, follow this issue right here on GitHub.
