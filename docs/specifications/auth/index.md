@@ -23,14 +23,14 @@ Esse modelo sustenta os pilares de segurança e governança da plataforma e orie
 O protocolo é implementado com fluxos distintos, de acordo com o contexto da API:
 
 - **[APIs Públicas](../glossary#api-pública-ou-api-externa):** Utilizam o fluxo *Client Credentials* com extensões de segurança do [FAPI 2.0 Security Profile](https://openid.net/specs/fapi-2_0-security-02.html), garantindo:
-  - Autorização granular com [RBAC](./rbac.md) e [ABAC](./abac.md)
+  - Autorização granular com [RBAC](#) e [ABAC](#)
   - Rastreabilidade de operações
   - Proteção contra fraudes
   - Autenticação mútua entre cliente e servidor
 
 - **[APIs Privadas](../glossary#api-privada-ou-api-interna):** Utilizam OAuth 2.0 com **tokens JWT emitidos por um IdP confiável**, assegurando:
   - Comunicação segura entre módulos internos
-  - Controle de acesso por funções ([RBAC](./rbac.md))
+  - Controle de acesso por funções ([RBAC](#))
   - Isolamento de rede via [Virtual Private Cloud (VPC)](https://en.wikipedia.org/wiki/Virtual_private_cloud)
 
 Essa abordagem unificada permite interoperabilidade entre componentes da plataforma, compatibilidade com regulações (LGPD, PCI DSS) e aderência a padrões como OpenID e FAPI.

@@ -148,7 +148,7 @@ Esta especificação NÃO DEVE ser usada para:
 
 - Os eventos DEVEM ser transmitidos por canais seguros (TLS).
 - Os dados sensíveis DEVEM ser criptografados ou ofuscados.
-- O acesso aos eventos DEVEM ser controlado por mecanismos de autenticação e autorização com base na especificação [Autenticação e Autorização](./authentication-and-authorization.md).
+- O acesso aos eventos DEVEM ser controlado por mecanismos de autenticação e autorização com base na especificação [Autenticação e Autorização](#).
 
 ## Notas Adicionais
 

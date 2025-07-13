@@ -24,7 +24,7 @@ Each asset has the following properties:
 | `ledgers`   | List of ledgers where the asset is declared. |
 | `metadata`  | Additional information about the asset, which may include description, tags, among others external identifiers. |
 
-For more details about asset properties, see the [Domain Model](../models/index.md#assets) section.
+For more details about asset properties, see the [Domain Model](../models/index.md#asset) section.
 
 ## Asset/Ledger Relationship
 

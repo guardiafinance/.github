@@ -24,7 +24,7 @@ Cada activo posee las siguientes propiedades:
 | `ledgers`   | Lista de ledgers en los que el activo está declarado. |
 | `metadata`  | Información adicional sobre el activo, que puede incluir descripción, etiquetas, entre otros datos externos. |
 
-Para más detalles sobre las propiedades del activo, consulte la sección [Modelo de Dominio](../models/index.md#assets).
+Para más detalles sobre las propiedades del activo, consulte la sección [Modelo de Dominio](../models/index.md#asset).
 
 ## Relación Asset/Ledger
 

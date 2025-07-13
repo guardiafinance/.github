@@ -91,4 +91,4 @@ A modelagem de Books permite representar ativos e passivos com alta granularidad
 
 ## Considerações Finais
 
-A estrutura do **Book** foi concebida como uma base contábil sólida e programável, capaz de representar desde ativos financeiros tradicionais até unidades de valor não convencionais. Combinando flexibilidade operacional e aderência a normas contábeis internacionais, o modelo viabiliza rastreabilidade, governança e compatibilidade com ecossistemas globais desde sua origem. Para entender os princípios contábeis e normativos que sustentam essa arquitetura, consulte a [Fundamentação Técnica do Book](./technical-foundation.md).
+A estrutura do **Book** foi concebida como uma base contábil sólida e programável, capaz de representar desde ativos financeiros tradicionais até unidades de valor não convencionais. Combinando flexibilidade operacional e aderência a normas contábeis internacionais, o modelo viabiliza rastreabilidade, governança e compatibilidade com ecossistemas globais desde sua origem. Para entender os princípios contábeis e normativos que sustentam essa arquitetura, consulte a [Fundamentação Técnica do Book](./foundation.md).

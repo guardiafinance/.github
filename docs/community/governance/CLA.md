@@ -10,8 +10,8 @@ keywords: [guardia core banking, core bancario open source, core bancário escal
 - [governance@guardia.finance](mailto:governance@guardia.finance)
 
 *Este documento está disponível em outros idiomas:*
-- [English](en/docs/community/governance/CLA.md)
-- [Español](es/docs/community/governance/CLA.md)
+- [English](https://hub.guardia.finance/en/docs/community/governance/CLA)
+- [Español](https://hub.guardia.finance/es/docs/community/governance/CLA)
 
 Obrigado por seu interesse em contribuir com os projetos da Guardia. Este Acordo de Licença de Contribuidor ("CLA") garante clareza sobre os direitos de propriedade intelectual relacionados às suas contribuições, protegendo o Contribuidor, a Guardia e os demais usuários.
 

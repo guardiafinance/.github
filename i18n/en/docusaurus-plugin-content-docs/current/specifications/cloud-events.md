@@ -150,7 +150,7 @@ This specification MUST NOT be used for:
 
 - Events MUST be transmitted over secure channels (TLS)
 - Sensitive data MUST be encrypted or obfuscated.
-- Event access MUST be controlled by authentication and authorization mechanisms based on the [Authentication and Authorization](./authentication-and-authorization.md) specification.
+- Event access MUST be controlled by authentication and authorization mechanisms based on the [Authentication and Authorization](#) specification.
 
 ## Additional Notes
 

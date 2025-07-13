@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Pagination
+# Paginations
 
 This specification defines a unified **pagination** standard for all Guardia RESTful API endpoints that return resource lists. The goal is to ensure consistency between interfaces, predictability in data consumption, and interoperability between internal and external systems.
 

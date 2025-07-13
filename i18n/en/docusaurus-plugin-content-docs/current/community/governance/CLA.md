@@ -11,8 +11,8 @@ keywords: [guardia core banking, open source core banking, scalable core banking
 - [governance@guardia.finance](mailto:governance@guardia.finance)
 
 *This document is available in other languages:*
-- [Portuguese](docs/community/governance/CLA.md)
-- [Spanish](es/docs/community/governance/CLA.md)
+- [Portuguese](https://hub.guardia.finance/docs/community/governance/CLA)
+- [Spanish](https://hub.guardia.finance/es/docs/community/governance/CLA)
 
 Thank you for your interest in contributing to Guardia's projects. This Contributor License Agreement ("CLA") ensures clarity regarding intellectual property rights related to your contributions, protecting the Contributor, Guardia, and other users.
 
