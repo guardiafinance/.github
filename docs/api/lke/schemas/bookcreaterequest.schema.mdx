@@ -6,7 +6,7 @@ sidebar_label: "BookCreateRequest"
 hide_title: true
 hide_table_of_contents: true
 schema: true
-sample: {"external_entity_id":"ext-123","name":"string","ledger_entity_id":"3fa85f64-5717-4562-b3fc-2c963f66afa6","nature":"CREDITOR","asset":"USD","chapter":"3fa85f64-5717-4562-b3fc-2c963f66afa6","metadata":{"foo":"bar"}}
+sample: {"external_entity_id":"ext:123","name":"string","ledger_entity_id":"3fa85f64-5717-4562-b3fc-2c963f66afa6","nature":"CREDITOR","asset":"USD","metadata":{"foo":"bar"}}
 custom_edit_url: null
 ---
 
@@ -31,7 +31,7 @@ import Heading from "@theme/Heading";
 
 
 <Schema
-  schema={{"type":"object","properties":{"external_entity_id":{"type":"string","description":"Identificador externo da entidade para interoperabilidade com outros sistemas.","minLength":1,"maxLength":36,"example":"ext-123","nullable":true,"title":"ExternalEntityID"},"name":{"type":"string","minLength":3,"maxLength":128},"ledger_entity_id":{"type":"string","format":"uuid","description":"Identificador único universal no formato UUIDv7 (RFC 9562).","pattern":"^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$","title":"UUIDv7"},"nature":{"type":"string","enum":["CREDITOR","DEBITOR"]},"asset":{"type":"string","description":"Código do ativo (aka. moeda) ao qual o book esta associado.","minLength":3,"maxLength":3,"example":"USD"},"chapter":{"type":"string","format":"uuid","description":"Identificador único universal no formato UUIDv7 (RFC 9562).","pattern":"^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$","title":"UUIDv7"},"metadata":{"type":"object","description":"Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.","additionalProperties":{"type":"string"},"maxProperties":10,"example":{"foo":"bar"},"title":"Metadata"}},"required":["external_entity_id","name","ledger_entity_id","nature","asset"],"title":"BookCreateRequest"}}
+  schema={{"type":"object","properties":{"external_entity_id":{"type":"string","description":"Identificador externo da entidade para interoperabilidade com outros sistemas.","minLength":1,"maxLength":36,"example":"ext:123","nullable":true,"title":"ExternalEntityID"},"name":{"type":"string","minLength":3,"maxLength":128},"ledger_entity_id":{"type":"string","format":"uuid","description":"Identificador único universal no formato UUIDv7 (RFC 9562).","pattern":"^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$","title":"UUIDv7"},"nature":{"type":"string","enum":["CREDITOR","DEBITOR"]},"asset":{"type":"string","description":"Código do ativo (aka. moeda) ao qual o book esta associado.","minLength":3,"maxLength":3,"example":"USD"},"metadata":{"type":"object","description":"Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.","additionalProperties":{"type":"string"},"maxProperties":10,"example":{"foo":"bar"},"title":"Metadata"}},"required":["external_entity_id","name","ledger_entity_id","nature","asset"],"title":"BookCreateRequest"}}
   schemaType={"response"}
 >
   

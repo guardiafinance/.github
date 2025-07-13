@@ -46,6 +46,24 @@ const sidebar: SidebarsConfig = {
           label: "Descarta um ledger específico",
           className: "api-method delete",
         },
+        {
+          type: "doc",
+          id: "api/lke/add-asset-to-ledger",
+          label: "Adiciona um asset ao ledger",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api/lke/list-ledger-assets",
+          label: "Lista assets associados ao ledger",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api/lke/remove-asset-from-ledger",
+          label: "Remove um asset do ledger",
+          className: "api-method delete",
+        },
       ],
     },
     {
@@ -256,6 +274,24 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api/lke/schemas/asset",
+          label: "Asset",
+          className: "schema",
+        },
+        {
+          type: "doc",
+          id: "api/lke/schemas/listofassets",
+          label: "ListOfAssets",
+          className: "schema",
+        },
+        {
+          type: "doc",
+          id: "api/lke/schemas/ledgerassetbinding",
+          label: "LedgerAssetBinding",
+          className: "schema",
+        },
+        {
+          type: "doc",
           id: "api/lke/schemas/chapter",
           label: "Chapter",
           className: "schema",
@@ -276,18 +312,6 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api/lke/schemas/chapterupdaterequest",
           label: "ChapterUpdateRequest",
-          className: "schema",
-        },
-        {
-          type: "doc",
-          id: "api/lke/schemas/asset",
-          label: "Asset",
-          className: "schema",
-        },
-        {
-          type: "doc",
-          id: "api/lke/schemas/listofassets",
-          label: "ListOfAssets",
           className: "schema",
         },
         {
