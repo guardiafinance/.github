@@ -432,9 +432,6 @@ paths:
                 code:
                   type: string
                   description: "Código do asset que será associado ao ledger (ex.: BRL, BTC)."
-                asset_identifier:
-                  $ref: './components.openapi.yaml#/components/schemas/EntityID'
-                  description: "Identificador único `entity_id` do asset no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`."
                 exponent:
                   type: number
                   description: |
@@ -444,7 +441,6 @@ paths:
                     :::
                   minimum: 0
                   maximum: 10
-
 
       responses:
         '201':
