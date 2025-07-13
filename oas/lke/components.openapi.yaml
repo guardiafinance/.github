@@ -58,11 +58,41 @@ components:
         type: string
         format: uuid
 
-    EntityIdParam:
-      name: entity_id
+    LedgerIdentifierParam:
+      name: ledger_identifier
       in: path
       description: |
-        Identificador único da entidade no formato UUIDv7. Alternativamente pode ser utilizado o
+        Identificador único `entity_id` da ledger no formato UUIDv7. Alternativamente pode ser utilizado o
+        `external_entity_id`.
+      required: true
+      schema:
+        $ref: '#/components/schemas/EntityID'
+
+    AssetIdentifierParam:
+      name: asset_identifier
+      in: path
+      description: |
+        Identificador único `entity_id` do asset no formato UUIDv7. Alternativamente pode ser utilizado o
+        `external_entity_id`.
+      required: true
+      schema:
+        $ref: '#/components/schemas/EntityID'
+
+    BookIdentifierParam:
+      name: book_identifier
+      in: path
+      description: |
+        Identificador único `entity_id` do book no formato UUIDv7. Alternativamente pode ser utilizado o
+        `external_entity_id`.
+      required: true
+      schema:
+        $ref: '#/components/schemas/EntityID'
+
+    ChapterIdentifierParam:
+      name: chapter_identifier
+      in: path
+      description: |
+        Identificador único `entity_id` da chapter no formato UUIDv7. Alternativamente pode ser utilizado o
         `external_entity_id`.
       required: true
       schema:
@@ -148,10 +178,10 @@ components:
       in: query
       description: |
         Uma lista de IDs externos de entidades separados por vírgulas. Ex.:
-        `external_entity_ids={external_id},{external_id},{external_id}`. Espaços em branco
+        `external_entity_ids=ext:{external_entity_id},ext:{external_entity_id},ext:{external_entity_id}`. Espaços em branco
         entre as vírgulas serão ignorados.
       required: false
-      example: ext-123,ext-456,ext-789
+      example: ext:123,ext:456,ext:789
       schema:
         type: string
 
@@ -188,6 +218,17 @@ components:
       example: 'USD,BRL,EUR'
       schema:
         type: string
+
+    ListOfAssetIds:
+      name: entity_ids
+      in: query
+      description: |
+        Uma lista de identificadores de assets separados por vírgulas. Ex.:
+        `entity_ids={asset_identifier},{asset_identifier},{asset_identifier}`. Espaços em branco
+        entre as vírgulas serão ignorados.
+      required: false
+      schema:
+        $ref: '#/components/schemas/EntityID'
 
     ListOfChapterIds:
       name: chapter_ids
@@ -535,7 +576,7 @@ components:
       description: Identificador externo da entidade para interoperabilidade com outros sistemas.
       minLength: 1
       maxLength: 36
-      example: 'ext-123'
+      example: 'ext:123'
       nullable: true
 
     ErrorsResponse:
