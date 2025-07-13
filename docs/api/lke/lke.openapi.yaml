@@ -594,31 +594,21 @@ paths:
         "500":
           $ref: "#/components/responses/Error500"
       security: []
+  /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}:
     delete:
       summary: Remove um asset do ledger
       description: Remove a associação de um asset existente do ledger especificado
-        através do código do asset.
+        através do identificador do asset.
       operationId: remove_asset_from_ledger
       tags:
         - Ledgers
       parameters:
         - $ref: "#/paths/~1v1~1ledgers~1%7Bledger_identifier%7D/get/parameters/0"
+        - $ref: "#/paths/~1v1~1assets~1%7Basset_identifier%7D/get/parameters/0"
         - $ref: "#/paths/~1v1~1books/get/parameters/10"
         - $ref: "#/paths/~1v1~1books/get/parameters/11"
         - $ref: "#/paths/~1v1~1books/get/parameters/12"
         - $ref: "#/paths/~1v1~1books/get/parameters/13"
-      requestBody:
-        required: true
-        content:
-          application/vnd.guardia.v1+json:
-            schema:
-              type: object
-              required:
-                - code
-              properties:
-                code:
-                  type: string
-                  description: Código do asset que será removido do ledger.
       responses:
         "204":
           description: Asset removido com sucesso.

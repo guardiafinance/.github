@@ -566,30 +566,20 @@ paths:
         '500':
           $ref: './components.openapi.yaml#/components/responses/Error500'
       security: []
+  /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}:
     delete:
       summary: Remove um asset do ledger
-      description: Remove a associação de um asset existente do ledger especificado através do código do asset.
+      description: Remove a associação de um asset existente do ledger especificado através do identificador do asset.
       operationId: remove_asset_from_ledger
       tags:
         - Ledgers
       parameters:
         - $ref: './components.openapi.yaml#/components/parameters/LedgerIdentifierParam'
+        - $ref: './components.openapi.yaml#/components/parameters/AssetIdentifierParam'
         - $ref: './components.openapi.yaml#/components/parameters/Accept'
         - $ref: './components.openapi.yaml#/components/parameters/AcceptLanguage'
         - $ref: './components.openapi.yaml#/components/parameters/ContentType'
         - $ref: './components.openapi.yaml#/components/parameters/CorrelationId'
-      requestBody:
-        required: true
-        content:
-          application/vnd.guardia.v1+json:
-            schema:
-              type: object
-              required:
-                - code
-              properties:
-                code:
-                  type: string
-                  description: Código do asset que será removido do ledger.
       responses:
         '204':
           description: Asset removido com sucesso.
