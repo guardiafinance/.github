@@ -58,7 +58,6 @@ Este documento lista os erros padronizados utilizados na plataforma Guardia. Cad
 - **Retry**: ✅ Somente após correção.
 - **Tratamento sugerido**:
   - Verificar a documentação da API para o formato esperado dos parâmetros e do corpo da requisição e corrigir a requisição.
-  
 
 ---
 
@@ -75,6 +74,14 @@ Este documento lista os erros padronizados utilizados na plataforma Guardia. Cad
 - **Retry**: ✅ Somente após correção.
 - **Tratamento sugerido**:
   - Reduzir o tamanho dos metadados para estar em conformidade com o limite definido.
+
+---
+
+### `INVALID_EXTERNAL_ENTITY_ID_FORMAT`
+- **Mensagem**: O formato do ID de entidade externa não é válido.
+- **Retry**: ✅ Somente após correção.
+- **Tratamento sugerido**:
+  - Verificar se o ID de entidade externa está corretamente formatado conforme a especificação de entidades.
 
 ## ERR401_UNAUTHORIZED
 

@@ -74,6 +74,14 @@ This document lists the standardized errors used in the Guardia platform. Each e
 - **Suggested treatment**:
   - Reduce the metadata size to comply with the defined limit.
 
+---
+
+### `INVALID_EXTERNAL_ENTITY_ID_FORMAT`
+- **Message**: The external entity ID format is invalid.
+- **Retry**: ✅ Only after correction.
+- **Suggested treatment**:
+  - Verify that the external entity ID is correctly formatted according to the entities specification.
+
 ## ERR401_UNAUTHORIZED
 
 ## ERR402_INSUFFICIENT_FUNDS

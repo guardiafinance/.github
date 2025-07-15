@@ -74,6 +74,14 @@ Este documento lista los errores estandarizados utilizados en la plataforma Guar
 - **Tratamiento sugerido**:
   - Reducir el tamaño de los metadatos para cumplir con el límite definido.
 
+---
+
+### `INVALID_EXTERNAL_ENTITY_ID_FORMAT`
+- **Mensaje**: El formato del ID de entidad externa no es válido.
+- **Reintento**: ✅ Solo después de la corrección.
+- **Tratamiento sugerido**:
+  - Verificar que el ID de entidad externa esté correctamente formateado según la especificación de entidades.
+
 ## ERR401_UNAUTHORIZED
 
 ## ERR402_INSUFFICIENT_FUNDS
