@@ -407,7 +407,7 @@ paths:
       x-apidog-maintainer: Fernando Seguim
       x-run-in-apidog: https://app.apidog.com/web/project/719079/apis/api-11718082-run
   /v1/ledgers/{ledger_identifier}/assets:
-    post:
+    put:
       summary: Adiciona um asset ao ledger
       description: Associa um asset existente ao ledger especificado através do código do asset.
       operationId: add_asset_to_ledger
@@ -427,11 +427,11 @@ paths:
             schema:
               type: object
               required:
-                - code
+                - identifier
               properties:
-                code:
+                identifier:
                   type: string
-                  description: "Código do asset que será associado ao ledger (ex.: BRL, BTC)."
+                  description: "Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`."
                 exponent:
                   type: number
                   description: |
