@@ -1,12 +1,12 @@
 ---
-id: externalentityid
-title: "ExternalEntityID"
-description: "Identificador externo da entidade para interoperabilidade com outros sistemas."
-sidebar_label: "ExternalEntityID"
+id: balance
+title: "Balance"
+description: "Representa um saldo financeiro em uma position."
+sidebar_label: "Balance"
 hide_title: true
 hide_table_of_contents: true
 schema: true
-sample: "ext:123-456-789-ABCD"
+sample: {"amount":0,"credits":0,"debits":0}
 custom_edit_url: null
 ---
 
@@ -22,16 +22,16 @@ import Heading from "@theme/Heading";
 <Heading
   as={"h1"}
   className={"openapi__heading"}
-  children={"ExternalEntityID"}
+  children={"Balance"}
 >
 </Heading>
 
 
 
-Identificador externo da entidade para interoperabilidade com outros sistemas.
+Representa um saldo financeiro em uma position.
 
 <Schema
-  schema={{"type":"string","description":"Identificador externo da entidade para interoperabilidade com outros sistemas.","minLength":1,"maxLength":36,"example":"ext:123-456-789-ABCD","nullable":true,"title":"ExternalEntityID"}}
+  schema={{"type":"object","description":"Representa um saldo financeiro em uma position.","properties":{"amount":{"type":"integer","description":"Valor do saldo em centavos.","example":0},"credits":{"type":"integer","description":"Total de creditos da posicao de saldo.","example":0},"debits":{"type":"integer","description":"Total de debitos da posicao de saldo.","example":0}},"required":["amount","credits","debits"],"title":"Balance"}}
   schemaType={"response"}
 >
   

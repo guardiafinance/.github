@@ -50,7 +50,7 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api/lke/add-asset-to-ledger",
           label: "Adiciona um asset ao ledger",
-          className: "api-method post",
+          className: "api-method put",
         },
         {
           type: "doc",
@@ -196,8 +196,8 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api/lke/schemas/uuidv-7",
-          label: "UUIDv7",
+          id: "api/lke/schemas/entityid",
+          label: "EntityID",
           className: "schema",
         },
         {
@@ -286,6 +286,12 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api/lke/schemas/entityidentifier",
+          label: "EntityIdentifier",
+          className: "schema",
+        },
+        {
+          type: "doc",
           id: "api/lke/schemas/ledgerassetbinding",
           label: "LedgerAssetBinding",
           className: "schema",
@@ -330,6 +336,18 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api/lke/schemas/assetupdaterequest",
           label: "AssetUpdateRequest",
+          className: "schema",
+        },
+        {
+          type: "doc",
+          id: "api/lke/schemas/balance",
+          label: "Balance",
+          className: "schema",
+        },
+        {
+          type: "doc",
+          id: "api/lke/schemas/position",
+          label: "Position",
           className: "schema",
         },
         {

@@ -1,12 +1,12 @@
 ---
-id: externalentityid
-title: "ExternalEntityID"
-description: "Identificador externo da entidade para interoperabilidade com outros sistemas."
-sidebar_label: "ExternalEntityID"
+id: entityid
+title: "EntityID"
+description: "Identificador único da entidade no formato `{entity_type}:{uuid_v7}`."
+sidebar_label: "EntityID"
 hide_title: true
 hide_table_of_contents: true
 schema: true
-sample: "ext:123-456-789-ABCD"
+sample: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
 custom_edit_url: null
 ---
 
@@ -22,16 +22,16 @@ import Heading from "@theme/Heading";
 <Heading
   as={"h1"}
   className={"openapi__heading"}
-  children={"ExternalEntityID"}
+  children={"EntityID"}
 >
 </Heading>
 
 
 
-Identificador externo da entidade para interoperabilidade com outros sistemas.
+Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
 
 <Schema
-  schema={{"type":"string","description":"Identificador externo da entidade para interoperabilidade com outros sistemas.","minLength":1,"maxLength":36,"example":"ext:123-456-789-ABCD","nullable":true,"title":"ExternalEntityID"}}
+  schema={{"type":"string","description":"Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.","pattern":"^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$","example":"{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e","title":"EntityID"}}
   schemaType={"response"}
 >
   

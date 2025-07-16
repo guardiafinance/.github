@@ -105,7 +105,7 @@ paths:
                   description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                   minLength: 1
                   maxLength: 36
-                  example: ext:123
+                  example: ext:123-456-789-ABCD
                   nullable: true
                 name:
                   type: string
@@ -215,9 +215,9 @@ paths:
                     properties:
                       entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       entity_type:
                         type: string
                         enum:
@@ -227,12 +227,13 @@ paths:
                         description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                         minLength: 1
                         maxLength: 36
-                        example: ext:123
+                        example: ext:123-456-789-ABCD
                         nullable: true
                       version:
                         type: integer
                         minimum: 0
                         maximum: 128
+                        default: 0
                       name:
                         type: string
                         description: O nome único e personalizado da ledger. Mínimo de 3 caractere e Máximo de 256 caracteres.
@@ -729,22 +730,23 @@ paths:
         - name: entity_ids
           in: query
           description: |
-            Uma lista de IDs de entidades no formato UUIDv7 separados por vírgulas. Ex.:
-            `entity_ids={entity_id},{entity_id},{entity_id}`. Espaços em branco
+            Uma lista de identificadores `entity_id` de ledgers separados por vírgulas. Ex.:
+            `entity_ids={ledger:entity_id},{ledger:entity_id},{ledger:entity_id}`. Espaços em branco
             entre as vírgulas serão ignorados.
           required: false
-          example: 018f74a6e3b270ccbf248a4b012f5f3e,018f74a6e3b270ccbf248a4b012f5f3f,018f74a6e3b270ccbf248a4b012f5f40
           schema:
             type: string
-            pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12},)*[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: external_entity_ids
           in: query
           description: |
             Uma lista de IDs externos de entidades separados por vírgulas. Ex.:
-            `external_entity_ids=ext:{external_entity_id},ext:{external_entity_id},ext:{external_entity_id}`. Espaços em branco
+            `external_entity_ids={ext:external_entity_id},{ext:external_entity_id},{ext:external_entity_id}`. Espaços em branco
             entre as vírgulas serão ignorados.
           required: false
-          example: ext:123,ext:456,ext:789
+          example: ext:123-456-789-ABCD,ext:456-789-ABCD-EFGH,ext:789-ABCD-EFGH-IJKL
           schema:
             type: string
         - name: $metadata.key
@@ -852,9 +854,9 @@ paths:
                       properties:
                         entity_id:
                           type: string
-                          format: uuid
-                          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                         entity_type:
                           type: string
                           enum:
@@ -864,12 +866,13 @@ paths:
                           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                           minLength: 1
                           maxLength: 36
-                          example: ext:123
+                          example: ext:123-456-789-ABCD
                           nullable: true
                         version:
                           type: integer
                           minimum: 0
                           maximum: 128
+                          default: 0
                         name:
                           type: string
                           description: O nome único e personalizado da ledger. Mínimo de 3 caractere e Máximo de 256 caracteres.
@@ -1469,9 +1472,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Accept
           in: header
           description: |
@@ -1520,9 +1523,9 @@ paths:
                     properties:
                       entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       entity_type:
                         type: string
                         enum:
@@ -1532,12 +1535,13 @@ paths:
                         description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                         minLength: 1
                         maxLength: 36
-                        example: ext:123
+                        example: ext:123-456-789-ABCD
                         nullable: true
                       version:
                         type: integer
                         minimum: 0
                         maximum: 128
+                        default: 0
                       name:
                         type: string
                         description: O nome único e personalizado da ledger. Mínimo de 3 caractere e Máximo de 256 caracteres.
@@ -2108,9 +2112,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Idempotency-Key
           in: header
           description: Chave para garantir idempotência da requisição.
@@ -2271,9 +2275,9 @@ paths:
                     properties:
                       entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       entity_type:
                         type: string
                         enum:
@@ -2283,12 +2287,13 @@ paths:
                         description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                         minLength: 1
                         maxLength: 36
-                        example: ext:123
+                        example: ext:123-456-789-ABCD
                         nullable: true
                       version:
                         type: integer
                         minimum: 0
                         maximum: 128
+                        default: 0
                       name:
                         type: string
                         description: O nome único e personalizado da ledger. Mínimo de 3 caractere e Máximo de 256 caracteres.
@@ -2796,9 +2801,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Accept
           in: header
           description: |
@@ -3382,9 +3387,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Idempotency-Key
           in: header
           description: Chave para garantir idempotência da requisição.
@@ -3437,12 +3442,14 @@ paths:
                 - identifier
               properties:
                 identifier:
-                  type: string
                   description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
+                  type: string
+                  pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                  example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                 exponent:
                   type: number
                   description: |
-                    Expoente do asset vinculado.
+                    Expoente do **asset** vinculado.
                     :::note
                     Caso informado o expoente, ele irá sobrescrever, **apenas neste ledger**, o expoente padrão do asset vinculado.
                     :::
@@ -3538,14 +3545,14 @@ paths:
                     properties:
                       ledger_entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       asset_entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       code:
                         type: string
                         description: Código do asset vinculado.
@@ -4029,29 +4036,29 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: entity_ids
           in: query
           description: |
-            Uma lista de identificadores de assets separados por vírgulas. Ex.:
-            `entity_ids={asset_identifier},{asset_identifier},{asset_identifier}`. Espaços em branco
+            Uma lista de identificadores `entity_id` de assets separados por vírgulas. Ex.:
+            `entity_ids={asset:entity_id},{asset:entity_id},{asset:entity_id}`. Espaços em branco
             entre as vírgulas serão ignorados.
           required: false
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: external_entity_ids
           in: query
           description: |
             Uma lista de IDs externos de entidades separados por vírgulas. Ex.:
-            `external_entity_ids=ext:{external_entity_id},ext:{external_entity_id},ext:{external_entity_id}`. Espaços em branco
+            `external_entity_ids={ext:external_entity_id},{ext:external_entity_id},{ext:external_entity_id}`. Espaços em branco
             entre as vírgulas serão ignorados.
           required: false
-          example: ext:123,ext:456,ext:789
+          example: ext:123-456-789-ABCD,ext:456-789-ABCD-EFGH,ext:789-ABCD-EFGH-IJKL
           schema:
             type: string
         - name: asset_codes
@@ -4161,9 +4168,9 @@ paths:
                       properties:
                         entity_id:
                           type: string
-                          format: uuid
-                          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                         entity_type:
                           type: string
                           enum:
@@ -4173,12 +4180,13 @@ paths:
                           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                           minLength: 1
                           maxLength: 36
-                          example: ext:123
+                          example: ext:123-456-789-ABCD
                           nullable: true
                         version:
                           type: integer
                           minimum: 0
                           maximum: 128
+                          default: 0
                         code:
                           type: string
                           minLength: 3
@@ -4203,9 +4211,9 @@ paths:
                             Lista de identificadores únicos das ledgers associadas ao asset.
                           items:
                             type: string
-                            format: uuid
-                            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                         created_at:
                           nullable: false
                           type: string
@@ -4790,9 +4798,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: asset_identifier
           in: path
           description: |
@@ -4801,9 +4809,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Accept
           in: header
           description: |
@@ -5420,7 +5428,7 @@ paths:
                   description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                   minLength: 1
                   maxLength: 36
-                  example: ext:123
+                  example: ext:123-456-789-ABCD
                   nullable: true
                 name:
                   type: string
@@ -5542,9 +5550,9 @@ paths:
                     properties:
                       entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       entity_type:
                         type: string
                         enum:
@@ -5554,12 +5562,13 @@ paths:
                         description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                         minLength: 1
                         maxLength: 36
-                        example: ext:123
+                        example: ext:123-456-789-ABCD
                         nullable: true
                       version:
                         type: integer
                         minimum: 0
                         maximum: 128
+                        default: 0
                       name:
                         type: string
                       description:
@@ -5567,9 +5576,9 @@ paths:
                         nullable: true
                       ledger_entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       created_at:
                         nullable: false
                         type: string
@@ -6017,22 +6026,23 @@ paths:
         - name: entity_ids
           in: query
           description: |
-            Uma lista de IDs de entidades no formato UUIDv7 separados por vírgulas. Ex.:
-            `entity_ids={entity_id},{entity_id},{entity_id}`. Espaços em branco
+            Uma lista de identificadores `entity_id` de chapters separados por vírgulas. Ex.:
+            `entity_ids={chapter:entity_id},{chapter:entity_id},{chapter:entity_id}`. Espaços em branco
             entre as vírgulas serão ignorados.
           required: false
-          example: 018f74a6e3b270ccbf248a4b012f5f3e,018f74a6e3b270ccbf248a4b012f5f3f,018f74a6e3b270ccbf248a4b012f5f40
           schema:
             type: string
-            pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12},)*[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: external_entity_ids
           in: query
           description: |
             Uma lista de IDs externos de entidades separados por vírgulas. Ex.:
-            `external_entity_ids=ext:{external_entity_id},ext:{external_entity_id},ext:{external_entity_id}`. Espaços em branco
+            `external_entity_ids={ext:external_entity_id},{ext:external_entity_id},{ext:external_entity_id}`. Espaços em branco
             entre as vírgulas serão ignorados.
           required: false
-          example: ext:123,ext:456,ext:789
+          example: ext:123-456-789-ABCD,ext:456-789-ABCD-EFGH,ext:789-ABCD-EFGH-IJKL
           schema:
             type: string
         - name: $metadata.key
@@ -6140,9 +6150,9 @@ paths:
                       properties:
                         entity_id:
                           type: string
-                          format: uuid
-                          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                         entity_type:
                           type: string
                           enum:
@@ -6152,12 +6162,13 @@ paths:
                           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                           minLength: 1
                           maxLength: 36
-                          example: ext:123
+                          example: ext:123-456-789-ABCD
                           nullable: true
                         version:
                           type: integer
                           minimum: 0
                           maximum: 128
+                          default: 0
                         name:
                           type: string
                         description:
@@ -6165,9 +6176,9 @@ paths:
                           nullable: true
                         ledger_entity_id:
                           type: string
-                          format: uuid
-                          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                         created_at:
                           nullable: false
                           type: string
@@ -6692,9 +6703,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Accept
           in: header
           description: |
@@ -6743,9 +6754,9 @@ paths:
                     properties:
                       entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       entity_type:
                         type: string
                         enum:
@@ -6755,12 +6766,13 @@ paths:
                         description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                         minLength: 1
                         maxLength: 36
-                        example: ext:123
+                        example: ext:123-456-789-ABCD
                         nullable: true
                       version:
                         type: integer
                         minimum: 0
                         maximum: 128
+                        default: 0
                       name:
                         type: string
                       description:
@@ -6768,9 +6780,9 @@ paths:
                         nullable: true
                       ledger_entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       created_at:
                         nullable: false
                         type: string
@@ -7332,9 +7344,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Accept
           in: header
           description: |
@@ -7417,9 +7429,9 @@ paths:
                     properties:
                       entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       entity_type:
                         type: string
                         enum:
@@ -7429,12 +7441,13 @@ paths:
                         description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                         minLength: 1
                         maxLength: 36
-                        example: ext:123
+                        example: ext:123-456-789-ABCD
                         nullable: true
                       version:
                         type: integer
                         minimum: 0
                         maximum: 128
+                        default: 0
                       name:
                         type: string
                       description:
@@ -7442,9 +7455,9 @@ paths:
                         nullable: true
                       ledger_entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       created_at:
                         nullable: false
                         type: string
@@ -8037,9 +8050,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Accept
           in: header
           description: |
@@ -8688,7 +8701,7 @@ paths:
                   description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                   minLength: 1
                   maxLength: 36
-                  example: ext:123
+                  example: ext:123-456-789-ABCD
                   nullable: true
                 code:
                   type: string
@@ -8706,9 +8719,9 @@ paths:
                   type: array
                   items:
                     type: string
-                    format: uuid
-                    description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                    description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                    pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                    example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
               required:
                 - external_entity_id
                 - code
@@ -8812,9 +8825,9 @@ paths:
                     properties:
                       entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       entity_type:
                         type: string
                         enum:
@@ -8824,12 +8837,13 @@ paths:
                         description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                         minLength: 1
                         maxLength: 36
-                        example: ext:123
+                        example: ext:123-456-789-ABCD
                         nullable: true
                       version:
                         type: integer
                         minimum: 0
                         maximum: 128
+                        default: 0
                       code:
                         type: string
                         minLength: 3
@@ -8854,9 +8868,9 @@ paths:
                           Lista de identificadores únicos das ledgers associadas ao asset.
                         items:
                           type: string
-                          format: uuid
-                          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       created_at:
                         nullable: false
                         type: string
@@ -9306,22 +9320,23 @@ paths:
         - name: entity_ids
           in: query
           description: |
-            Uma lista de IDs de entidades no formato UUIDv7 separados por vírgulas. Ex.:
-            `entity_ids={entity_id},{entity_id},{entity_id}`. Espaços em branco
+            Uma lista de identificadores `entity_id` de assets separados por vírgulas. Ex.:
+            `entity_ids={asset:entity_id},{asset:entity_id},{asset:entity_id}`. Espaços em branco
             entre as vírgulas serão ignorados.
           required: false
-          example: 018f74a6e3b270ccbf248a4b012f5f3e,018f74a6e3b270ccbf248a4b012f5f3f,018f74a6e3b270ccbf248a4b012f5f40
           schema:
             type: string
-            pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12},)*[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: external_entity_ids
           in: query
           description: |
             Uma lista de IDs externos de entidades separados por vírgulas. Ex.:
-            `external_entity_ids=ext:{external_entity_id},ext:{external_entity_id},ext:{external_entity_id}`. Espaços em branco
+            `external_entity_ids={ext:external_entity_id},{ext:external_entity_id},{ext:external_entity_id}`. Espaços em branco
             entre as vírgulas serão ignorados.
           required: false
-          example: ext:123,ext:456,ext:789
+          example: ext:123-456-789-ABCD,ext:456-789-ABCD-EFGH,ext:789-ABCD-EFGH-IJKL
           schema:
             type: string
         - name: asset_codes
@@ -9449,9 +9464,9 @@ paths:
                       properties:
                         entity_id:
                           type: string
-                          format: uuid
-                          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                         entity_type:
                           type: string
                           enum:
@@ -9461,12 +9476,13 @@ paths:
                           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                           minLength: 1
                           maxLength: 36
-                          example: ext:123
+                          example: ext:123-456-789-ABCD
                           nullable: true
                         version:
                           type: integer
                           minimum: 0
                           maximum: 128
+                          default: 0
                         code:
                           type: string
                           minLength: 3
@@ -9491,9 +9507,9 @@ paths:
                             Lista de identificadores únicos das ledgers associadas ao asset.
                           items:
                             type: string
-                            format: uuid
-                            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                         created_at:
                           nullable: false
                           type: string
@@ -10085,9 +10101,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Accept
           in: header
           description: |
@@ -10136,9 +10152,9 @@ paths:
                     properties:
                       entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       entity_type:
                         type: string
                         enum:
@@ -10148,12 +10164,13 @@ paths:
                         description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                         minLength: 1
                         maxLength: 36
-                        example: ext:123
+                        example: ext:123-456-789-ABCD
                         nullable: true
                       version:
                         type: integer
                         minimum: 0
                         maximum: 128
+                        default: 0
                       code:
                         type: string
                         minLength: 3
@@ -10178,9 +10195,9 @@ paths:
                           Lista de identificadores únicos das ledgers associadas ao asset.
                         items:
                           type: string
-                          format: uuid
-                          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       created_at:
                         nullable: false
                         type: string
@@ -10738,9 +10755,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Idempotency-Key
           in: header
           description: Chave para garantir idempotência da requisição.
@@ -10905,9 +10922,9 @@ paths:
                     properties:
                       entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       entity_type:
                         type: string
                         enum:
@@ -10917,12 +10934,13 @@ paths:
                         description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                         minLength: 1
                         maxLength: 36
-                        example: ext:123
+                        example: ext:123-456-789-ABCD
                         nullable: true
                       version:
                         type: integer
                         minimum: 0
                         maximum: 128
+                        default: 0
                       code:
                         type: string
                         minLength: 3
@@ -10947,9 +10965,9 @@ paths:
                           Lista de identificadores únicos das ledgers associadas ao asset.
                         items:
                           type: string
-                          format: uuid
-                          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       created_at:
                         nullable: false
                         type: string
@@ -11443,9 +11461,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Accept
           in: header
           description: |
@@ -12084,28 +12102,27 @@ paths:
                   description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                   minLength: 1
                   maxLength: 36
-                  example: ext:123
+                  example: ext:123-456-789-ABCD
                   nullable: true
                 name:
                   type: string
                   minLength: 3
                   maxLength: 128
-                ledger_entity_id:
-                  type: string
-                  format: uuid
-                  description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                  pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
                 nature:
                   type: string
                   enum:
                     - CREDITOR
                     - DEBITOR
-                asset:
+                ledger_identifier:
+                  description: Identificador único `entity_id` do **ledger** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
                   type: string
-                  description: Código do ativo (aka. moeda) ao qual o book esta associado.
-                  minLength: 3
-                  maxLength: 3
-                  example: USD
+                  pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                  example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                asset_identifier:
+                  description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
+                  type: string
+                  pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                  example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                 metadata:
                   type: object
                   description: Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.
@@ -12117,9 +12134,9 @@ paths:
               required:
                 - external_entity_id
                 - name
-                - ledger_entity_id
                 - nature
-                - asset
+                - ledger_identifier
+                - asset_identifier
       responses:
         "201":
           description: Book criado com sucesso.
@@ -12209,9 +12226,9 @@ paths:
                     properties:
                       entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       entity_type:
                         type: string
                         enum:
@@ -12221,12 +12238,13 @@ paths:
                         description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                         minLength: 1
                         maxLength: 36
-                        example: ext:123
+                        example: ext:123-456-789-ABCD
                         nullable: true
                       version:
                         type: integer
                         minimum: 0
                         maximum: 128
+                        default: 0
                       name:
                         type: string
                         minLength: 3
@@ -12234,9 +12252,9 @@ paths:
                         description: Nome único do book dentro do ledger.
                       ledger:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       nature:
                         type: string
                         enum:
@@ -12261,6 +12279,141 @@ paths:
                         description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
                         format: date-time
                         pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                      position:
+                        description: Posição de saldo associada ao book quando criado.
+                        type: object
+                        properties:
+                          entity_id:
+                            type: string
+                            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                          entity_type:
+                            type: string
+                            enum:
+                              - POSITION
+                          version:
+                            type: integer
+                            minimum: 0
+                            maximum: 128
+                            default: 0
+                          reference_date:
+                            description: Data de referência da posição de saldo. Quando não informada durante uma transação, será a data de criação da transação.
+                            type: string
+                            format: date-time
+                            pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                          entry_reference:
+                            description: Identificador do último lançamento que atualizou a posição do saldo. É nulo quando a posição do saldo é inicializada.
+                            nullable: true
+                            type: string
+                            pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                          posted:
+                            description: Posição do saldo lançado.
+                            type: object
+                            properties:
+                              amount:
+                                type: integer
+                                description: Valor do saldo em centavos.
+                                example: 0
+                              credits:
+                                type: integer
+                                description: Total de creditos da posicao de saldo.
+                                example: 0
+                              debits:
+                                type: integer
+                                description: Total de debitos da posicao de saldo.
+                                example: 0
+                            required:
+                              - amount
+                              - credits
+                              - debits
+                          confirmable:
+                            description: Posição do saldo a ser confirmado.
+                            type: object
+                            properties:
+                              amount:
+                                type: integer
+                                description: Valor do saldo em centavos.
+                                example: 0
+                              credits:
+                                type: integer
+                                description: Total de creditos da posicao de saldo.
+                                example: 0
+                              debits:
+                                type: integer
+                                description: Total de debitos da posicao de saldo.
+                                example: 0
+                            required:
+                              - amount
+                              - credits
+                              - debits
+                          provisioned:
+                            description: Posição do saldo provisionado (lançado e a ser confirmado).
+                            type: object
+                            properties:
+                              amount:
+                                type: integer
+                                description: Valor do saldo em centavos.
+                                example: 0
+                              credits:
+                                type: integer
+                                description: Total de creditos da posicao de saldo.
+                                example: 0
+                              debits:
+                                type: integer
+                                description: Total de debitos da posicao de saldo.
+                                example: 0
+                            required:
+                              - amount
+                              - credits
+                              - debits
+                          available:
+                            description: Posição do saldo disponível.
+                            type: object
+                            properties:
+                              amount:
+                                type: integer
+                                description: Valor do saldo em centavos.
+                                example: 0
+                              credits:
+                                type: integer
+                                description: Total de creditos da posicao de saldo.
+                                example: 0
+                              debits:
+                                type: integer
+                                description: Total de debitos da posicao de saldo.
+                                example: 0
+                            required:
+                              - amount
+                              - credits
+                              - debits
+                          asset_identifier:
+                            description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
+                            type: string
+                            pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                          created_at:
+                            type: string
+                            description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+                            format: date-time
+                            pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                          updated_at:
+                            type: string
+                            description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+                            format: date-time
+                            pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                        required:
+                          - entity_id
+                          - entity_type
+                          - reference_date
+                          - posted
+                          - confirmable
+                          - provisioned
+                          - available
+                          - asset_identifier
+                          - created_at
+                          - updated_at
                       metadata:
                         type: object
                         description: Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.
@@ -12729,10 +12882,10 @@ paths:
           in: query
           description: |
             Uma lista de IDs de entidades no formato UUIDv7 separados por vírgulas. Ex.:
-            `entity_ids={entity_id},{entity_id},{entity_id}`. Espaços em branco
+            `entity_ids={entity_type:entity_id},{entity_type:entity_id},{entity_type:entity_id}`. Espaços em branco
             entre as vírgulas serão ignorados.
           required: false
-          example: 018f74a6e3b270ccbf248a4b012f5f3e,018f74a6e3b270ccbf248a4b012f5f3f,018f74a6e3b270ccbf248a4b012f5f40
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e,{entity_type}:018f74a6e3b270ccbf248a4b012f5f3f,{entity_type}:018f74a6e3b270ccbf248a4b012f5f40"
           schema:
             type: string
             pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12},)*[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
@@ -12740,10 +12893,10 @@ paths:
           in: query
           description: |
             Uma lista de IDs externos de entidades separados por vírgulas. Ex.:
-            `external_entity_ids=ext:{external_entity_id},ext:{external_entity_id},ext:{external_entity_id}`. Espaços em branco
+            `external_entity_ids={ext:external_entity_id},{ext:external_entity_id},{ext:external_entity_id}`. Espaços em branco
             entre as vírgulas serão ignorados.
           required: false
-          example: ext:123,ext:456,ext:789
+          example: ext:123-456-789-ABCD,ext:456-789-ABCD-EFGH,ext:789-ABCD-EFGH-IJKL
           schema:
             type: string
         - name: asset_codes
@@ -12754,14 +12907,18 @@ paths:
           example: USD,BRL,EUR
           schema:
             type: string
-        - name: chapter_ids
+        - name: entity_ids
           in: query
           description: |
-            Uma lista de IDs de chapters no formato UUIDv7 separados por vírgulas. Exemplo: 'id1,id2,id3'.
+            Uma lista de identificadores `entity_id` de chapters separados por vírgulas. Ex.:
+            `entity_ids={chapter:entity_id},{chapter:entity_id},{chapter:entity_id}`. Espaços em branco
+            entre as vírgulas serão ignorados.
           required: false
-          example: 018f74a6e3b270ccbf248a4b012f5f3e,018f74a6e3b270ccbf248a4b012f5f3f
           schema:
             type: string
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: $metadata.key
           in: query
           description: |
@@ -12867,9 +13024,9 @@ paths:
                       properties:
                         entity_id:
                           type: string
-                          format: uuid
-                          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                         entity_type:
                           type: string
                           enum:
@@ -12879,12 +13036,13 @@ paths:
                           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                           minLength: 1
                           maxLength: 36
-                          example: ext:123
+                          example: ext:123-456-789-ABCD
                           nullable: true
                         version:
                           type: integer
                           minimum: 0
                           maximum: 128
+                          default: 0
                         name:
                           type: string
                           minLength: 3
@@ -12892,9 +13050,9 @@ paths:
                           description: Nome único do book dentro do ledger.
                         ledger:
                           type: string
-                          format: uuid
-                          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                         nature:
                           type: string
                           enum:
@@ -12919,6 +13077,141 @@ paths:
                           description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
                           format: date-time
                           pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                        position:
+                          description: Posição de saldo associada ao book quando criado.
+                          type: object
+                          properties:
+                            entity_id:
+                              type: string
+                              description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                              pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                              example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                            entity_type:
+                              type: string
+                              enum:
+                                - POSITION
+                            version:
+                              type: integer
+                              minimum: 0
+                              maximum: 128
+                              default: 0
+                            reference_date:
+                              description: Data de referência da posição de saldo. Quando não informada durante uma transação, será a data de criação da transação.
+                              type: string
+                              format: date-time
+                              pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                            entry_reference:
+                              description: Identificador do último lançamento que atualizou a posição do saldo. É nulo quando a posição do saldo é inicializada.
+                              nullable: true
+                              type: string
+                              pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                              example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                            posted:
+                              description: Posição do saldo lançado.
+                              type: object
+                              properties:
+                                amount:
+                                  type: integer
+                                  description: Valor do saldo em centavos.
+                                  example: 0
+                                credits:
+                                  type: integer
+                                  description: Total de creditos da posicao de saldo.
+                                  example: 0
+                                debits:
+                                  type: integer
+                                  description: Total de debitos da posicao de saldo.
+                                  example: 0
+                              required:
+                                - amount
+                                - credits
+                                - debits
+                            confirmable:
+                              description: Posição do saldo a ser confirmado.
+                              type: object
+                              properties:
+                                amount:
+                                  type: integer
+                                  description: Valor do saldo em centavos.
+                                  example: 0
+                                credits:
+                                  type: integer
+                                  description: Total de creditos da posicao de saldo.
+                                  example: 0
+                                debits:
+                                  type: integer
+                                  description: Total de debitos da posicao de saldo.
+                                  example: 0
+                              required:
+                                - amount
+                                - credits
+                                - debits
+                            provisioned:
+                              description: Posição do saldo provisionado (lançado e a ser confirmado).
+                              type: object
+                              properties:
+                                amount:
+                                  type: integer
+                                  description: Valor do saldo em centavos.
+                                  example: 0
+                                credits:
+                                  type: integer
+                                  description: Total de creditos da posicao de saldo.
+                                  example: 0
+                                debits:
+                                  type: integer
+                                  description: Total de debitos da posicao de saldo.
+                                  example: 0
+                              required:
+                                - amount
+                                - credits
+                                - debits
+                            available:
+                              description: Posição do saldo disponível.
+                              type: object
+                              properties:
+                                amount:
+                                  type: integer
+                                  description: Valor do saldo em centavos.
+                                  example: 0
+                                credits:
+                                  type: integer
+                                  description: Total de creditos da posicao de saldo.
+                                  example: 0
+                                debits:
+                                  type: integer
+                                  description: Total de debitos da posicao de saldo.
+                                  example: 0
+                              required:
+                                - amount
+                                - credits
+                                - debits
+                            asset_identifier:
+                              description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
+                              type: string
+                              pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                              example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                            created_at:
+                              type: string
+                              description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+                              format: date-time
+                              pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                            updated_at:
+                              type: string
+                              description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+                              format: date-time
+                              pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                          required:
+                            - entity_id
+                            - entity_type
+                            - reference_date
+                            - posted
+                            - confirmable
+                            - provisioned
+                            - available
+                            - asset_identifier
+                            - created_at
+                            - updated_at
                         metadata:
                           type: object
                           description: Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.
@@ -13489,9 +13782,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Accept
           in: header
           description: |
@@ -13540,9 +13833,9 @@ paths:
                     properties:
                       entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       entity_type:
                         type: string
                         enum:
@@ -13552,12 +13845,13 @@ paths:
                         description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                         minLength: 1
                         maxLength: 36
-                        example: ext:123
+                        example: ext:123-456-789-ABCD
                         nullable: true
                       version:
                         type: integer
                         minimum: 0
                         maximum: 128
+                        default: 0
                       name:
                         type: string
                         minLength: 3
@@ -13565,9 +13859,9 @@ paths:
                         description: Nome único do book dentro do ledger.
                       ledger:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       nature:
                         type: string
                         enum:
@@ -13592,6 +13886,141 @@ paths:
                         description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
                         format: date-time
                         pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                      position:
+                        description: Posição de saldo associada ao book quando criado.
+                        type: object
+                        properties:
+                          entity_id:
+                            type: string
+                            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                          entity_type:
+                            type: string
+                            enum:
+                              - POSITION
+                          version:
+                            type: integer
+                            minimum: 0
+                            maximum: 128
+                            default: 0
+                          reference_date:
+                            description: Data de referência da posição de saldo. Quando não informada durante uma transação, será a data de criação da transação.
+                            type: string
+                            format: date-time
+                            pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                          entry_reference:
+                            description: Identificador do último lançamento que atualizou a posição do saldo. É nulo quando a posição do saldo é inicializada.
+                            nullable: true
+                            type: string
+                            pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                          posted:
+                            description: Posição do saldo lançado.
+                            type: object
+                            properties:
+                              amount:
+                                type: integer
+                                description: Valor do saldo em centavos.
+                                example: 0
+                              credits:
+                                type: integer
+                                description: Total de creditos da posicao de saldo.
+                                example: 0
+                              debits:
+                                type: integer
+                                description: Total de debitos da posicao de saldo.
+                                example: 0
+                            required:
+                              - amount
+                              - credits
+                              - debits
+                          confirmable:
+                            description: Posição do saldo a ser confirmado.
+                            type: object
+                            properties:
+                              amount:
+                                type: integer
+                                description: Valor do saldo em centavos.
+                                example: 0
+                              credits:
+                                type: integer
+                                description: Total de creditos da posicao de saldo.
+                                example: 0
+                              debits:
+                                type: integer
+                                description: Total de debitos da posicao de saldo.
+                                example: 0
+                            required:
+                              - amount
+                              - credits
+                              - debits
+                          provisioned:
+                            description: Posição do saldo provisionado (lançado e a ser confirmado).
+                            type: object
+                            properties:
+                              amount:
+                                type: integer
+                                description: Valor do saldo em centavos.
+                                example: 0
+                              credits:
+                                type: integer
+                                description: Total de creditos da posicao de saldo.
+                                example: 0
+                              debits:
+                                type: integer
+                                description: Total de debitos da posicao de saldo.
+                                example: 0
+                            required:
+                              - amount
+                              - credits
+                              - debits
+                          available:
+                            description: Posição do saldo disponível.
+                            type: object
+                            properties:
+                              amount:
+                                type: integer
+                                description: Valor do saldo em centavos.
+                                example: 0
+                              credits:
+                                type: integer
+                                description: Total de creditos da posicao de saldo.
+                                example: 0
+                              debits:
+                                type: integer
+                                description: Total de debitos da posicao de saldo.
+                                example: 0
+                            required:
+                              - amount
+                              - credits
+                              - debits
+                          asset_identifier:
+                            description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
+                            type: string
+                            pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                          created_at:
+                            type: string
+                            description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+                            format: date-time
+                            pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                          updated_at:
+                            type: string
+                            description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+                            format: date-time
+                            pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                        required:
+                          - entity_id
+                          - entity_type
+                          - reference_date
+                          - posted
+                          - confirmable
+                          - provisioned
+                          - available
+                          - asset_identifier
+                          - created_at
+                          - updated_at
                       metadata:
                         type: object
                         description: Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.
@@ -14131,9 +14560,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Idempotency-Key
           in: header
           description: Chave para garantir idempotência da requisição.
@@ -14199,9 +14628,9 @@ paths:
                   description: Código do ativo (aka. moeda) ao qual o book está associado.
                 chapter:
                   type: string
-                  format: uuid
-                  description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                  pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                  description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                  pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                  example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                 metadata:
                   type: object
                   description: Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.
@@ -14305,9 +14734,9 @@ paths:
                     properties:
                       entity_id:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       entity_type:
                         type: string
                         enum:
@@ -14317,12 +14746,13 @@ paths:
                         description: Identificador externo da entidade para interoperabilidade com outros sistemas.
                         minLength: 1
                         maxLength: 36
-                        example: ext:123
+                        example: ext:123-456-789-ABCD
                         nullable: true
                       version:
                         type: integer
                         minimum: 0
                         maximum: 128
+                        default: 0
                       name:
                         type: string
                         minLength: 3
@@ -14330,9 +14760,9 @@ paths:
                         description: Nome único do book dentro do ledger.
                       ledger:
                         type: string
-                        format: uuid
-                        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-                        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
                       nature:
                         type: string
                         enum:
@@ -14357,6 +14787,141 @@ paths:
                         description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
                         format: date-time
                         pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                      position:
+                        description: Posição de saldo associada ao book quando criado.
+                        type: object
+                        properties:
+                          entity_id:
+                            type: string
+                            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                          entity_type:
+                            type: string
+                            enum:
+                              - POSITION
+                          version:
+                            type: integer
+                            minimum: 0
+                            maximum: 128
+                            default: 0
+                          reference_date:
+                            description: Data de referência da posição de saldo. Quando não informada durante uma transação, será a data de criação da transação.
+                            type: string
+                            format: date-time
+                            pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                          entry_reference:
+                            description: Identificador do último lançamento que atualizou a posição do saldo. É nulo quando a posição do saldo é inicializada.
+                            nullable: true
+                            type: string
+                            pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                          posted:
+                            description: Posição do saldo lançado.
+                            type: object
+                            properties:
+                              amount:
+                                type: integer
+                                description: Valor do saldo em centavos.
+                                example: 0
+                              credits:
+                                type: integer
+                                description: Total de creditos da posicao de saldo.
+                                example: 0
+                              debits:
+                                type: integer
+                                description: Total de debitos da posicao de saldo.
+                                example: 0
+                            required:
+                              - amount
+                              - credits
+                              - debits
+                          confirmable:
+                            description: Posição do saldo a ser confirmado.
+                            type: object
+                            properties:
+                              amount:
+                                type: integer
+                                description: Valor do saldo em centavos.
+                                example: 0
+                              credits:
+                                type: integer
+                                description: Total de creditos da posicao de saldo.
+                                example: 0
+                              debits:
+                                type: integer
+                                description: Total de debitos da posicao de saldo.
+                                example: 0
+                            required:
+                              - amount
+                              - credits
+                              - debits
+                          provisioned:
+                            description: Posição do saldo provisionado (lançado e a ser confirmado).
+                            type: object
+                            properties:
+                              amount:
+                                type: integer
+                                description: Valor do saldo em centavos.
+                                example: 0
+                              credits:
+                                type: integer
+                                description: Total de creditos da posicao de saldo.
+                                example: 0
+                              debits:
+                                type: integer
+                                description: Total de debitos da posicao de saldo.
+                                example: 0
+                            required:
+                              - amount
+                              - credits
+                              - debits
+                          available:
+                            description: Posição do saldo disponível.
+                            type: object
+                            properties:
+                              amount:
+                                type: integer
+                                description: Valor do saldo em centavos.
+                                example: 0
+                              credits:
+                                type: integer
+                                description: Total de creditos da posicao de saldo.
+                                example: 0
+                              debits:
+                                type: integer
+                                description: Total de debitos da posicao de saldo.
+                                example: 0
+                            required:
+                              - amount
+                              - credits
+                              - debits
+                          asset_identifier:
+                            description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
+                            type: string
+                            pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+                          created_at:
+                            type: string
+                            description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+                            format: date-time
+                            pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                          updated_at:
+                            type: string
+                            description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+                            format: date-time
+                            pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+                        required:
+                          - entity_id
+                          - entity_type
+                          - reference_date
+                          - posted
+                          - confirmable
+                          - provisioned
+                          - available
+                          - asset_identifier
+                          - created_at
+                          - updated_at
                       metadata:
                         type: object
                         description: Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.
@@ -14831,9 +15396,9 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         - name: Accept
           in: header
           description: |
@@ -15521,9 +16086,9 @@ components:
       properties:
         entity_id:
           type: string
-          format: uuid
-          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         entity_type:
           type: string
           enum:
@@ -15533,12 +16098,13 @@ components:
           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
           minLength: 1
           maxLength: 36
-          example: ext:123
+          example: ext:123-456-789-ABCD
           nullable: true
         version:
           type: integer
           minimum: 0
           maximum: 128
+          default: 0
         name:
           type: string
           description: O nome único e personalizado da ledger. Mínimo de 3 caractere e Máximo de 256 caracteres.
@@ -15580,9 +16146,9 @@ components:
       properties:
         entity_id:
           type: string
-          format: uuid
-          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         entity_type:
           type: string
           enum:
@@ -15592,12 +16158,13 @@ components:
           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
           minLength: 1
           maxLength: 36
-          example: ext:123
+          example: ext:123-456-789-ABCD
           nullable: true
         version:
           type: integer
           minimum: 0
           maximum: 128
+          default: 0
         name:
           type: string
         description:
@@ -15605,9 +16172,9 @@ components:
           nullable: true
         ledger_entity_id:
           type: string
-          format: uuid
-          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         created_at:
           nullable: false
           type: string
@@ -15639,9 +16206,9 @@ components:
       properties:
         entity_id:
           type: string
-          format: uuid
-          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         entity_type:
           type: string
           enum:
@@ -15651,12 +16218,13 @@ components:
           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
           minLength: 1
           maxLength: 36
-          example: ext:123
+          example: ext:123-456-789-ABCD
           nullable: true
         version:
           type: integer
           minimum: 0
           maximum: 128
+          default: 0
         code:
           type: string
           minLength: 3
@@ -15681,9 +16249,9 @@ components:
             Lista de identificadores únicos das ledgers associadas ao asset.
           items:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         created_at:
           nullable: false
           type: string
@@ -15716,14 +16284,14 @@ components:
       properties:
         ledger_entity_id:
           type: string
-          format: uuid
-          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         asset_entity_id:
           type: string
-          format: uuid
-          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         code:
           type: string
           description: Código do asset vinculado.
@@ -15803,18 +16371,28 @@ components:
       type: integer
       minimum: 0
       maximum: 128
+      default: 0
     EntityID:
       type: string
-      format: uuid
-      description: Identificador único universal no formato UUIDv7 (RFC 9562).
-      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+      pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+      example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
     ExternalEntityID:
       type: string
       description: Identificador externo da entidade para interoperabilidade com outros sistemas.
       minLength: 1
       maxLength: 36
-      example: ext:123
+      example: ext:123-456-789-ABCD
       nullable: true
+    EntityIdentifier:
+      type: string
+      description: |
+        Identificador da entidade que aceita tanto `entity_id` quanto `external_entity_id`.
+
+        - **entity_id**: Formato `{entity_type}:{uuid_v7}` (ex: `ledger:018f74a6-e3b2-70cc-bf24-8a4b012f5f3e`)
+        - **external_entity_id**: Formato `ext:{valor}` (ex: `ext:123-456-789-ABCD`)
+      pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+      example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
     ErrorsResponse:
       type: object
       properties:
@@ -15909,9 +16487,9 @@ components:
         properties:
           entity_id:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
           entity_type:
             type: string
             enum:
@@ -15921,12 +16499,13 @@ components:
             description: Identificador externo da entidade para interoperabilidade com outros sistemas.
             minLength: 1
             maxLength: 36
-            example: ext:123
+            example: ext:123-456-789-ABCD
             nullable: true
           version:
             type: integer
             minimum: 0
             maximum: 128
+            default: 0
           name:
             type: string
             description: O nome único e personalizado da ledger. Mínimo de 3 caractere e Máximo de 256 caracteres.
@@ -15970,9 +16549,9 @@ components:
         properties:
           entity_id:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
           entity_type:
             type: string
             enum:
@@ -15982,12 +16561,13 @@ components:
             description: Identificador externo da entidade para interoperabilidade com outros sistemas.
             minLength: 1
             maxLength: 36
-            example: ext:123
+            example: ext:123-456-789-ABCD
             nullable: true
           version:
             type: integer
             minimum: 0
             maximum: 128
+            default: 0
           name:
             type: string
           description:
@@ -15995,9 +16575,9 @@ components:
             nullable: true
           ledger_entity_id:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
           created_at:
             nullable: false
             type: string
@@ -16031,9 +16611,9 @@ components:
         properties:
           entity_id:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
           entity_type:
             type: string
             enum:
@@ -16043,12 +16623,13 @@ components:
             description: Identificador externo da entidade para interoperabilidade com outros sistemas.
             minLength: 1
             maxLength: 36
-            example: ext:123
+            example: ext:123-456-789-ABCD
             nullable: true
           version:
             type: integer
             minimum: 0
             maximum: 128
+            default: 0
           code:
             type: string
             minLength: 3
@@ -16073,9 +16654,9 @@ components:
               Lista de identificadores únicos das ledgers associadas ao asset.
             items:
               type: string
-              format: uuid
-              description: Identificador único universal no formato UUIDv7 (RFC 9562).
-              pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+              description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+              pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+              example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
           created_at:
             nullable: false
             type: string
@@ -16109,9 +16690,9 @@ components:
         properties:
           entity_id:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
           entity_type:
             type: string
             enum:
@@ -16121,12 +16702,13 @@ components:
             description: Identificador externo da entidade para interoperabilidade com outros sistemas.
             minLength: 1
             maxLength: 36
-            example: ext:123
+            example: ext:123-456-789-ABCD
             nullable: true
           version:
             type: integer
             minimum: 0
             maximum: 128
+            default: 0
           name:
             type: string
             minLength: 3
@@ -16134,9 +16716,9 @@ components:
             description: Nome único do book dentro do ledger.
           ledger:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
           nature:
             type: string
             enum:
@@ -16161,6 +16743,141 @@ components:
             description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
             format: date-time
             pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+          position:
+            description: Posição de saldo associada ao book quando criado.
+            type: object
+            properties:
+              entity_id:
+                type: string
+                description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+                pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+                example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+              entity_type:
+                type: string
+                enum:
+                  - POSITION
+              version:
+                type: integer
+                minimum: 0
+                maximum: 128
+                default: 0
+              reference_date:
+                description: Data de referência da posição de saldo. Quando não informada durante uma transação, será a data de criação da transação.
+                type: string
+                format: date-time
+                pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+              entry_reference:
+                description: Identificador do último lançamento que atualizou a posição do saldo. É nulo quando a posição do saldo é inicializada.
+                nullable: true
+                type: string
+                pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+              posted:
+                description: Posição do saldo lançado.
+                type: object
+                properties:
+                  amount:
+                    type: integer
+                    description: Valor do saldo em centavos.
+                    example: 0
+                  credits:
+                    type: integer
+                    description: Total de creditos da posicao de saldo.
+                    example: 0
+                  debits:
+                    type: integer
+                    description: Total de debitos da posicao de saldo.
+                    example: 0
+                required:
+                  - amount
+                  - credits
+                  - debits
+              confirmable:
+                description: Posição do saldo a ser confirmado.
+                type: object
+                properties:
+                  amount:
+                    type: integer
+                    description: Valor do saldo em centavos.
+                    example: 0
+                  credits:
+                    type: integer
+                    description: Total de creditos da posicao de saldo.
+                    example: 0
+                  debits:
+                    type: integer
+                    description: Total de debitos da posicao de saldo.
+                    example: 0
+                required:
+                  - amount
+                  - credits
+                  - debits
+              provisioned:
+                description: Posição do saldo provisionado (lançado e a ser confirmado).
+                type: object
+                properties:
+                  amount:
+                    type: integer
+                    description: Valor do saldo em centavos.
+                    example: 0
+                  credits:
+                    type: integer
+                    description: Total de creditos da posicao de saldo.
+                    example: 0
+                  debits:
+                    type: integer
+                    description: Total de debitos da posicao de saldo.
+                    example: 0
+                required:
+                  - amount
+                  - credits
+                  - debits
+              available:
+                description: Posição do saldo disponível.
+                type: object
+                properties:
+                  amount:
+                    type: integer
+                    description: Valor do saldo em centavos.
+                    example: 0
+                  credits:
+                    type: integer
+                    description: Total de creditos da posicao de saldo.
+                    example: 0
+                  debits:
+                    type: integer
+                    description: Total de debitos da posicao de saldo.
+                    example: 0
+                required:
+                  - amount
+                  - credits
+                  - debits
+              asset_identifier:
+                description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
+                type: string
+                pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+                example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+              created_at:
+                type: string
+                description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+                format: date-time
+                pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+              updated_at:
+                type: string
+                description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+                format: date-time
+                pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+            required:
+              - entity_id
+              - entity_type
+              - reference_date
+              - posted
+              - confirmable
+              - provisioned
+              - available
+              - asset_identifier
+              - created_at
+              - updated_at
           metadata:
             type: object
             description: Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.
@@ -16173,9 +16890,9 @@ components:
       type: array
       items:
         type: string
-        format: uuid
-        description: Identificador único universal no formato UUIDv7 (RFC 9562).
-        pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+        description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+        pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+        example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
     LedgerCreateRequest:
       type: object
       properties:
@@ -16184,7 +16901,7 @@ components:
           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
           minLength: 1
           maxLength: 36
-          example: ext:123
+          example: ext:123-456-789-ABCD
           nullable: true
         name:
           type: string
@@ -16232,7 +16949,7 @@ components:
           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
           minLength: 1
           maxLength: 36
-          example: ext:123
+          example: ext:123-456-789-ABCD
           nullable: true
         name:
           type: string
@@ -16275,7 +16992,7 @@ components:
           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
           minLength: 1
           maxLength: 36
-          example: ext:123
+          example: ext:123-456-789-ABCD
           nullable: true
         code:
           type: string
@@ -16293,9 +17010,9 @@ components:
           type: array
           items:
             type: string
-            format: uuid
-            description: Identificador único universal no formato UUIDv7 (RFC 9562).
-            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+            pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+            example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
       required:
         - external_entity_id
         - code
@@ -16332,9 +17049,9 @@ components:
       properties:
         entity_id:
           type: string
-          format: uuid
-          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         entity_type:
           type: string
           enum:
@@ -16344,12 +17061,13 @@ components:
           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
           minLength: 1
           maxLength: 36
-          example: ext:123
+          example: ext:123-456-789-ABCD
           nullable: true
         version:
           type: integer
           minimum: 0
           maximum: 128
+          default: 0
         name:
           type: string
           minLength: 3
@@ -16357,9 +17075,9 @@ components:
           description: Nome único do book dentro do ledger.
         ledger:
           type: string
-          format: uuid
-          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         nature:
           type: string
           enum:
@@ -16384,6 +17102,141 @@ components:
           description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
           format: date-time
           pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+        position:
+          description: Posição de saldo associada ao book quando criado.
+          type: object
+          properties:
+            entity_id:
+              type: string
+              description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+              pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+              example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+            entity_type:
+              type: string
+              enum:
+                - POSITION
+            version:
+              type: integer
+              minimum: 0
+              maximum: 128
+              default: 0
+            reference_date:
+              description: Data de referência da posição de saldo. Quando não informada durante uma transação, será a data de criação da transação.
+              type: string
+              format: date-time
+              pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+            entry_reference:
+              description: Identificador do último lançamento que atualizou a posição do saldo. É nulo quando a posição do saldo é inicializada.
+              nullable: true
+              type: string
+              pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+              example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+            posted:
+              description: Posição do saldo lançado.
+              type: object
+              properties:
+                amount:
+                  type: integer
+                  description: Valor do saldo em centavos.
+                  example: 0
+                credits:
+                  type: integer
+                  description: Total de creditos da posicao de saldo.
+                  example: 0
+                debits:
+                  type: integer
+                  description: Total de debitos da posicao de saldo.
+                  example: 0
+              required:
+                - amount
+                - credits
+                - debits
+            confirmable:
+              description: Posição do saldo a ser confirmado.
+              type: object
+              properties:
+                amount:
+                  type: integer
+                  description: Valor do saldo em centavos.
+                  example: 0
+                credits:
+                  type: integer
+                  description: Total de creditos da posicao de saldo.
+                  example: 0
+                debits:
+                  type: integer
+                  description: Total de debitos da posicao de saldo.
+                  example: 0
+              required:
+                - amount
+                - credits
+                - debits
+            provisioned:
+              description: Posição do saldo provisionado (lançado e a ser confirmado).
+              type: object
+              properties:
+                amount:
+                  type: integer
+                  description: Valor do saldo em centavos.
+                  example: 0
+                credits:
+                  type: integer
+                  description: Total de creditos da posicao de saldo.
+                  example: 0
+                debits:
+                  type: integer
+                  description: Total de debitos da posicao de saldo.
+                  example: 0
+              required:
+                - amount
+                - credits
+                - debits
+            available:
+              description: Posição do saldo disponível.
+              type: object
+              properties:
+                amount:
+                  type: integer
+                  description: Valor do saldo em centavos.
+                  example: 0
+                credits:
+                  type: integer
+                  description: Total de creditos da posicao de saldo.
+                  example: 0
+                debits:
+                  type: integer
+                  description: Total de debitos da posicao de saldo.
+                  example: 0
+              required:
+                - amount
+                - credits
+                - debits
+            asset_identifier:
+              description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
+              type: string
+              pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+              example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+            created_at:
+              type: string
+              description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+              format: date-time
+              pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+            updated_at:
+              type: string
+              description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+              format: date-time
+              pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+          required:
+            - entity_id
+            - entity_type
+            - reference_date
+            - posted
+            - confirmable
+            - provisioned
+            - available
+            - asset_identifier
+            - created_at
+            - updated_at
         metadata:
           type: object
           description: Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.
@@ -16392,6 +17245,163 @@ components:
           maxProperties: 10
           example:
             foo: bar
+    Balance:
+      type: object
+      description: Representa um saldo financeiro em uma position.
+      properties:
+        amount:
+          type: integer
+          description: Valor do saldo em centavos.
+          example: 0
+        credits:
+          type: integer
+          description: Total de creditos da posicao de saldo.
+          example: 0
+        debits:
+          type: integer
+          description: Total de debitos da posicao de saldo.
+          example: 0
+      required:
+        - amount
+        - credits
+        - debits
+    Position:
+      type: object
+      description: |
+        Representa a posição de saldo de um **book** dentro do **ledger**.
+        Inicializada automaticamente com valor zero quando um book é criado.
+      properties:
+        entity_id:
+          type: string
+          description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+          pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+        entity_type:
+          type: string
+          enum:
+            - POSITION
+        version:
+          type: integer
+          minimum: 0
+          maximum: 128
+          default: 0
+        reference_date:
+          description: Data de referência da posição de saldo. Quando não informada durante uma transação, será a data de criação da transação.
+          type: string
+          format: date-time
+          pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+        entry_reference:
+          description: Identificador do último lançamento que atualizou a posição do saldo. É nulo quando a posição do saldo é inicializada.
+          nullable: true
+          type: string
+          pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+        posted:
+          description: Posição do saldo lançado.
+          type: object
+          properties:
+            amount:
+              type: integer
+              description: Valor do saldo em centavos.
+              example: 0
+            credits:
+              type: integer
+              description: Total de creditos da posicao de saldo.
+              example: 0
+            debits:
+              type: integer
+              description: Total de debitos da posicao de saldo.
+              example: 0
+          required:
+            - amount
+            - credits
+            - debits
+        confirmable:
+          description: Posição do saldo a ser confirmado.
+          type: object
+          properties:
+            amount:
+              type: integer
+              description: Valor do saldo em centavos.
+              example: 0
+            credits:
+              type: integer
+              description: Total de creditos da posicao de saldo.
+              example: 0
+            debits:
+              type: integer
+              description: Total de debitos da posicao de saldo.
+              example: 0
+          required:
+            - amount
+            - credits
+            - debits
+        provisioned:
+          description: Posição do saldo provisionado (lançado e a ser confirmado).
+          type: object
+          properties:
+            amount:
+              type: integer
+              description: Valor do saldo em centavos.
+              example: 0
+            credits:
+              type: integer
+              description: Total de creditos da posicao de saldo.
+              example: 0
+            debits:
+              type: integer
+              description: Total de debitos da posicao de saldo.
+              example: 0
+          required:
+            - amount
+            - credits
+            - debits
+        available:
+          description: Posição do saldo disponível.
+          type: object
+          properties:
+            amount:
+              type: integer
+              description: Valor do saldo em centavos.
+              example: 0
+            credits:
+              type: integer
+              description: Total de creditos da posicao de saldo.
+              example: 0
+            debits:
+              type: integer
+              description: Total de debitos da posicao de saldo.
+              example: 0
+          required:
+            - amount
+            - credits
+            - debits
+        asset_identifier:
+          description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
+          type: string
+          pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+        created_at:
+          type: string
+          description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+          format: date-time
+          pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+        updated_at:
+          type: string
+          description: Data e hora no formato no formato ISO 8601 / RFC 3339 (UTC).
+          format: date-time
+          pattern: ^(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):?(?<minute>[0-5][0-9]):?(?<second>[0-5][0-9])(?:\.(?<fraction>[0-9]{1,9}))?Z$
+      required:
+        - entity_id
+        - entity_type
+        - reference_date
+        - posted
+        - confirmable
+        - provisioned
+        - available
+        - asset_identifier
+        - created_at
+        - updated_at
     BookCreateRequest:
       type: object
       properties:
@@ -16400,28 +17410,27 @@ components:
           description: Identificador externo da entidade para interoperabilidade com outros sistemas.
           minLength: 1
           maxLength: 36
-          example: ext:123
+          example: ext:123-456-789-ABCD
           nullable: true
         name:
           type: string
           minLength: 3
           maxLength: 128
-        ledger_entity_id:
-          type: string
-          format: uuid
-          description: Identificador único universal no formato UUIDv7 (RFC 9562).
-          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
         nature:
           type: string
           enum:
             - CREDITOR
             - DEBITOR
-        asset:
+        ledger_identifier:
+          description: Identificador único `entity_id` do **ledger** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
           type: string
-          description: Código do ativo (aka. moeda) ao qual o book esta associado.
-          minLength: 3
-          maxLength: 3
-          example: USD
+          pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
+        asset_identifier:
+          description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
+          type: string
+          pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+          example: "{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"
         metadata:
           type: object
           description: Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.
@@ -16433,9 +17442,9 @@ components:
       required:
         - external_entity_id
         - name
-        - ledger_entity_id
         - nature
-        - asset
+        - ledger_identifier
+        - asset_identifier
   responses:
     Error400:
       description: Requisição inválida.

@@ -6,7 +6,7 @@ sidebar_label: "ListOfEntityIDs"
 hide_title: true
 hide_table_of_contents: true
 schema: true
-sample: ["3fa85f64-5717-4562-b3fc-2c963f66afa6"]
+sample: ["{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"]
 custom_edit_url: null
 ---
 
@@ -31,7 +31,7 @@ import Heading from "@theme/Heading";
 
 
 <Schema
-  schema={{"type":"array","items":{"type":"string","format":"uuid","description":"Identificador único universal no formato UUIDv7 (RFC 9562).","pattern":"^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$","title":"UUIDv7"},"title":"ListOfEntityIDs"}}
+  schema={{"type":"array","items":{"type":"string","description":"Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.","pattern":"^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$","example":"{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e","title":"EntityID"},"title":"ListOfEntityIDs"}}
   schemaType={"response"}
 >
   
