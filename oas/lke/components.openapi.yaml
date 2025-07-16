@@ -165,10 +165,10 @@ components:
       in: query
       description: |
         Uma lista de IDs de entidades no formato UUIDv7 separados por vírgulas. Ex.:
-        `entity_ids={entity_id},{entity_id},{entity_id}`. Espaços em branco
+        `entity_ids={entity_type:entity_id},{entity_type:entity_id},{entity_type:entity_id}`. Espaços em branco
         entre as vírgulas serão ignorados.
       required: false
-      example: 018f74a6e3b270ccbf248a4b012f5f3e,018f74a6e3b270ccbf248a4b012f5f3f,018f74a6e3b270ccbf248a4b012f5f40
+      example: '{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e,{entity_type}:018f74a6e3b270ccbf248a4b012f5f3f,{entity_type}:018f74a6e3b270ccbf248a4b012f5f40'
       schema:
         type: string
         pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12},)*[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
@@ -178,10 +178,10 @@ components:
       in: query
       description: |
         Uma lista de IDs externos de entidades separados por vírgulas. Ex.:
-        `external_entity_ids=ext:{external_entity_id},ext:{external_entity_id},ext:{external_entity_id}`. Espaços em branco
+        `external_entity_ids={ext:external_entity_id},{ext:external_entity_id},{ext:external_entity_id}`. Espaços em branco
         entre as vírgulas serão ignorados.
       required: false
-      example: ext:123,ext:456,ext:789
+      example: ext:123-456-789-ABCD,ext:456-789-ABCD-EFGH,ext:789-ABCD-EFGH-IJKL
       schema:
         type: string
 
@@ -219,26 +219,38 @@ components:
       schema:
         type: string
 
+    ListOfLedgerIds:
+      name: entity_ids
+      in: query
+      description: |
+        Uma lista de identificadores `entity_id` de ledgers separados por vírgulas. Ex.:
+        `entity_ids={ledger:entity_id},{ledger:entity_id},{ledger:entity_id}`. Espaços em branco
+        entre as vírgulas serão ignorados.
+      required: false
+      schema:
+        $ref: '#/components/schemas/EntityID'
+
     ListOfAssetIds:
       name: entity_ids
       in: query
       description: |
-        Uma lista de identificadores de assets separados por vírgulas. Ex.:
-        `entity_ids={asset_identifier},{asset_identifier},{asset_identifier}`. Espaços em branco
+        Uma lista de identificadores `entity_id` de assets separados por vírgulas. Ex.:
+        `entity_ids={asset:entity_id},{asset:entity_id},{asset:entity_id}`. Espaços em branco
         entre as vírgulas serão ignorados.
       required: false
       schema:
         $ref: '#/components/schemas/EntityID'
 
     ListOfChapterIds:
-      name: chapter_ids
+      name: entity_ids
       in: query
       description: |
-        Uma lista de IDs de chapters no formato UUIDv7 separados por vírgulas. Exemplo: 'id1,id2,id3'.
+        Uma lista de identificadores `entity_id` de chapters separados por vírgulas. Ex.:
+        `entity_ids={chapter:entity_id},{chapter:entity_id},{chapter:entity_id}`. Espaços em branco
+        entre as vírgulas serão ignorados.
       required: false
-      example: '018f74a6e3b270ccbf248a4b012f5f3e,018f74a6e3b270ccbf248a4b012f5f3f'
       schema:
-        type: string
+        $ref: '#/components/schemas/EntityID'
 
   headers:
     X-Grd-Trace-Id:
@@ -567,17 +579,31 @@ components:
       type: integer
       minimum: 0
       maximum: 128
+      default: 0
 
     EntityID:
-      $ref: '#/components/schemas/UUIDv7'
+      type: string
+      description: Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.
+      pattern: ^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$
+      example: '{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e'
 
     ExternalEntityID:
       type: string
       description: Identificador externo da entidade para interoperabilidade com outros sistemas.
       minLength: 1
       maxLength: 36
-      example: 'ext:123'
+      example: 'ext:123-456-789-ABCD'
       nullable: true
+
+    EntityIdentifier:
+      type: string
+      description: |
+        Identificador da entidade que aceita tanto `entity_id` quanto `external_entity_id`.
+
+        - **entity_id**: Formato `{entity_type}:{uuid_v7}` (ex: `ledger:018f74a6-e3b2-70cc-bf24-8a4b012f5f3e`)
+        - **external_entity_id**: Formato `ext:{valor}` (ex: `ext:123-456-789-ABCD`)
+      pattern: ^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$
+      example: '{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e'
 
     ErrorsResponse:
       type: object
@@ -823,25 +849,23 @@ components:
           type: string
           minLength: 3
           maxLength: 128
-        ledger_entity_id:
-          $ref: '#/components/schemas/EntityID'
         nature:
           type: string
           enum: [CREDITOR, DEBITOR]
-        asset:
-          type: string
-          description: Código do ativo (aka. moeda) ao qual o book esta associado.
-          minLength: 3
-          maxLength: 3
-          example: 'USD'
+        ledger_identifier:
+          $ref: '#/components/schemas/EntityIdentifier'
+          description: "Identificador único `entity_id` do **ledger** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`."
+        asset_identifier:
+          $ref: '#/components/schemas/EntityIdentifier'
+          description: "Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`."
         metadata:
           $ref: '#/components/schemas/Metadata'
       required:
         - external_entity_id
         - name
-        - ledger_entity_id
         - nature
-        - asset
+        - ledger_identifier
+        - asset_identifier
 
   responses:
     Error400:

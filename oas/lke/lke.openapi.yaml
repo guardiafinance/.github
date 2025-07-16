@@ -125,7 +125,7 @@ paths:
       tags:
         - Ledgers
       parameters:
-        - $ref: './components.openapi.yaml#/components/parameters/ListOfEntityIds'
+        - $ref: './components.openapi.yaml#/components/parameters/ListOfLedgerIds'
         - $ref: './components.openapi.yaml#/components/parameters/ListOfExternalEntityIds'
         - $ref: './components.openapi.yaml#/components/parameters/MetadataFilter'
         - $ref: './components.openapi.yaml#/components/parameters/IncludeDiscarded'
@@ -430,12 +430,12 @@ paths:
                 - identifier
               properties:
                 identifier:
-                  type: string
+                  $ref: './components.openapi.yaml#/components/schemas/EntityIdentifier'
                   description: "Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`."
                 exponent:
                   type: number
                   description: |
-                    Expoente do asset vinculado.
+                    Expoente do **asset** vinculado.
                     :::note
                     Caso informado o expoente, ele irá sobrescrever, **apenas neste ledger**, o expoente padrão do asset vinculado.
                     :::
@@ -728,7 +728,7 @@ paths:
       tags:
         - Chapters
       parameters:
-        - $ref: './components.openapi.yaml#/components/parameters/ListOfEntityIds'
+        - $ref: './components.openapi.yaml#/components/parameters/ListOfChapterIds'
         - $ref: './components.openapi.yaml#/components/parameters/ListOfExternalEntityIds'
         - $ref: './components.openapi.yaml#/components/parameters/MetadataFilter'
         - $ref: './components.openapi.yaml#/components/parameters/IncludeDiscarded'
@@ -1144,7 +1144,7 @@ paths:
       tags:
         - Assets
       parameters:
-        - $ref: './components.openapi.yaml#/components/parameters/ListOfEntityIds'
+        - $ref: './components.openapi.yaml#/components/parameters/ListOfAssetIds'
         - $ref: './components.openapi.yaml#/components/parameters/ListOfExternalEntityIds'
         - $ref: './components.openapi.yaml#/components/parameters/AssetCodes'
         - $ref: './components.openapi.yaml#/components/parameters/AssetNumbers'
