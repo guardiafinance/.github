@@ -837,8 +837,83 @@ components:
         discarded_at:
           $ref: '#/components/schemas/DateTime'
           nullable: true
+        position:
+          $ref: '#/components/schemas/Position'
+          description: Posição de saldo associada ao book quando criado.
         metadata:
           $ref: '#/components/schemas/Metadata'
+
+    Balance:
+      type: object
+      description: Representa um saldo financeiro em uma position.
+      properties:
+        amount:
+          type: integer
+          description: Valor do saldo em centavos.
+          example: 0
+        credits:
+          type: integer
+          description: Total de creditos da posicao de saldo.
+          example: 0
+        debits:
+          type: integer
+          description: Total de debitos da posicao de saldo.
+          example: 0
+      required:
+        - amount
+        - credits
+        - debits
+
+    Position:
+      type: object
+      description: |
+        Representa a posição de saldo de um **book** dentro do **ledger**.
+        Inicializada automaticamente com valor zero quando um book é criado.
+      properties:
+        entity_id:
+          $ref: '#/components/schemas/EntityID'
+        entity_type:
+          type: string
+          enum: [POSITION]
+        version:
+          $ref: '#/components/schemas/Version'
+        reference_date:
+          $ref: '#/components/schemas/DateTime'
+          description: Data de referência da posição de saldo. Quando não informada durante uma transação, será a data de criação da transação.
+        entry_reference:
+          $ref: '#/components/schemas/EntityIdentifier'
+          description: Identificador do último lançamento que atualizou a posição do saldo. É nulo quando a posição do saldo é inicializada.
+          nullable: true
+        posted:
+          $ref: '#/components/schemas/Balance'
+          description: Posição do saldo lançado.
+        confirmable:
+          $ref: '#/components/schemas/Balance'
+          description: Posição do saldo a ser confirmado.
+        provisioned:
+          $ref: '#/components/schemas/Balance'
+          description: Posição do saldo provisionado (lançado e a ser confirmado).
+        available:
+          $ref: '#/components/schemas/Balance'
+          description: Posição do saldo disponível.
+        asset_identifier:
+          $ref: '#/components/schemas/EntityIdentifier'
+          description: "Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`."
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          $ref: '#/components/schemas/DateTime'
+      required:
+        - entity_id
+        - entity_type
+        - reference_date
+        - posted
+        - confirmable
+        - provisioned
+        - available
+        - asset_identifier
+        - created_at
+        - updated_at
 
     BookCreateRequest:
       type: object
