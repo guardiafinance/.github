@@ -18,7 +18,7 @@
     "oas:bundle": "node oas/bundle-oas.js"
   },
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "14.1.0",
+    "@apidevtools/json-schema-ref-parser": "14.1.1",
     "@docusaurus/core": "3.8.1",
     "@docusaurus/plugin-content-docs": "3.8.1",
     "@docusaurus/plugin-ideal-image": "3.8.1",
