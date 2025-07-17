@@ -1802,6 +1802,8 @@ paths:
       x-apidog-maintainer: Fernando Seguim
 
 components:
+  parameters:
+    $ref: './components.openapi.yaml#/components/parameters'
   headers:
     $ref: './components.openapi.yaml#/components/headers'
   schemas:

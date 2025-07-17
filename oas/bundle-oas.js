@@ -1,12 +1,17 @@
 const path = require('path');
 const fs = require('fs');
 const YAML = require('yaml');
-const $RefParser = require('@apidevtools/json-schema-ref-parser');
 
 async function bundleOAS() {
+  // Change working directory to project root first
+  const originalCwd = process.cwd();
+
   try {
-    const inputPath = path.resolve(__dirname, '../oas/lke/lke.openapi.yaml');
-    const outputDir = path.resolve(__dirname, '../docs/api/lke');
+    process.chdir(path.resolve(__dirname, '..'));
+
+    const inputPath = './oas/lke/lke.openapi.yaml';
+    const componentsPath = './oas/lke/components.openapi.yaml';
+    const outputDir = './docs/api/lke';
     const outputPath = path.join(outputDir, 'lke.openapi.yaml');
     const readmePath = path.join(outputDir, 'IMPORTANT.md');
 
@@ -15,17 +20,40 @@ async function bundleOAS() {
     console.log('Starting OpenAPI bundle process...');
     console.log('Input file:', inputPath);
 
-    const oas = await $RefParser.dereference(inputPath, {
-      continueOnError: false,
-      dereference: {
-        circular: false,
-        excludedPathMatcher: () => false
+    // Read and parse main OpenAPI file
+    const mainContent = fs.readFileSync(inputPath, 'utf8');
+    const mainOAS = YAML.parse(mainContent);
+
+    // Read and parse components file
+    let componentsOAS = {};
+    if (fs.existsSync(componentsPath)) {
+      const componentsContent = fs.readFileSync(componentsPath, 'utf8');
+      componentsOAS = YAML.parse(componentsContent);
+      console.log('Components file loaded successfully');
+    }
+
+    // Merge components into main OAS
+    if (componentsOAS.components) {
+      if (!mainOAS.components) {
+        mainOAS.components = {};
       }
-    });
 
-    console.log('References resolved successfully!');
+      // Merge each component section
+      Object.keys(componentsOAS.components).forEach(componentType => {
+        if (!mainOAS.components[componentType]) {
+          mainOAS.components[componentType] = {};
+        }
+        Object.assign(mainOAS.components[componentType], componentsOAS.components[componentType]);
+      });
 
-    const cleanedOAS = cleanMalformedRefs(oas);
+      console.log('Components merged successfully');
+    }
+
+    // Replace external references with internal ones
+    const bundledOAS = replaceExternalReferences(mainOAS);
+
+    // Clean up any malformed refs
+    const cleanedOAS = cleanMalformedRefs(bundledOAS);
 
     const yamlContent = YAML.stringify(cleanedOAS, {
       indent: 2,
@@ -69,11 +97,42 @@ To modify the documentation or OpenAPI specification, edit the appropriate sourc
     validateResult(cleanedOAS);
     console.log('Bundle validated successfully!');
 
+    // Restore original working directory
+    process.chdir(originalCwd);
+
   } catch (error) {
+    // Restore original working directory in case of error
+    process.chdir(originalCwd);
     console.error('Error creating OAS bundle:', error);
     console.error('Stack:', error.stack);
     process.exit(1);
   }
+}
+
+function replaceExternalReferences(obj) {
+  if (typeof obj !== 'object' || obj === null) {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(item => replaceExternalReferences(item));
+  }
+
+  const replaced = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (key === '$ref' && typeof value === 'string') {
+      // Replace external component references with internal ones
+      if (value.startsWith('./components.openapi.yaml#/components/')) {
+        replaced[key] = value.replace('./components.openapi.yaml#/components/', '#/components/');
+      } else {
+        replaced[key] = value;
+      }
+    } else {
+      replaced[key] = replaceExternalReferences(value);
+    }
+  }
+
+  return replaced;
 }
 
 function cleanMalformedRefs(obj) {
@@ -121,7 +180,11 @@ function validateResult(oas) {
   }
 
   const pathCount = Object.keys(oas.paths).length;
-  console.log(`Validation: ${pathCount} endpoints processed`);
+  const componentCount = oas.components ? Object.keys(oas.components).reduce((acc, type) => {
+    return acc + (oas.components[type] ? Object.keys(oas.components[type]).length : 0);
+  }, 0) : 0;
+
+  console.log(`Validation: ${pathCount} endpoints processed, ${componentCount} components included`);
 }
 
 bundleOAS().catch((err) => {
