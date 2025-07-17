@@ -821,7 +821,7 @@ components:
           minLength: 3
           maxLength: 128
           description: Nome único do book dentro do ledger.
-        ledger:
+        ledger_entity_id:
           $ref: '#/components/schemas/EntityID'
           description: UUIDv7 do ledger ao qual o book pertence.
         nature:
