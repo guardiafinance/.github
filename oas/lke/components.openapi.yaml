@@ -896,9 +896,9 @@ components:
         available:
           $ref: '#/components/schemas/Balance'
           description: Posição do saldo disponível.
-        asset_identifier:
-          $ref: '#/components/schemas/EntityIdentifier'
-          description: "Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`."
+        asset_entity_id:
+          $ref: '#/components/schemas/EntityID'
+          description: "Identificador único `entity_id` do **asset** no formato UUIDv7."
         created_at:
           $ref: '#/components/schemas/DateTime'
         updated_at:
@@ -911,7 +911,7 @@ components:
         - confirmable
         - provisioned
         - available
-        - asset_identifier
+        - asset_entity_id
         - created_at
         - updated_at
 
