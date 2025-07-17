@@ -55,7 +55,7 @@ classDef special fill:#f8f9fa,stroke:#dee2e6,stroke-width:2px,color:#212529;
         +DateTime reference_date "Fecha de la transacción. Si no se proporciona, será la fecha de inserción en la base de datos."
         +Balance posted "Posición del saldo registrado."
         +Balance confirmable "Posición del saldo a confirmar."
-        +Balance provisioned "Posición del saldo provisionado (registrado y a confirmar)."
+        +Balance provisioned "Posición del saldo provisionado, o sea, registrado y a confirmar."
         +Balance available "Posición del saldo disponible."
         +DateTime created_at "Fecha de inserción en la base de datos."
         +DateTime updated_at "Fecha de la última actualización en la base de datos."

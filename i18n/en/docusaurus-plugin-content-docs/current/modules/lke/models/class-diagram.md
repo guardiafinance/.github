@@ -55,7 +55,7 @@ classDef special fill:#f8f9fa,stroke:#dee2e6,stroke-width:2px,color:#212529;
         +DateTime reference_date "Transaction date. If not provided, it will be the date of insertion into the database."
         +Balance posted "Posted balance position."
         +Balance confirmable "Balance position to be confirmed."
-        +Balance provisioned "Provisioned balance position (posted and to be confirmed)."
+        +Balance provisioned "Provisioned balance position, that is, posted and to be confirmed."
         +Balance available "Available balance position."
         +DateTime created_at "Date of insertion into the database."
         +DateTime updated_at "Date of last update in the database."
