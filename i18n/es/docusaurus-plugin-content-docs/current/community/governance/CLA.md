@@ -106,7 +106,7 @@ El **Contribuidor** reconoce que realiza sus **Contribuciones** de forma volunta
 
 La firma de este **CLA** no establece cualquier relación de empleo, sociedad, representación, sociedad o mandato entre el **Contribuidor** y **Guardia**. Este acuerdo no crea cualquier obligación de prestación de servicios continuados, tampoco derechos laborales, previsionales o fiscales de cualquier naturaleza.
 
-Sin perjuicio de lo dispuesto arriba, el **Contribuidor** podrá referenciar públicamente su participación en el proyecto en currículos, portafolios y perfiles profesionales o en redes sociales, utilizando la designación: **"OSS Contributor | Guardia ({Nombre del Proyecto o Módulo})"**, en formato de badge o texto, a su criterio. Tal reconocimiento es opcional y no implica vínculo formal con **Guardia**. **Guardia** se reserva el derecho de solicitar ajustes en el uso de esa designación en caso de que ella represente de forma equivocada la relación entre las partes, viole reglas de uso de marca o cause confusión en cuanto a papeles oficiales.
+Sin perjuicio de lo dispuesto arriba, el **Contribuidor** podrá referenciar públicamente su participación en el proyecto en currículos, portafolios y perfiles profesionales o en redes sociales, utilizando la designación: **"OSS Contributor | Guardia (\{Nombre del Proyecto o Módulo\})"**, en formato de badge o texto, a su criterio. Tal reconocimiento es opcional y no implica vínculo formal con **Guardia**. **Guardia** se reserva el derecho de solicitar ajustes en el uso de esa designación en caso de que ella represente de forma equivocada la relación entre las partes, viole reglas de uso de marca o cause confusión en cuanto a papeles oficiales.
 
 ## 11. Sin Obligación de Uso
 

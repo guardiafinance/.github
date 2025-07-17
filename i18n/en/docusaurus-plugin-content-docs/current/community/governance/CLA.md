@@ -106,7 +106,7 @@ The **Contributor** acknowledges that they make their **Contributions** voluntar
 
 The signing of this **CLA** does not establish any employment, partnership, representation, partnership or mandate relationship between the **Contributor** and **Guardia**. This agreement does not create any obligation for continued service provision, nor labor, social security or tax rights of any nature.
 
-Without prejudice to the above, the **Contributor** may publicly reference their participation in the project in resumes, portfolios and professional profiles or on social networks, using the designation: **"OSS Contributor | Guardia ({Project or Module Name})"**, in badge or text format, at their discretion. Such recognition is optional and does not imply formal relationship with **Guardia**. **Guardia** reserves the right to request adjustments in the use of this designation should it misrepresent the relationship between the parties, violate trademark usage rules or cause confusion regarding official roles.
+Without prejudice to the above, the **Contributor** may publicly reference their participation in the project in resumes, portfolios and professional profiles or on social networks, using the designation: **"OSS Contributor | Guardia (\{Project or Module Name\})"**, in badge or text format, at their discretion. Such recognition is optional and does not imply formal relationship with **Guardia**. **Guardia** reserves the right to request adjustments in the use of this designation should it misrepresent the relationship between the parties, violate trademark usage rules or cause confusion regarding official roles.
 
 ## 11. No Obligation of Use
 
