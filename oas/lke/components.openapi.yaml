@@ -763,28 +763,42 @@ components:
       properties:
         external_entity_id:
           $ref: '#/components/schemas/ExternalEntityID'
+        name:
+          type: string
+          minLength: 3
+          maxLength: 128
         code:
           type: string
+          minLength: 3
+          maxLength: 12
         number:
           type: string
+          minLength: 3
+          maxLength: 128
         exponent:
           type: string
+          minimum: 0
+          maximum: 18
         is_fiat:
           type: boolean
         locations:
           type: array
           items:
             type: string
-        ledgers:
-          $ref: '#/components/schemas/ListOfEntityIDs'
+            example:
+              - BR
+              - US
+              - ALL # All countries
+        metadata:
+          $ref: '#/components/schemas/Metadata'
       required:
-        - external_entity_id
+        - name
         - code
         - number
         - exponent
         - is_fiat
         - locations
-        - ledgers
+        - metadata
 
     AssetUpdateRequest:
       type: object
