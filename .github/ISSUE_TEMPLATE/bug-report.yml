@@ -2,12 +2,13 @@ name: "Bug report 🐞"
 description: Create a report to help us improve
 title: bug/ {{ summarize the reported bug here }}
 type: Bug
-labels: 
+labels:
   - "bug report 🐞"
 assignees:
   - commitybyguardia
 projects:
-  - "guardiafinance/13"
+  - "guardiafinance/3"
+  - "guardiafinance/4"
 
 body:
   - type: markdown
@@ -15,34 +16,49 @@ body:
       value: |
         Thanks for taking the time to fill out this bug report!
   - type: textarea
-    id: what-happened
+    id: bug-description
     attributes:
       label: What happened?
-      description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
-      value: |
-        **Describe the bug**
-
-        A clear and concise description of what the bug is.
-
-        **To Reproduce**
-        
-        Steps to reproduce the behavior:
+      description: A clear and concise description of what the bug is.
+      placeholder: Provide a detailed description of the bug you encountered...
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: To Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
         1. Go to '...'
         2. Click on '....'
         3. Scroll down to '....'
         4. See error
-
-        **Expected behavior**
-        A clear and concise description of what you expected to happen.
-
-        **Screenshots**
-        If applicable, add screenshots to help explain your problem.
-
-        **Additional context**
-        Add any other context about the problem here.
     validations:
       required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+      placeholder: Describe what you expected to happen instead...
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem.
+      placeholder: Paste or attach screenshots here...
+    validations:
+      required: false
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
+      placeholder: Any additional information that might be helpful...
+    validations:
+      required: false
   - type: markdown
     attributes:
       value: |
