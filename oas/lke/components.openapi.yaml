@@ -884,8 +884,6 @@ components:
         Representa a posição de saldo de um **book** dentro do **ledger**.
         Inicializada automaticamente com valor zero quando um book é criado.
       properties:
-        entity_id:
-          $ref: '#/components/schemas/EntityID'
         entity_type:
           type: string
           enum: [POSITION]
