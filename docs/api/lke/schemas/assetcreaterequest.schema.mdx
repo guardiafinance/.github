@@ -6,7 +6,7 @@ sidebar_label: "AssetCreateRequest"
 hide_title: true
 hide_table_of_contents: true
 schema: true
-sample: {"external_entity_id":"ext:123-456-789-ABCD","code":"string","number":"string","exponent":"string","is_fiat":true,"locations":["string"],"ledgers":["{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e"]}
+sample: {"external_entity_id":"ext:123-456-789-ABCD","name":"string","code":"string","number":"string","exponent":"string","is_fiat":true,"locations":["BR","US","ALL"],"metadata":{"foo":"bar"}}
 custom_edit_url: null
 ---
 
@@ -31,7 +31,7 @@ import Heading from "@theme/Heading";
 
 
 <Schema
-  schema={{"type":"object","properties":{"external_entity_id":{"type":"string","description":"Identificador externo da entidade para interoperabilidade com outros sistemas.","minLength":1,"maxLength":36,"example":"ext:123-456-789-ABCD","nullable":true,"title":"ExternalEntityID"},"code":{"type":"string"},"number":{"type":"string"},"exponent":{"type":"string"},"is_fiat":{"type":"boolean"},"locations":{"type":"array","items":{"type":"string"}},"ledgers":{"type":"array","items":{"type":"string","description":"Identificador único da entidade no formato `{entity_type}:{uuid_v7}`.","pattern":"^([a-zA-Z_-]+:[0-9a-f]{8}[0-9a-f]{4}7[0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12})$","example":"{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e","title":"EntityID"},"title":"ListOfEntityIDs"}},"required":["external_entity_id","code","number","exponent","is_fiat","locations","ledgers"],"title":"AssetCreateRequest"}}
+  schema={{"type":"object","properties":{"external_entity_id":{"type":"string","description":"Identificador externo da entidade para interoperabilidade com outros sistemas.","minLength":1,"maxLength":36,"example":"ext:123-456-789-ABCD","nullable":true,"title":"ExternalEntityID"},"name":{"type":"string","minLength":3,"maxLength":128},"code":{"type":"string","minLength":3,"maxLength":12},"number":{"type":"string","minLength":3,"maxLength":128},"exponent":{"type":"string","minimum":0,"maximum":18},"is_fiat":{"type":"boolean"},"locations":{"type":"array","items":{"type":"string","example":["BR","US","ALL"]}},"metadata":{"type":"object","description":"Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.","additionalProperties":{"type":"string"},"maxProperties":10,"example":{"foo":"bar"},"title":"Metadata"}},"required":["name","code","number","exponent","is_fiat","locations","metadata"],"title":"AssetCreateRequest"}}
   schemaType={"response"}
 >
   

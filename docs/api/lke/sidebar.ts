@@ -322,12 +322,6 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api/lke/schemas/listofentityids",
-          label: "ListOfEntityIDs",
-          className: "schema",
-        },
-        {
-          type: "doc",
           id: "api/lke/schemas/assetcreaterequest",
           label: "AssetCreateRequest",
           className: "schema",
@@ -384,6 +378,12 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api/lke/schemas/debug",
           label: "Debug",
+          className: "schema",
+        },
+        {
+          type: "doc",
+          id: "api/lke/schemas/listofentityids",
+          label: "ListOfEntityIDs",
           className: "schema",
         },
       ],
