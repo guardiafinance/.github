@@ -50,8 +50,12 @@ erDiagram
     ASSET {
         uuid entity_id PK "Campo controlado pela aplicação. UUID v7, com ordenação temporal."
         string external_entity_id "Identificador único para interoperabilidade com outros sistemas. Tamanho máximo: 36 caracteres."
-        boolean is_fiat "Indica se o asset é uma moeda fiduciária."
-        array locations "Regiões onde o asset é aceito como moeda de troca. Deve ser um array de códigos ISO 3166-2."
+        string classification "Classificação do asset. Deve ser FIAT ou NON_FIAT."
+        string denomination_code "Código representativo do asset. Deve ser um código ISO 4217."
+        string denomination_number "Número ISO ou identificador do asset. Deve ser um número ISO 4217."
+        int denomination_exponent "Escala decimal do asset. Deve ser um número inteiro entre 0 e 18."
+        array denomination_locations "Regiões onde o asset é aceito como moeda de troca. Deve ser um array de códigos ISO 3166-2."
+        hstore metadata "Metadados adicionais para interoperabilidade com outros sistemas. Tamanho máximo: 4KB"
         timestamp created_at "Data de inserção no banco de dados."
         timestamp updated_at "Data da última atualização no banco de dados."
         timestamp discarded_at "Data de exclusão no banco de dados. Deve implementar padrão de exclusão suave."
@@ -64,8 +68,11 @@ erDiagram
         uuid entity_id PK "Campo controlado pela aplicação. UUID v7, com ordenação temporal."
         string external_entity_id "Identificador único para interoperabilidade com outros sistemas. Tamanho máximo: 36 caracteres."
         uuid ledger_id "Referência do LEDGER."
-        boolean is_fiat "Indica se o asset é uma moeda fiduciária."
-        array locations "Regiões onde o asset é aceito como moeda de troca. Deve ser um array de códigos ISO 3166-2."
+        string classification "Classificação do asset. Deve ser FIAT ou NON_FIAT."
+        string denomination_code "Código representativo do asset. Deve ser um código ISO 4217."
+        string denomination_number "Número ISO ou identificador do asset. Deve ser um número ISO 4217."
+        int denomination_exponent "Escala decimal do asset. Deve ser um número inteiro entre 0 e 18."
+        array denomination_locations "Regiões onde o asset é aceito como moeda de troca. Deve ser um array de códigos ISO 3166-2."
         timestamp created_at "Data de inserção no banco de dados."
         timestamp updated_at "Data da última atualização no banco de dados."
         timestamp discarded_at "Data de exclusão no banco de dados. Deve implementar padrão de exclusão suave."
@@ -74,29 +81,33 @@ erDiagram
         timestampz valid_to "Campo indicando o fim do período de validade desta versão da entidade."
     }
 
-    LEDGER ||--o{ LEDGER_ASSET : has
-    ASSET ||--o{ LEDGER_ASSET : has
-    LEDGER_ASSET ||--o{ LEDGER_ASSET_HISTORY : tracks
-    LEDGER_ASSET {
-        uuid ledger_id FK "Referência do LEDGER."
-        uuid asset_id FK "Relação com ASSET."
-        string code "Único dentro do ledger. Tamanho máximo: 12 caracteres."
-        string number "Único dentro do ledger. Tamanho máximo: 128 caracteres."
-        int exponent "Expoente do asset. Deve estar entre 0 e 18."
+    LEDGER ||--o{ BOUND_ASSET : has
+    ASSET ||--o{ BOUND_ASSET : has
+    BOUND_ASSET ||--o{ BOUND_ASSET_HISTORY : tracks
+    BOUND_ASSET {
+        uuid ledger_entity_id FK "Referência do LEDGER."
+        uuid asset_entity_id FK "Relação com ASSET."
+        string denomination_code "Código representativo do asset. Deve ser um código ISO 4217."
+        string denomination_number "Número ISO ou identificador do asset. Deve ser um número ISO 4217."
+        int denomination_exponent "Escala decimal do asset. Deve ser um número inteiro entre 0 e 18."
+        array denomination_locations "Regiões onde o asset é aceito como moeda de troca. Deve ser um array de códigos ISO 3166-2."
         timestamp created_at "Data de inserção no banco de dados."
         timestamp updated_at "Data da última atualização no banco de dados."
+        int version "Campo controlado pela aplicação. Deve ser incrementado em 1 cada vez que a entidade é alterada."
         timestampz valid_from "Campo indicando o início do período de validade desta versão da entidade."
         timestampz valid_to "Campo indicando o fim do período de validade desta versão da entidade."
     }
 
-    LEDGER_ASSET_HISTORY {
-        uuid ledger_id FK "Referência do LEDGER."
-        uuid asset_id FK "Relação com ASSET."
-        string code "Único dentro do ledger. Tamanho máximo: 12 caracteres."
-        string number "Único dentro do ledger. Tamanho máximo: 128 caracteres."
-        int exponent "Expoente do asset. Deve estar entre 0 e 18."
+    BOUND_ASSET_HISTORY {
+        uuid ledger_entity_id FK "Referência do LEDGER."
+        uuid asset_entity_id FK "Relação com ASSET."
+        string denomination_code "Código representativo do asset. Deve ser um código ISO 4217."
+        string denomination_number "Número ISO ou identificador do asset. Deve ser um número ISO 4217."
+        int denomination_exponent "Escala decimal do asset. Deve ser um número inteiro entre 0 e 18."
+        array denomination_locations "Regiões onde o asset é aceito como moeda de troca. Deve ser um array de códigos ISO 3166-2."
         timestamp created_at "Data de inserção no banco de dados."
         timestamp updated_at "Data da última atualização no banco de dados."
+        int version "Campo controlado pela aplicação. Deve ser incrementado em 1 cada vez que a entidade é alterada."
         timestampz valid_from "Campo indicando o início do período de validade desta versão da entidade."
         timestampz valid_to "Campo indicando o fim do período de validade desta versão da entidade."
     }

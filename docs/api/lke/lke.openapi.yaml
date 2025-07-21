@@ -31,14 +31,17 @@ tags:
     description: |
       Gerencie os livros razão da sua empresa. Crie, atualize e exclua ledgers,
       além de consultar informações detalhadas sobre cada um.
-  - name: Chapters
-    description: |
-      Organize os livros razão em capítulos para facilitar a gestão e análise.
-      Crie, atualize e exclua capítulos, além de consultar informações detalhadas sobre cada um.
   - name: Assets
     description: |
       Gerencie os ativos da sua empresa. Crie, atualize e exclua ativos,
       além de consultar informações detalhadas sobre cada um.
+  - name: Bound Assets
+    description: |
+      Gerencie o vínculo entre um asset e um ledger.
+  - name: Chapters
+    description: |
+      Organize os livros razão em capítulos para facilitar a gestão e análise.
+      Crie, atualize e exclua capítulos, além de consultar informações detalhadas sobre cada um.
   - name: Transactions
     description: |
       Registre transações financeiras relacionadas a um livro razão ou capítulo.
@@ -405,104 +408,16 @@ paths:
       x-apidog-maintainer: Fernando Seguim
       x-run-in-apidog: https://app.apidog.com/web/project/719079/apis/api-11718082-run
   /v1/ledgers/{ledger_identifier}/assets:
-    put:
-      summary: Adiciona um asset ao ledger
-      description: Associa um asset existente ao ledger especificado através do código do asset.
-      operationId: add_asset_to_ledger
-      tags:
-        - Ledgers
-      parameters:
-        - $ref: "#/components/parameters/LedgerIdentifierParam"
-        - $ref: "#/components/parameters/IdempotencyKey"
-        - $ref: "#/components/parameters/Accept"
-        - $ref: "#/components/parameters/AcceptLanguage"
-        - $ref: "#/components/parameters/ContentType"
-        - $ref: "#/components/parameters/CorrelationId"
-      requestBody:
-        required: true
-        content:
-          application/vnd.guardia.v1+json:
-            schema:
-              type: object
-              required:
-                - identifier
-              properties:
-                identifier:
-                  $ref: "#/components/schemas/EntityIdentifier"
-                  description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
-                exponent:
-                  type: number
-                  description: |
-                    Expoente do **asset** vinculado.
-                    :::note
-                    Caso informado o expoente, ele irá sobrescrever, **apenas neste ledger**, o expoente padrão do asset vinculado.
-                    :::
-                  minimum: 0
-                  maximum: 10
-      responses:
-        "201":
-          description: Asset associado com sucesso.
-          headers:
-            Cache-Control:
-              $ref: "#/components/headers/Cache-Control"
-            Content-Digest:
-              $ref: "#/components/headers/Content-Digest"
-            Content-Language:
-              $ref: "#/components/headers/Content-Language"
-            Content-Length:
-              $ref: "#/components/headers/Content-Length"
-            Content-Type:
-              $ref: "#/components/headers/Content-Type"
-            Idempotency-Key:
-              $ref: "#/components/headers/Idempotency-Key"
-            Last-Modified:
-              $ref: "#/components/headers/Last-Modified"
-            X-Grd-Correlation-Id:
-              $ref: "#/components/headers/X-Grd-Correlation-Id"
-            X-Grd-Trace-Id:
-              $ref: "#/components/headers/X-Grd-Trace-Id"
-            X-RateLimit-Limit:
-              $ref: "#/components/headers/X-RateLimit-Limit"
-            X-RateLimit-Remaining:
-              $ref: "#/components/headers/X-RateLimit-Remaining"
-            X-RateLimit-Reset:
-              $ref: "#/components/headers/X-RateLimit-Reset"
-          content:
-            application/vnd.guardia.v1+json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/LedgerAssetBinding"
-        "400":
-          $ref: "#/components/responses/Error400"
-        "401":
-          $ref: "#/components/responses/Error401"
-        "403":
-          $ref: "#/components/responses/Error403"
-        "404":
-          $ref: "#/components/responses/Error404"
-        "409":
-          $ref: "#/components/responses/Error409"
-        "422":
-          $ref: "#/components/responses/Error422"
-        "429":
-          $ref: "#/components/responses/Error429"
-        "500":
-          $ref: "#/components/responses/Error500"
-      security: []
     get:
       summary: Lista assets associados ao ledger
       description: Obtém uma lista de assets associados ao ledger especificado, com filtros por código, número e identificadores.
       operationId: list_ledger_assets
       tags:
-        - Ledgers
+        - Bound Assets
       parameters:
         - $ref: "#/components/parameters/LedgerIdentifierParam"
-        - $ref: "#/components/parameters/ListOfAssetIds"
-        - $ref: "#/components/parameters/ListOfExternalEntityIds"
-        - $ref: "#/components/parameters/AssetCodes"
-        - $ref: "#/components/parameters/AssetNumbers"
+        - $ref: "#/components/parameters/ListOfDenominationCodes"
+        - $ref: "#/components/parameters/ListOfDenominationNumbers"
         - $ref: "#/components/parameters/PageSize"
         - $ref: "#/components/parameters/PageToken"
         - $ref: "#/components/parameters/OrderBy"
@@ -564,12 +479,98 @@ paths:
           $ref: "#/components/responses/Error500"
       security: []
   /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}:
+    put:
+      summary: Adiciona um asset ao ledger
+      description: Associa um asset existente ao ledger especificado através do código do asset.
+      operationId: add_asset_to_ledger
+      tags:
+        - Bound Assets
+      parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/Accept"
+        - $ref: "#/components/parameters/AcceptLanguage"
+        - $ref: "#/components/parameters/ContentType"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/vnd.guardia.v1+json:
+            schema:
+              type: object
+              properties:
+                denomination:
+                  $ref: "#/components/schemas/Denomination"
+                  description: Denominação do **asset** vinculado. Caso não informado, o expoente padrão do asset vinculado será utilizado.
+                metadata:
+                  $ref: "#/components/schemas/Metadata"
+            example:
+              denomination:
+                code: BRL
+                number: "968"
+                exponent: 2
+                locations:
+                  - BR
+              metadata:
+                foo: bar
+      responses:
+        "200":
+          description: Asset associado com sucesso.
+          headers:
+            Cache-Control:
+              $ref: "#/components/headers/Cache-Control"
+            Content-Digest:
+              $ref: "#/components/headers/Content-Digest"
+            Content-Language:
+              $ref: "#/components/headers/Content-Language"
+            Content-Length:
+              $ref: "#/components/headers/Content-Length"
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Idempotency-Key:
+              $ref: "#/components/headers/Idempotency-Key"
+            Last-Modified:
+              $ref: "#/components/headers/Last-Modified"
+            X-Grd-Correlation-Id:
+              $ref: "#/components/headers/X-Grd-Correlation-Id"
+            X-Grd-Trace-Id:
+              $ref: "#/components/headers/X-Grd-Trace-Id"
+            X-RateLimit-Limit:
+              $ref: "#/components/headers/X-RateLimit-Limit"
+            X-RateLimit-Remaining:
+              $ref: "#/components/headers/X-RateLimit-Remaining"
+            X-RateLimit-Reset:
+              $ref: "#/components/headers/X-RateLimit-Reset"
+          content:
+            application/vnd.guardia.v1+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/BoundAsset"
+        "400":
+          $ref: "#/components/responses/Error400"
+        "401":
+          $ref: "#/components/responses/Error401"
+        "403":
+          $ref: "#/components/responses/Error403"
+        "404":
+          $ref: "#/components/responses/Error404"
+        "409":
+          $ref: "#/components/responses/Error409"
+        "422":
+          $ref: "#/components/responses/Error422"
+        "429":
+          $ref: "#/components/responses/Error429"
+        "500":
+          $ref: "#/components/responses/Error500"
+      security: []
     delete:
       summary: Remove um asset do ledger
       description: Remove a associação de um asset existente do ledger especificado através do identificador do asset.
       operationId: remove_asset_from_ledger
       tags:
-        - Ledgers
+        - Bound Assets
       parameters:
         - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/AssetIdentifierParam"
@@ -1101,16 +1102,17 @@ paths:
                     $ref: "#/components/schemas/Asset"
               example:
                 data:
-                  entity_id: "6683756247371778"
+                  entity_id: asset:018f74a6e3b270ccbf248a4b012f5f3e
                   entity_type: ASSET
-                  external_entity_id: e9ad6a8ac4ce4a0b8e845c5d89e24322
+                  external_entity_id: ext:e9ad6a8ac4ce4a0b8e845c5d89e24322
                   version: 0
-                  code: INT01
-                  number: "2003202501"
-                  exponent: 10
-                  is_fiat: false
-                  locations:
-                    - NONE
+                  classification: FIAT
+                  denomination:
+                    code: BRL
+                    number: "968"
+                    exponent: 2
+                    locations:
+                      - BR
                   created_at: 2024-11-17T00:00:00.000Z
                   updated_at: 2024-11-17T00:00:00.000Z
           x-apidog-name: Created
@@ -1143,8 +1145,8 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ListOfAssetIds"
         - $ref: "#/components/parameters/ListOfExternalEntityIds"
-        - $ref: "#/components/parameters/AssetCodes"
-        - $ref: "#/components/parameters/AssetNumbers"
+        - $ref: "#/components/parameters/ListOfDenominationCodes"
+        - $ref: "#/components/parameters/ListOfDenominationNumbers"
         - $ref: "#/components/parameters/MetadataFilter"
         - $ref: "#/components/parameters/IncludeDiscarded"
         - $ref: "#/components/parameters/PageSize"
@@ -1278,7 +1280,8 @@ paths:
     patch:
       summary: Atualiza um asset específico
       description: |
-        Atualiza os dados como Nome, Código, Número, Expoente, Locations e Metadata de um asset existente.
+        Atualiza os dados como Nome, Classificação, Denominação e Metadata de um asset existente.
+        Essa atualização não afeta os `BoundAssets` existentes, apenas os novos que forem criados após a atualização.
         <br />
         :::warning
         Ao atualizar um metadata, quando o valor for `null`, caso a propriedade exista, ela será considerada para remoção, conforme a especificação do Json Merge Patch [RFC 7386](https://datatracker.ietf.org/doc/html/rfc7386).
@@ -1509,7 +1512,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ListOfEntityIds"
         - $ref: "#/components/parameters/ListOfExternalEntityIds"
-        - $ref: "#/components/parameters/ListOfAssetCodes"
+        - $ref: "#/components/parameters/ListOfDenominationCodes"
         - $ref: "#/components/parameters/ListOfChapterIds"
         - $ref: "#/components/parameters/MetadataFilter"
         - $ref: "#/components/parameters/IncludeDiscarded"
@@ -1969,35 +1972,26 @@ components:
       example: ext:123-456-789-ABCD,ext:456-789-ABCD-EFGH,ext:789-ABCD-EFGH-IJKL
       schema:
         type: string
-    AssetCodes:
-      name: asset_codes
+    ListOfDenominationCodes:
+      name: denomination_codes
       in: query
       description: |
-        Uma lista de códigos de assets separados por vírgulas. Para ativos fiduciários, use códigos ISO 4217
-        (ex: BRL, USD, EUR). Para outros tipos de ativos, use o código definido
+        Uma lista de códigos de denominações separados por vírgulas. Este código pode ser baseado
+        em especificações como ISO 4217, ISO 10962, MIC, ISIN ou um padrão interno da instituição, conforme definido
         na criação do asset.
       required: false
       example: BRL,USD,EUR
       schema:
         type: string
-    AssetNumbers:
-      name: asset_numbers
+    ListOfDenominationNumbers:
+      name: denomination_numbers
       in: query
       description: |
-        Uma lista de números de identificação de assets separados por vírgulas. Este número pode ser baseado
-        em especificações como ISO 10962, MIC, ISIN ou um padrão interno da
-        instituição.
+        Uma lista de números de identificação de denominações separados por vírgulas. Este número pode ser baseado
+        em especificações como ISO 4217, ISO 10962, MIC, ISIN ou um padrão interno da instituição, conforme definido
+        na criação do asset.
       required: false
       example: 986,840,978
-      schema:
-        type: string
-    ListOfAssetCodes:
-      name: asset_codes
-      in: query
-      description: |
-        Uma lista de códigos de ativos (moedas) separados por vírgulas. Exemplo: 'USD,BRL,EUR'.
-      required: false
-      example: USD,BRL,EUR
       schema:
         type: string
     ListOfLedgerIds:
@@ -2228,30 +2222,10 @@ components:
           $ref: "#/components/schemas/ExternalEntityID"
         version:
           $ref: "#/components/schemas/Version"
-        code:
-          type: string
-          minLength: 3
-          maxLength: 10
-        number:
-          type: string
-          minLength: 3
-          maxLength: 10
-        exponent:
-          type: number
-          minimum: 0
-          maximum: 10
-        is_fiat:
-          type: boolean
-        locations:
-          type: array
-          items:
-            type: string
-        ledgers:
-          type: array
-          description: |
-            Lista de identificadores únicos das ledgers associadas ao asset.
-          items:
-            $ref: "#/components/schemas/EntityID"
+        classification:
+          $ref: "#/components/schemas/Classification"
+        denomination:
+          $ref: "#/components/schemas/Denomination"
         created_at:
           $ref: "#/components/schemas/DateTime"
           nullable: false
@@ -2263,7 +2237,44 @@ components:
           nullable: true
         metadata:
           $ref: "#/components/schemas/Metadata"
-    LedgerAssetBinding:
+    Classification:
+      type: string
+      enum:
+        - FIAT
+        - NON_FIAT
+    Denomination:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Código de denominação do asset. Pode ser um código ISO 4217, ISO 10962, MIC, ISIN ou um padrão interno da instituição.
+          minLength: 3
+          maxLength: 12
+          default: BRL
+        number:
+          type: string
+          description: Número de denominação do asset. Pode ser um número ISO 4217, ISO 10962, MIC, ISIN ou um padrão interno da instituição.
+          minLength: 3
+          maxLength: 128
+          default: "968"
+        exponent:
+          type: integer
+          description: Expoente de denominação do asset, que indica o número de casas decimais a ser usado em representações contábeis. Deve estar entre 0 e 18.
+          minimum: 0
+          maximum: 18
+          default: 2
+        locations:
+          type: array
+          description: Lista de países em que o asset é reconhecido com fins de trocas.
+          items:
+            type: string
+            example:
+              - BR
+              - US
+              - ALL
+          default:
+            - BR
+    BoundAsset:
       type: object
       description: Representa a associação entre um ledger e um asset, incluindo informações específicas do vínculo.
       properties:
@@ -2273,22 +2284,11 @@ components:
         asset_entity_id:
           $ref: "#/components/schemas/EntityID"
           description: Identificador único do asset.
-        code:
-          type: string
-          description: Código do asset vinculado.
-          minLength: 3
-          maxLength: 10
-        number:
-          type: string
-          description: Número de identificação do asset vinculado.
-          minLength: 3
-          maxLength: 10
-        exponent:
-          type: number
-          description: Expoente do asset vinculado.
-          minimum: 0
-          maximum: 10
-        binded_at:
+        version:
+          $ref: "#/components/schemas/Version"
+        denomination:
+          $ref: "#/components/schemas/Denomination"
+        bound_date:
           $ref: "#/components/schemas/DateTime"
           description: Data e hora em que o asset foi vinculado ao ledger.
     Metadata:
@@ -2508,28 +2508,10 @@ components:
           type: string
           minLength: 3
           maxLength: 128
-        code:
-          type: string
-          minLength: 3
-          maxLength: 12
-        number:
-          type: string
-          minLength: 3
-          maxLength: 128
-        exponent:
-          type: string
-          minimum: 0
-          maximum: 18
-        is_fiat:
-          type: boolean
-        locations:
-          type: array
-          items:
-            type: string
-            example:
-              - BR
-              - US
-              - ALL
+        classification:
+          $ref: "#/components/schemas/Classification"
+        denomination:
+          $ref: "#/components/schemas/Denomination"
         metadata:
           $ref: "#/components/schemas/Metadata"
       required:

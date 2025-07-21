@@ -6,7 +6,7 @@ sidebar_label: "AssetCreateRequest"
 hide_title: true
 hide_table_of_contents: true
 schema: true
-sample: {"external_entity_id":"ext:123-456-789-ABCD","name":"string","code":"string","number":"string","exponent":"string","is_fiat":true,"locations":["BR","US","ALL"],"metadata":{"foo":"bar"}}
+sample: {"external_entity_id":"ext:123-456-789-ABCD","name":"string","classification":"FIAT","denomination":{"code":"BRL","number":"968","exponent":2,"locations":["BR","US","ALL"]},"metadata":{"foo":"bar"}}
 custom_edit_url: null
 ---
 
@@ -31,7 +31,7 @@ import Heading from "@theme/Heading";
 
 
 <Schema
-  schema={{"type":"object","properties":{"external_entity_id":{"type":"string","description":"Identificador externo da entidade para interoperabilidade com outros sistemas.","minLength":1,"maxLength":36,"example":"ext:123-456-789-ABCD","nullable":true,"title":"ExternalEntityID"},"name":{"type":"string","minLength":3,"maxLength":128},"code":{"type":"string","minLength":3,"maxLength":12},"number":{"type":"string","minLength":3,"maxLength":128},"exponent":{"type":"string","minimum":0,"maximum":18},"is_fiat":{"type":"boolean"},"locations":{"type":"array","items":{"type":"string","example":["BR","US","ALL"]}},"metadata":{"type":"object","description":"Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.","additionalProperties":{"type":"string"},"maxProperties":10,"example":{"foo":"bar"},"title":"Metadata"}},"required":["name","code","number","exponent","is_fiat","locations","metadata"],"title":"AssetCreateRequest"}}
+  schema={{"type":"object","properties":{"external_entity_id":{"type":"string","description":"Identificador externo da entidade para interoperabilidade com outros sistemas.","minLength":1,"maxLength":36,"example":"ext:123-456-789-ABCD","nullable":true,"title":"ExternalEntityID"},"name":{"type":"string","minLength":3,"maxLength":128},"classification":{"type":"string","enum":["FIAT","NON_FIAT"],"title":"Classification"},"denomination":{"type":"object","properties":{"code":{"type":"string","description":"Código de denominação do asset. Pode ser um código ISO 4217, ISO 10962, MIC, ISIN ou um padrão interno da instituição.","minLength":3,"maxLength":12,"default":"BRL"},"number":{"type":"string","description":"Número de denominação do asset. Pode ser um número ISO 4217, ISO 10962, MIC, ISIN ou um padrão interno da instituição.","minLength":3,"maxLength":128,"default":"968"},"exponent":{"type":"integer","description":"Expoente de denominação do asset, que indica o número de casas decimais a ser usado em representações contábeis. Deve estar entre 0 e 18.","minimum":0,"maximum":18,"default":2},"locations":{"type":"array","description":"Lista de países em que o asset é reconhecido com fins de trocas.","items":{"type":"string","example":["BR","US","ALL"]},"default":["BR"]}},"title":"Denomination"},"metadata":{"type":"object","description":"Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.","additionalProperties":{"type":"string"},"maxProperties":10,"example":{"foo":"bar"},"title":"Metadata"}},"required":["name","code","number","exponent","is_fiat","locations","metadata"],"title":"AssetCreateRequest"}}
   schemaType={"response"}
 >
   

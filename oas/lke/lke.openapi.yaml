@@ -32,14 +32,17 @@ tags:
     description: |
       Gerencie os livros razão da sua empresa. Crie, atualize e exclua ledgers,
       além de consultar informações detalhadas sobre cada um.
-  - name: Chapters
-    description: |
-      Organize os livros razão em capítulos para facilitar a gestão e análise.
-      Crie, atualize e exclua capítulos, além de consultar informações detalhadas sobre cada um.
   - name: Assets
     description: |
       Gerencie os ativos da sua empresa. Crie, atualize e exclua ativos,
       além de consultar informações detalhadas sobre cada um.
+  - name: 'Bound Assets'
+    description: |
+      Gerencie o vínculo entre um asset e um ledger.
+  - name: Chapters
+    description: |
+      Organize os livros razão em capítulos para facilitar a gestão e análise.
+      Crie, atualize e exclua capítulos, além de consultar informações detalhadas sobre cada um.
   - name: Transactions
     description: |
       Registre transações financeiras relacionadas a um livro razão ou capítulo.
@@ -407,105 +410,16 @@ paths:
       x-apidog-maintainer: Fernando Seguim
       x-run-in-apidog: https://app.apidog.com/web/project/719079/apis/api-11718082-run
   /v1/ledgers/{ledger_identifier}/assets:
-    put:
-      summary: Adiciona um asset ao ledger
-      description: Associa um asset existente ao ledger especificado através do código do asset.
-      operationId: add_asset_to_ledger
-      tags:
-        - Ledgers
-      parameters:
-        - $ref: './components.openapi.yaml#/components/parameters/LedgerIdentifierParam'
-        - $ref: './components.openapi.yaml#/components/parameters/IdempotencyKey'
-        - $ref: './components.openapi.yaml#/components/parameters/Accept'
-        - $ref: './components.openapi.yaml#/components/parameters/AcceptLanguage'
-        - $ref: './components.openapi.yaml#/components/parameters/ContentType'
-        - $ref: './components.openapi.yaml#/components/parameters/CorrelationId'
-      requestBody:
-        required: true
-        content:
-          application/vnd.guardia.v1+json:
-            schema:
-              type: object
-              required:
-                - identifier
-              properties:
-                identifier:
-                  $ref: './components.openapi.yaml#/components/schemas/EntityIdentifier'
-                  description: "Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`."
-                exponent:
-                  type: number
-                  description: |
-                    Expoente do **asset** vinculado.
-                    :::note
-                    Caso informado o expoente, ele irá sobrescrever, **apenas neste ledger**, o expoente padrão do asset vinculado.
-                    :::
-                  minimum: 0
-                  maximum: 10
-
-      responses:
-        '201':
-          description: Asset associado com sucesso.
-          headers:
-            Cache-Control:
-              $ref: './components.openapi.yaml#/components/headers/Cache-Control'
-            Content-Digest:
-              $ref: './components.openapi.yaml#/components/headers/Content-Digest'
-            Content-Language:
-              $ref: './components.openapi.yaml#/components/headers/Content-Language'
-            Content-Length:
-              $ref: './components.openapi.yaml#/components/headers/Content-Length'
-            Content-Type:
-              $ref: './components.openapi.yaml#/components/headers/Content-Type'
-            Idempotency-Key:
-              $ref: './components.openapi.yaml#/components/headers/Idempotency-Key'
-            Last-Modified:
-              $ref: './components.openapi.yaml#/components/headers/Last-Modified'
-            X-Grd-Correlation-Id:
-              $ref: './components.openapi.yaml#/components/headers/X-Grd-Correlation-Id'
-            X-Grd-Trace-Id:
-              $ref: './components.openapi.yaml#/components/headers/X-Grd-Trace-Id'
-            X-RateLimit-Limit:
-              $ref: './components.openapi.yaml#/components/headers/X-RateLimit-Limit'
-            X-RateLimit-Remaining:
-              $ref: './components.openapi.yaml#/components/headers/X-RateLimit-Remaining'
-            X-RateLimit-Reset:
-              $ref: './components.openapi.yaml#/components/headers/X-RateLimit-Reset'
-          content:
-            application/vnd.guardia.v1+json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: './components.openapi.yaml#/components/schemas/LedgerAssetBinding'
-        '400':
-          $ref: './components.openapi.yaml#/components/responses/Error400'
-        '401':
-          $ref: './components.openapi.yaml#/components/responses/Error401'
-        '403':
-          $ref: './components.openapi.yaml#/components/responses/Error403'
-        '404':
-          $ref: './components.openapi.yaml#/components/responses/Error404'
-        '409':
-          $ref: './components.openapi.yaml#/components/responses/Error409'
-        '422':
-          $ref: './components.openapi.yaml#/components/responses/Error422'
-        '429':
-          $ref: './components.openapi.yaml#/components/responses/Error429'
-        '500':
-          $ref: './components.openapi.yaml#/components/responses/Error500'
-      security: []
     get:
       summary: Lista assets associados ao ledger
       description: Obtém uma lista de assets associados ao ledger especificado, com filtros por código, número e identificadores.
       operationId: list_ledger_assets
       tags:
-        - Ledgers
+        - 'Bound Assets'
       parameters:
         - $ref: './components.openapi.yaml#/components/parameters/LedgerIdentifierParam'
-        - $ref: './components.openapi.yaml#/components/parameters/ListOfAssetIds'
-        - $ref: './components.openapi.yaml#/components/parameters/ListOfExternalEntityIds'
-        - $ref: './components.openapi.yaml#/components/parameters/AssetCodes'
-        - $ref: './components.openapi.yaml#/components/parameters/AssetNumbers'
+        - $ref: './components.openapi.yaml#/components/parameters/ListOfDenominationCodes'
+        - $ref: './components.openapi.yaml#/components/parameters/ListOfDenominationNumbers'
         - $ref: './components.openapi.yaml#/components/parameters/PageSize'
         - $ref: './components.openapi.yaml#/components/parameters/PageToken'
         - $ref: './components.openapi.yaml#/components/parameters/OrderBy'
@@ -567,12 +481,98 @@ paths:
           $ref: './components.openapi.yaml#/components/responses/Error500'
       security: []
   /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}:
+    put:
+      summary: Adiciona um asset ao ledger
+      description: Associa um asset existente ao ledger especificado através do código do asset.
+      operationId: add_asset_to_ledger
+      tags:
+        - 'Bound Assets'
+      parameters:
+        - $ref: './components.openapi.yaml#/components/parameters/LedgerIdentifierParam'
+        - $ref: './components.openapi.yaml#/components/parameters/IdempotencyKey'
+        - $ref: './components.openapi.yaml#/components/parameters/Accept'
+        - $ref: './components.openapi.yaml#/components/parameters/AcceptLanguage'
+        - $ref: './components.openapi.yaml#/components/parameters/ContentType'
+        - $ref: './components.openapi.yaml#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/vnd.guardia.v1+json:
+            schema:
+              type: object
+              properties:
+                denomination:
+                  $ref: './components.openapi.yaml#/components/schemas/Denomination'
+                  description: "Denominação do **asset** vinculado. Caso não informado, o expoente padrão do asset vinculado será utilizado."
+                metadata:
+                  $ref: './components.openapi.yaml#/components/schemas/Metadata'
+            example:
+              denomination:
+                code: BRL
+                number: '968'
+                exponent: 2
+                locations:
+                  - BR
+              metadata:
+                foo: bar
+      responses:
+        '200':
+          description: Asset associado com sucesso.
+          headers:
+            Cache-Control:
+              $ref: './components.openapi.yaml#/components/headers/Cache-Control'
+            Content-Digest:
+              $ref: './components.openapi.yaml#/components/headers/Content-Digest'
+            Content-Language:
+              $ref: './components.openapi.yaml#/components/headers/Content-Language'
+            Content-Length:
+              $ref: './components.openapi.yaml#/components/headers/Content-Length'
+            Content-Type:
+              $ref: './components.openapi.yaml#/components/headers/Content-Type'
+            Idempotency-Key:
+              $ref: './components.openapi.yaml#/components/headers/Idempotency-Key'
+            Last-Modified:
+              $ref: './components.openapi.yaml#/components/headers/Last-Modified'
+            X-Grd-Correlation-Id:
+              $ref: './components.openapi.yaml#/components/headers/X-Grd-Correlation-Id'
+            X-Grd-Trace-Id:
+              $ref: './components.openapi.yaml#/components/headers/X-Grd-Trace-Id'
+            X-RateLimit-Limit:
+              $ref: './components.openapi.yaml#/components/headers/X-RateLimit-Limit'
+            X-RateLimit-Remaining:
+              $ref: './components.openapi.yaml#/components/headers/X-RateLimit-Remaining'
+            X-RateLimit-Reset:
+              $ref: './components.openapi.yaml#/components/headers/X-RateLimit-Reset'
+          content:
+            application/vnd.guardia.v1+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: './components.openapi.yaml#/components/schemas/BoundAsset'
+        '400':
+          $ref: './components.openapi.yaml#/components/responses/Error400'
+        '401':
+          $ref: './components.openapi.yaml#/components/responses/Error401'
+        '403':
+          $ref: './components.openapi.yaml#/components/responses/Error403'
+        '404':
+          $ref: './components.openapi.yaml#/components/responses/Error404'
+        '409':
+          $ref: './components.openapi.yaml#/components/responses/Error409'
+        '422':
+          $ref: './components.openapi.yaml#/components/responses/Error422'
+        '429':
+          $ref: './components.openapi.yaml#/components/responses/Error429'
+        '500':
+          $ref: './components.openapi.yaml#/components/responses/Error500'
+      security: []
     delete:
       summary: Remove um asset do ledger
       description: Remove a associação de um asset existente do ledger especificado através do identificador do asset.
       operationId: remove_asset_from_ledger
       tags:
-        - Ledgers
+        - 'Bound Assets'
       parameters:
         - $ref: './components.openapi.yaml#/components/parameters/LedgerIdentifierParam'
         - $ref: './components.openapi.yaml#/components/parameters/AssetIdentifierParam'
@@ -1104,16 +1104,17 @@ paths:
                     $ref: './components.openapi.yaml#/components/schemas/Asset'
               example:
                 data:
-                  entity_id: '6683756247371778'
+                  entity_id: 'asset:018f74a6e3b270ccbf248a4b012f5f3e'
                   entity_type: ASSET
-                  external_entity_id: e9ad6a8ac4ce4a0b8e845c5d89e24322
+                  external_entity_id: 'ext:e9ad6a8ac4ce4a0b8e845c5d89e24322'
                   version: 0
-                  code: INT01
-                  number: '2003202501'
-                  exponent: 10
-                  is_fiat: false
-                  locations:
-                    - NONE
+                  classification: FIAT
+                  denomination:
+                    code: BRL
+                    number: '968'
+                    exponent: 2
+                    locations:
+                      - BR
                   created_at: '2024-11-17T00:00:00.000Z'
                   updated_at: '2024-11-17T00:00:00.000Z'
           x-apidog-name: Created
@@ -1146,8 +1147,8 @@ paths:
       parameters:
         - $ref: './components.openapi.yaml#/components/parameters/ListOfAssetIds'
         - $ref: './components.openapi.yaml#/components/parameters/ListOfExternalEntityIds'
-        - $ref: './components.openapi.yaml#/components/parameters/AssetCodes'
-        - $ref: './components.openapi.yaml#/components/parameters/AssetNumbers'
+        - $ref: './components.openapi.yaml#/components/parameters/ListOfDenominationCodes'
+        - $ref: './components.openapi.yaml#/components/parameters/ListOfDenominationNumbers'
         - $ref: './components.openapi.yaml#/components/parameters/MetadataFilter'
         - $ref: './components.openapi.yaml#/components/parameters/IncludeDiscarded'
         - $ref: './components.openapi.yaml#/components/parameters/PageSize'
@@ -1281,7 +1282,8 @@ paths:
     patch:
       summary: Atualiza um asset específico
       description: |
-        Atualiza os dados como Nome, Código, Número, Expoente, Locations e Metadata de um asset existente.
+        Atualiza os dados como Nome, Classificação, Denominação e Metadata de um asset existente.
+        Essa atualização não afeta os `BoundAssets` existentes, apenas os novos que forem criados após a atualização.
         <br />
         :::warning
         Ao atualizar um metadata, quando o valor for `null`, caso a propriedade exista, ela será considerada para remoção, conforme a especificação do Json Merge Patch [RFC 7386](https://datatracker.ietf.org/doc/html/rfc7386).
@@ -1512,7 +1514,7 @@ paths:
       parameters:
         - $ref: './components.openapi.yaml#/components/parameters/ListOfEntityIds'
         - $ref: './components.openapi.yaml#/components/parameters/ListOfExternalEntityIds'
-        - $ref: './components.openapi.yaml#/components/parameters/ListOfAssetCodes'
+        - $ref: './components.openapi.yaml#/components/parameters/ListOfDenominationCodes'
         - $ref: './components.openapi.yaml#/components/parameters/ListOfChapterIds'
         - $ref: './components.openapi.yaml#/components/parameters/MetadataFilter'
         - $ref: './components.openapi.yaml#/components/parameters/IncludeDiscarded'

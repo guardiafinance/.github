@@ -75,15 +75,25 @@ classDef special fill:#f8f9fa,stroke:#dee2e6,stroke-width:2px,color:#212529;
         +String<uuid> external_entity_id "Unique identifier for interoperability with other systems. Maximum length: 36 characters."
         +String entity_type = "ASSET"
         +Integer version = 0 "Field controlled by the application. MUST be incremented by 1 each time the entity is changed."
-        +String<3,12> code "Unique within the ledger. Maximum length: 12 characters."
-        +String number "Unique within the ledger. Maximum length: 128 characters."
-        +int exponent "Asset exponent. MUST be between 0 and 18."
-        +boolean is_fiat "Indicates if the asset is a fiat currency."
-        +String[] locations "Regions where the asset is accepted as currency. MUST be an array of ISO 3166-2 codes."
+        +Classification classification "Asset classification. MUST be FIAT or NON_FIAT."
+        +Denomination denomination "Asset denomination."
         +DateTime created_at "Date of insertion into the database."
         +DateTime updated_at "Date of last update in the database."
         +DateTime discarded_at "Date of deletion in the database. MUST implement soft delete standard."
         +Asset[] AssetsHistory "Asset event history."
+    }
+
+    class Denomination {
+        +String code "Asset code. Can be an ISO 4217 code or an arbitrary code."
+        +String number "Asset number. Can be an ISO 4217 number or an arbitrary number."
+        +Integer exponent "Asset exponent. MUST be between 0 and 18."
+        +String[] locations "Regions where the asset is accepted as currency. MUST be an array of ISO 3166-2 codes."
+    }
+
+    class Classification {
+        <<Enumeration>>
+        FIAT,
+        NON_FIAT
     }
 
     class Book {

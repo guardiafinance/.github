@@ -185,37 +185,27 @@ components:
       schema:
         type: string
 
-    AssetCodes:
-      name: asset_codes
+    ListOfDenominationCodes:
+      name: denomination_codes
       in: query
       description: |
-        Uma lista de códigos de assets separados por vírgulas. Para ativos fiduciários, use códigos ISO 4217
-        (ex: BRL, USD, EUR). Para outros tipos de ativos, use o código definido
+        Uma lista de códigos de denominações separados por vírgulas. Este código pode ser baseado
+        em especificações como ISO 4217, ISO 10962, MIC, ISIN ou um padrão interno da instituição, conforme definido
         na criação do asset.
       required: false
       example: 'BRL,USD,EUR'
       schema:
         type: string
 
-    AssetNumbers:
-      name: asset_numbers
+    ListOfDenominationNumbers:
+      name: denomination_numbers
       in: query
       description: |
-        Uma lista de números de identificação de assets separados por vírgulas. Este número pode ser baseado
-        em especificações como ISO 10962, MIC, ISIN ou um padrão interno da
-        instituição.
+        Uma lista de números de identificação de denominações separados por vírgulas. Este número pode ser baseado
+        em especificações como ISO 4217, ISO 10962, MIC, ISIN ou um padrão interno da instituição, conforme definido
+        na criação do asset.
       required: false
       example: '986,840,978'
-      schema:
-        type: string
-
-    ListOfAssetCodes:
-      name: asset_codes
-      in: query
-      description: |
-        Uma lista de códigos de ativos (moedas) separados por vírgulas. Exemplo: 'USD,BRL,EUR'.
-      required: false
-      example: 'USD,BRL,EUR'
       schema:
         type: string
 
@@ -465,30 +455,10 @@ components:
           $ref: '#/components/schemas/ExternalEntityID'
         version:
           $ref: '#/components/schemas/Version'
-        code:
-          type: string
-          minLength: 3
-          maxLength: 10
-        number:
-          type: string
-          minLength: 3
-          maxLength: 10
-        exponent:
-          type: number
-          minimum: 0
-          maximum: 10
-        is_fiat:
-          type: boolean
-        locations:
-          type: array
-          items:
-            type: string
-        ledgers:
-          type: array
-          description: |
-            Lista de identificadores únicos das ledgers associadas ao asset.
-          items:
-            $ref: '#/components/schemas/EntityID'
+        classification:
+          $ref: '#/components/schemas/Classification'
+        denomination:
+          $ref: '#/components/schemas/Denomination'
         created_at:
           $ref: '#/components/schemas/DateTime'
           nullable: false
@@ -501,7 +471,44 @@ components:
         metadata:
           $ref: '#/components/schemas/Metadata'
 
-    LedgerAssetBinding:
+    Classification:
+      type: string
+      enum: [FIAT, NON_FIAT]
+
+    Denomination:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Código de denominação do asset. Pode ser um código ISO 4217, ISO 10962, MIC, ISIN ou um padrão interno da instituição.
+          minLength: 3
+          maxLength: 12
+          default: 'BRL'
+        number:
+          type: string
+          description: Número de denominação do asset. Pode ser um número ISO 4217, ISO 10962, MIC, ISIN ou um padrão interno da instituição.
+          minLength: 3
+          maxLength: 128
+          default: '968'
+        exponent:
+          type: integer
+          description: Expoente de denominação do asset, que indica o número de casas decimais a ser usado em representações contábeis. Deve estar entre 0 e 18.
+          minimum: 0
+          maximum: 18
+          default: 2
+        locations:
+          type: array
+          description: Lista de países em que o asset é reconhecido com fins de trocas.
+          items:
+            type: string
+            example:
+              - BR
+              - US
+              - ALL # All countries
+          default:
+            - BR
+
+    BoundAsset:
       type: object
       description: Representa a associação entre um ledger e um asset, incluindo informações específicas do vínculo.
       properties:
@@ -511,22 +518,11 @@ components:
         asset_entity_id:
           $ref: '#/components/schemas/EntityID'
           description: Identificador único do asset.
-        code:
-          type: string
-          description: Código do asset vinculado.
-          minLength: 3
-          maxLength: 10
-        number:
-          type: string
-          description: Número de identificação do asset vinculado.
-          minLength: 3
-          maxLength: 10
-        exponent:
-          type: number
-          description: Expoente do asset vinculado.
-          minimum: 0
-          maximum: 10
-        binded_at:
+        version:
+          $ref: '#/components/schemas/Version'
+        denomination:
+          $ref: '#/components/schemas/Denomination'
+        bound_date:
           $ref: '#/components/schemas/DateTime'
           description: Data e hora em que o asset foi vinculado ao ledger.
 
@@ -767,28 +763,10 @@ components:
           type: string
           minLength: 3
           maxLength: 128
-        code:
-          type: string
-          minLength: 3
-          maxLength: 12
-        number:
-          type: string
-          minLength: 3
-          maxLength: 128
-        exponent:
-          type: string
-          minimum: 0
-          maximum: 18
-        is_fiat:
-          type: boolean
-        locations:
-          type: array
-          items:
-            type: string
-            example:
-              - BR
-              - US
-              - ALL # All countries
+        classification:
+          $ref: '#/components/schemas/Classification'
+        denomination:
+          $ref: '#/components/schemas/Denomination'
         metadata:
           $ref: '#/components/schemas/Metadata'
       required:

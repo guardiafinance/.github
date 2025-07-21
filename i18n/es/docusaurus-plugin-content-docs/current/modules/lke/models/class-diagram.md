@@ -75,15 +75,25 @@ classDef special fill:#f8f9fa,stroke:#dee2e6,stroke-width:2px,color:#212529;
         +String<uuid> external_entity_id "Identificador único para interoperabilidad con otros sistemas. Tamaño máximo: 36 caracteres."
         +String entity_type = "ASSET"
         +Integer version = 0 "Campo controlado por la aplicación. Debe incrementarse en 1 cada vez que la entidad sea modificada."
-        +String<3,12> code "Único dentro del ledger. Tamaño máximo: 12 caracteres."
-        +String number "Único dentro del ledger. Tamaño máximo: 128 caracteres."
-        +int exponent "Exponente del asset. Debe estar entre 0 y 18."
-        +boolean is_fiat "Indica si el asset es una moneda fiduciaria."
-        +String[] locations "Regiones donde el asset es aceptado como moneda de cambio. Debe ser un array de códigos ISO 3166-2."
+        +Classification classification "Clasificación del asset. Debe ser FIAT o NON_FIAT."
+        +Denomination denomination "Denominación del asset."
         +DateTime created_at "Fecha de inserción en la base de datos."
         +DateTime updated_at "Fecha de la última actualización en la base de datos."
         +DateTime discarded_at "Fecha de exclusión en la base de datos. Debe implementar el estándar de exclusión suave."
         +Asset[] AssetsHistory "Historial de eventos del Asset"
+    }
+
+    class Denomination {
+        +String code "Código del asset. Puede ser un código ISO 4217 o un código arbitrario."
+        +String number "Número del asset. Puede ser un número ISO 4217 o un número arbitrario."
+        +Integer exponent "Exponente del asset. Debe estar entre 0 y 18."
+        +String[] locations "Regiones donde el asset es aceptado como moneda de cambio. Debe ser un array de códigos ISO 3166-2."
+    }
+
+    class Classification {
+        <<Enumeration>>
+        FIAT,
+        NON_FIAT
     }
 
     class Book {
