@@ -3,10 +3,6 @@ sidebar_position: 1
 keywords: [guardia core banking, core bancario open source, core bancário escalável, ledger transacional, transações em tempo real]
 ---
 
-Perfeito! Aqui está a versão unificada e coesa do bloco **Atualização de Assets**, combinando seu texto introdutório com os argumentos técnicos e normativos que discutimos. Fiz ajustes sutis para fluidez e clareza:
-
----
-
 # Atualização de Assets
 
 Gerenciar Assets em um sistema contábil exige equilíbrio entre flexibilidade operacional e integridade histórica. Este documento define as regras aplicáveis às atualizações de Assets, considerando as exigências contábeis (IAS/IFRS), os impactos técnicos e a rastreabilidade regulatória.

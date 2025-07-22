@@ -509,8 +509,6 @@ paths:
                 code: BRL
                 number: "968"
                 exponent: 2
-                locations:
-                  - BR
               metadata:
                 foo: bar
       responses:
@@ -1111,8 +1109,6 @@ paths:
                     code: BRL
                     number: "968"
                     exponent: 2
-                    locations:
-                      - BR
                   created_at: 2024-11-17T00:00:00.000Z
                   updated_at: 2024-11-17T00:00:00.000Z
           x-apidog-name: Created
@@ -2263,17 +2259,6 @@ components:
           minimum: 0
           maximum: 18
           default: 2
-        locations:
-          type: array
-          description: Lista de países em que o asset é reconhecido com fins de trocas.
-          items:
-            type: string
-            example:
-              - BR
-              - US
-              - ALL
-          default:
-            - BR
     BoundAsset:
       type: object
       description: Representa a associação entre um ledger e um asset, incluindo informações específicas do vínculo.
@@ -2516,27 +2501,16 @@ components:
           $ref: "#/components/schemas/Metadata"
       required:
         - name
-        - code
-        - number
-        - exponent
-        - is_fiat
-        - locations
+        - denomination
+        - classification
         - metadata
     AssetUpdateRequest:
       type: object
       properties:
-        code:
-          type: string
-        number:
-          type: string
-        exponent:
-          type: string
-        is_fiat:
-          type: boolean
-        locations:
-          type: array
-          items:
-            type: string
+        denomination:
+          $ref: "#/components/schemas/Denomination"
+        classification:
+          $ref: "#/components/schemas/Classification"
         metadata:
           $ref: "#/components/schemas/Metadata"
     Book:
