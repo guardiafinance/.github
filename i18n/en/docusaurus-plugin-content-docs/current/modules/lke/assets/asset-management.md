@@ -89,9 +89,17 @@ Disposing of a `BoundAsset` represents the deactivation of a specific binding be
 
 ### Rules for BoundAsset disposal
 
-- **Can be physically disposed**: if, and only if, the `BoundAsset` **has not been used** in any accounting entry.
-- **Can be logically disposed**: when the `BoundAsset` **has been used** in any accounting entry.
+- **Can be physically disposed**: if, and only if, the `BoundAsset` **has not been used** in any `Book`.
+- **Can be logically disposed**: when the `BoundAsset` **has been used** in any `Book`.
   - **Disposal effect**: prevents the creation of new `Books` from the disposed `BoundAsset`.
+
+**Example of allowed disposal**
+
+```json
+DELETE /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}
+// Resultado: 204 No Content
+// Efeito: BoundAsset é marcado como descartado; vínculos existentes permanecem válidos
+```
 
 ## References
 

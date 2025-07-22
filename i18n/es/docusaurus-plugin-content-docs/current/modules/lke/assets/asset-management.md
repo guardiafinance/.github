@@ -89,9 +89,17 @@ El descarte de un `BoundAsset` representa la desactivación de un vínculo espec
 
 ### Reglas para descarte de BoundAsset
 
-- **Puede ser descartado físicamente**: si, y solo si, el `BoundAsset` **no ha sido utilizado** en ningún asiento contable.
-- **Puede ser descartado lógicamente**: cuando el `BoundAsset` **ha sido utilizado** en cualquier asiento contable.
+- **Puede ser descartado físicamente**: si, y solo si, el `BoundAsset` **no ha sido utilizado** en ningún `Book`.
+- **Puede ser descartado lógicamente**: cuando el `BoundAsset` **ha sido utilizado** en un `Book`.
   - **Efecto del descarte**: impide la creación de nuevos `Books` a partir del `BoundAsset` descartado.
+
+**Ejemplo de descarte permitido**
+
+```json
+DELETE /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}
+// Resultado: 204 No Content
+// Efecto: BoundAsset es marcado como descartado; vínculos existentes permanecen válidos
+```
 
 ## Referencias
 
