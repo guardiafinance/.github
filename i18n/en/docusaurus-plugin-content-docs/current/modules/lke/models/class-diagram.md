@@ -87,7 +87,6 @@ classDef special fill:#f8f9fa,stroke:#dee2e6,stroke-width:2px,color:#212529;
         +String code "Asset code. Can be an ISO 4217 code or an arbitrary code."
         +String number "Asset number. Can be an ISO 4217 number or an arbitrary number."
         +Integer exponent "Asset exponent. MUST be between 0 and 18."
-        +String[] locations "Regions where the asset is accepted as currency. MUST be an array of ISO 3166-2 codes."
     }
 
     class Classification {

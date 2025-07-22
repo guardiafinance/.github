@@ -496,17 +496,6 @@ components:
           minimum: 0
           maximum: 18
           default: 2
-        locations:
-          type: array
-          description: Lista de países em que o asset é reconhecido com fins de trocas.
-          items:
-            type: string
-            example:
-              - BR
-              - US
-              - ALL # All countries
-          default:
-            - BR
 
     BoundAsset:
       type: object
@@ -771,28 +760,17 @@ components:
           $ref: '#/components/schemas/Metadata'
       required:
         - name
-        - code
-        - number
-        - exponent
-        - is_fiat
-        - locations
+        - denomination
+        - classification
         - metadata
 
     AssetUpdateRequest:
       type: object
       properties:
-        code:
-          type: string
-        number:
-          type: string
-        exponent:
-          type: string
-        is_fiat:
-          type: boolean
-        locations:
-          type: array
-          items:
-            type: string
+        denomination:
+          $ref: '#/components/schemas/Denomination'
+        classification:
+          $ref: '#/components/schemas/Classification'
         metadata:
           $ref: '#/components/schemas/Metadata'
 
