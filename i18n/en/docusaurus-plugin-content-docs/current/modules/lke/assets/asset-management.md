@@ -67,13 +67,13 @@ Disposing of a global Asset means making it unavailable for new bindings with le
 ### Rules for global Asset disposal
 
 - **Can be disposed**: even if the asset is linked to existing Ledgers (with or without transactions).
-- **Disposal effect**: prevents the creation of new BoundAssets from the disposed asset.
+- **Disposal effect**: prevents the creation of new `BoundAssets` from the disposed asset.
 
 **Restrictions**
 
 - The system must only prevent new bindings (not retroactive use).
 
-- No modifications are made to existing BoundAssets.
+- No modifications are made to existing `BoundAssets`.
 
 **Example of allowed disposal**
 
@@ -89,21 +89,9 @@ Disposing of a `BoundAsset` represents the deactivation of a specific binding be
 
 ### Rules for BoundAsset disposal
 
-- **Can be disposed**: if, and only if, the `BoundAsset` **has not been used** in any accounting entry.
-
-**Restrictions**
-
-- HTTP Status: `422 Unprocessable Entity`
-- Error code: `ERR422_BUSINESS_ERROR`
-- Message: `LEDGER_HAS_TRANSACTIONS`
-
-**Example of invalid attempt**
-
-```json
-DELETE /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}
-// Result: 422 Unprocessable Entity
-// Error: LEDGER_HAS_TRANSACTIONS
-```
+- **Can be physically disposed**: if, and only if, the `BoundAsset` **has not been used** in any accounting entry.
+- **Can be logically disposed**: when the `BoundAsset` **has been used** in any accounting entry.
+  - **Disposal effect**: prevents the creation of new `Books` from the disposed `BoundAsset`.
 
 ## References
 

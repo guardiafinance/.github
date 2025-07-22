@@ -60,6 +60,16 @@ PUT /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}
     "exponent": 4
   }
 }
+// Resultado
+{
+  "errors": [
+    {
+      "code": "ERR422_BUSINESS_ERROR",
+      "reason": "LEDGER_HAS_TRANSACTIONS",
+      "message": "This bound asset cannot be updated because the ledger already contains transactions."
+    }
+  ]
+}
 ```
 
 > IMPORTANTE: Para alterar os atributos de um `BoundAsset`, deve-se criar um novo `BoundAsset` com os atributos desejados, vincular este novo recurso ao ledger e, em seguida, descartar o vínculo anterior, se desejado. Esse procedimento está descrito na seção [Atualizações de BoundAssets](#atualizações-de-boundassets) e garante a imutabilidade dos parâmetros utilizados em lançamentos já realizados.
@@ -71,13 +81,13 @@ O descarte de um Asset global implica torná-lo indisponível para novos víncul
 ### Regras para descarte de Asset global
 
 - **Pode ser descartado**: mesmo que o asset esteja vinculado a Ledgers existentes (com ou sem transações).
-- **Efeito do descarte**: impede a criação de novos BoundAssets a partir do asset descartado.
+- **Efeito do descarte**: impede a criação de novos `BoundAssets` a partir do asset descartado.
 
 **Restrições**
 
 - O sistema deve impedir apenas novas vinculações (não o uso retroativo).
 
-- Nenhuma modificação é feita nos BoundAssets existentes.
+- Nenhuma modificação é feita nos `BoundAssets` existentes.
 
 **Exemplo de descarte permitido**
 
@@ -93,21 +103,9 @@ O descarte de um `BoundAsset` representa a desativação de um vínculo específ
 
 ### Regras para descarte de BoundAsset
 
-- **Pode ser descartado**: se, e somente se, o `BoundAsset` **não tiver sido utilizado** em nenhuma lançamento contábil.
-
-**Restrições**
-
-- HTTP Status: `422 Unprocessable Entity`
-- Código de erro: `ERR422_BUSINESS_ERROR`
-- Mensagem: `LEDGER_HAS_TRANSACTIONS`
-
-**Exemplo de tentativa inválida**
-
-```json
-DELETE /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}
-// Resultado: 422 Unprocessable Entity
-// Erro: LEDGER_HAS_TRANSACTIONS
-```
+- **Pode ser descartado fisicamente**: se, e somente se, o `BoundAsset` **não tiver sido utilizado** em nenhuma lançamento contábil.
+- **Pode ser descartado logicamente**: quando o `BoundAsset` **tiver sido utilizado** em nenhuma lançamento contábil.
+- **Efeito do descarte**: impede a criação de novos `Books` a partir do `BoundAsset` descartado.
 
 ## Referências
 

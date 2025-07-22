@@ -67,13 +67,13 @@ El descarte de un Asset global implica tornarlo indisponible para nuevos víncul
 ### Reglas para descarte de Asset global
 
 - **Puede ser descartado**: aun si el asset está vinculado a Ledgers existentes (con o sin transacciones).
-- **Efecto del descarte**: impide la creación de nuevos BoundAssets a partir del asset descartado.
+- **Efecto del descarte**: impide la creación de nuevos `BoundAssets` a partir del asset descartado.
 
 **Restricciones**
 
 - El sistema debe impedir apenas nuevas vinculaciones (no el uso retroactivo).
 
-- Ninguna modificación es hecha en los BoundAssets existentes.
+- Ninguna modificación es hecha en los `BoundAssets` existentes.
 
 **Ejemplo de descarte permitido**
 
@@ -89,21 +89,9 @@ El descarte de un `BoundAsset` representa la desactivación de un vínculo espec
 
 ### Reglas para descarte de BoundAsset
 
-- **Puede ser descartado**: si, y solamente si, el `BoundAsset` **no ha sido utilizado** en ningún asiento contable.
-
-**Restricciones**
-
-- HTTP Status: `422 Unprocessable Entity`
-- Código de error: `ERR422_BUSINESS_ERROR`
-- Mensaje: `LEDGER_HAS_TRANSACTIONS`
-
-**Ejemplo de tentativa inválida**
-
-```json
-DELETE /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}
-// Resultado: 422 Unprocessable Entity
-// Error: LEDGER_HAS_TRANSACTIONS
-```
+- **Puede ser descartado físicamente**: si, y solo si, el `BoundAsset` **no ha sido utilizado** en ningún asiento contable.
+- **Puede ser descartado lógicamente**: cuando el `BoundAsset` **ha sido utilizado** en cualquier asiento contable.
+  - **Efecto del descarte**: impide la creación de nuevos `Books` a partir del `BoundAsset` descartado.
 
 ## Referencias
 

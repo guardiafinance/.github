@@ -172,6 +172,8 @@ classDef special fill:#f8f9fa,stroke:#dee2e6,stroke-width:2px,color:#212529;
 
     Position --* Balance : contains
     Position --* Asset : contains
+    Asset --* Denomination : contains
+    Asset --* Classification : contains
 
     Book --* Nature: contains
     Book --> Entry: has none or multiple
