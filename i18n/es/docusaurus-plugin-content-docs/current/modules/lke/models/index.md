@@ -1,5 +1,7 @@
 ---
 sidebar_position: 0
+description: Modelo de dominio de LKe, con entidades, atributos, tipos, valores, predeterminados, direcciones y descripciones.
+keywords: [guardia core banking, libro mayor transaccional, libro mayor como servicio, módulo de libro mayor de guardia, modelos]
 ---
 
 import MermaidDiagram from '@site/src/components/MermaidDiagram';

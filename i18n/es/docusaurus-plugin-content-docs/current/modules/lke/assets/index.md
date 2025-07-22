@@ -1,5 +1,5 @@
 ---
-sidebar_position: 0
+sidebar_position: 3
 keywords: [guardia core bancario, libro mayor transaccional, libro mayor como servicio, módulo de libro mayor de guardia, activos, ias-1, ias-8]
 ---
 
@@ -42,7 +42,7 @@ Para más detalles sobre las propiedades del activo, consulte la sección [Model
 
 ### Relación Asset/Ledger (BoundAsset)
 
-Los activos son declarados y versionados en el contexto de uno o más **Ledgers** por medio de la entidad intermediaria **`BoundAsset`**. Este modelado garantiza que cada `Ledger` mantenga una configuración aislada, trazable y auditable de los activos utilizados en sus asientos contables.
+Los activos son declarados y versionados en el contexto de uno o más `Ledgers` por medio de la entidad intermediaria `BoundAsset`. Este modelado garantiza que cada `Ledger` mantenga una configuración aislada, trazable y auditable de los activos utilizados en sus asientos contables.
 
 La **denominación** de un asset — compuesta por propiedades como `code`, `number` y `exponent` — define cómo ese activo es identificado, convertido y presentado operacionalmente. Esta denominación es inicialmente establecida en el ámbito del `Asset`, representando su forma **global y genérica** en el sistema.
 
@@ -56,18 +56,18 @@ Por ejemplo, el asset global "USD" puede tener como denominación por defecto `e
 
 Un `Book` representa la instancia de uso de un `BoundAsset` por un cliente o entidad dentro de un `Ledger`. Este vínculo es **inmutable y persistente**, garantizando trazabilidad histórica e integridad de los registros.
 
-* Un `Book` **siempre es creado con base en un `BoundAsset` específico**;
+* Un `Book` **siempre es creado con base en un** `BoundAsset` **específico**;
 * Toda la configuración del asset (como `exponent`) utilizada en el `Book` es **heredada en el momento de la creación**;
-* Después de creado, el `Book` **no puede ser reasignado a otro `BoundAsset`**, aun si el asset original es actualizado o descontinuado.
+* Después de creado, el `Book` **no puede ser reasignado a otro** `BoundAsset`, aun si el asset original es actualizado o descontinuado.
 
-> NOTA: En caso de necesidad de alteración en el `BoundAsset` (como ajuste en el exponente), debe **crearse un nuevo `BoundAsset`**, y a partir de él, nuevos `Books` destinados a las operaciones futuras.
+> NOTA: En caso de necesidad de alteración en el `BoundAsset` (como ajuste en el exponente), debe crearse un nuevo `BoundAsset`, y a partir de él, nuevos `Books` destinados a las operaciones futuras.
 
 ### Relación BoundAsset/Entry
 
-Las `Entries` (asientos contables) representan los registros efectivos de movimiento dentro de un `Ledger`. Están **asociadas indirectamente a un `BoundAsset`**, por medio del `Book` al cual pertenecen.
+Las `Entries` (asientos contables) representan los registros efectivos de movimiento dentro de un `Ledger`. Están **asociadas indirectamente a un** `BoundAsset`, por medio del `Book` al cual pertenecen.
 
-* Cada `Entry` **hereda el contexto contable del `BoundAsset`** vigente en el `Book` en el momento del asiento;
+* Cada `Entry` **hereda el contexto contable del** `BoundAsset` vigente en el `Book` en el momento del asiento;
 * Esto garantiza que los valores sean registrados con el `exponent` y `code` correctos;
-* Después de creada, la `Entry` **no puede reflejar alteraciones posteriores en el `BoundAsset`**, preservando la representación fiel del evento original.
+* Después de creada, la `Entry` **no puede reflejar alteraciones posteriores en el** `BoundAsset`, preservando la representación fiel del evento original.
 
 > NOTA: Este comportamiento está en conformidad con los principios de la **IAS 1 (representación fiel)** y de la **IAS 8 (tratamiento prospectivo de alteraciones contables)**.

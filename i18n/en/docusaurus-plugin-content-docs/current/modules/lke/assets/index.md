@@ -1,5 +1,5 @@
 ---
-sidebar_position: 0
+sidebar_position: 3
 keywords: [guardia core banking, transactional ledger, ledger as a service, guardia ledger module, assets, ias-1, ias-8]
 ---
 
@@ -42,7 +42,7 @@ For more details about asset properties, see the [Domain Model](../models/index.
 
 ### Asset/Ledger Relationship (BoundAsset)
 
-Assets are declared and versioned in the context of one or more **Ledgers** through the intermediate entity **`BoundAsset`**. This modeling ensures that each `Ledger` maintains an isolated, traceable, and auditable configuration of the assets used in its accounting entries.
+Assets are declared and versioned in the context of one or more `Ledgers` through the intermediate entity `BoundAsset`. This modeling ensures that each `Ledger` maintains an isolated, traceable, and auditable configuration of the assets used in its accounting entries.
 
 The **denomination** of an asset — composed of properties such as `code`, `number`, and `exponent` — defines how this asset is identified, converted, and presented operationally. This denomination is initially established in the scope of the `Asset`, representing its **global and generic** form in the system.
 
@@ -56,18 +56,18 @@ For example, the global asset "USD" may have as default denomination `exponent =
 
 A `Book` represents the instance of use of a `BoundAsset` by a client or entity within a `Ledger`. This link is **immutable and persistent**, ensuring historical traceability and record integrity.
 
-* A `Book` **is always created based on a specific `BoundAsset`**;
+* A `Book` **is always created based on a specific** `BoundAsset`;
 * All asset configuration (such as `exponent`) used in the `Book` is **inherited at the time of creation**;
-* After created, the `Book` **cannot be reassigned to another `BoundAsset`**, even if the original asset is updated or discontinued.
+* After created, the `Book` **cannot be reassigned to another** `BoundAsset`, even if the original asset is updated or discontinued.
 
-> NOTE: In case of need to change the `BoundAsset` (such as exponent adjustment), a **new `BoundAsset`** must be created, and from it, new `Books` intended for future operations.
+> NOTE: In case of need to change the `BoundAsset` (such as exponent adjustment), a new `BoundAsset` must be created, and from it, new `Books` intended for future operations.
 
 ### BoundAsset/Entry Relationship
 
-`Entries` (accounting entries) represent the effective movement records within a `Ledger`. They are **indirectly associated with a `BoundAsset`**, through the `Book` to which they belong.
+`Entries` (accounting entries) represent the effective movement records within a `Ledger`. They are **indirectly associated with a** `BoundAsset`, through the `Book` to which they belong.
 
-* Each `Entry` **inherits the accounting context of the `BoundAsset`** current in the `Book` at the time of the entry;
+* Each `Entry` **inherits the accounting context of the** `BoundAsset` current in the `Book` at the time of the entry;
 * This ensures that values are recorded with the correct `exponent` and `code`;
-* After created, the `Entry` **cannot reflect subsequent changes in the `BoundAsset`**, preserving the faithful representation of the original event.
+* After created, the `Entry` **cannot reflect subsequent changes in the** `BoundAsset`, preserving the faithful representation of the original event.
 
 > NOTE: This behavior complies with the principles of **IAS 1 (faithful representation)** and **IAS 8 (prospective treatment of accounting changes)**.

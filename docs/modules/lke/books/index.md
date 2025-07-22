@@ -1,5 +1,5 @@
 ---
-sidebar_position: 0
+sidebar_position: 4
 keywords: [guardia core banking, transactional ledger, ledger as a service, modulo de ledger da guardia, books, ias-1, ias-2, ias-38, ifrs-9]
 ---
 
@@ -7,7 +7,7 @@ keywords: [guardia core banking, transactional ledger, ledger as a service, modu
 
 Um **Book** é uma **unidade contábil independente**, usada para registrar o histórico de movimentações (`entries`) relacionadas a um determinado ativo, passivo, receita, despesa ou patrimônio. Ele é a menor célula rastreável de mensuração contábil dentro do ledger.
 
-Cada Book é sempre associado a um **Asset**, que por sua vez representa uma **moeda contábil** — financeira ou não financeira — garantindo consistência na mensuração e segregação por tipo de valor.
+Cada Book é sempre associado a um **BoundAsset**, que por sua vez representa uma **unidade de valor** — monetária ou não monetária — garantindo consistência na mensuração e segregação por tipo de valor.
 
 **Benefícios do uso de Books:**
 
@@ -40,7 +40,7 @@ Abaixo estão os principais campos que compõem a estrutura de um Book:
 
 Cada Book possui uma **natureza contábil**, que define o comportamento esperado do seu saldo:
 
-### Natureza Devedora (`debitor`)
+### Natureza Devedora (`DEBITOR`)
 
 * O saldo **aumenta com lançamentos a débito** e **diminui com lançamentos a crédito**
 * Representa ativos, despesas ou aplicações financeiras
@@ -53,7 +53,7 @@ Cada Book possui uma **natureza contábil**, que define o comportamento esperado
 * Ativo imobilizado (ex: veículo, imóvel)
 * Despesas operacionais
 
-### Natureza Credora (`creditor`)
+### Natureza Credora (`CREDITOR`)
 
 * O saldo **aumenta com lançamentos a crédito** e **diminui com lançamentos a débito**
 * Representa passivos, receitas ou obrigações

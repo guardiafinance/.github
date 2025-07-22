@@ -1,5 +1,6 @@
 ---
-sidebar_position: 0
+sidebar_position: 1
+keywords: [guardia core banking, transactional ledger, ledger as a service, guardia ledger module, models]
 ---
 
 import MermaidDiagram from '@site/src/components/MermaidDiagram';
