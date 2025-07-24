@@ -13,12 +13,10 @@ Nossa visão é sermos a **primeira escolha** de cada fintech quando buscam maxi
 
 ![maximize-your-future](./static/img/pt-br/maximize-your-future.png)
 
-## Projetos
+## Projetos em destaque
 
-### Guardia
-
-- [LKE - Ledger Kernel Engine](https://github.com/guardia-lke)
-- [BASE - Banking System Engine](https://github.com/guardia-base)
+[![Guardia Developer Hub](https://github-readme-stats.vercel.app/api/pin/?username=guardiafinance&repo=.github&show_icons=true&theme=default#gh-light-mode-only)](https://github.com/guardiafinance/.github#gh-light-mode-only)
+[![Guardia Developer Hub](https://github-readme-stats.vercel.app/api/pin/?username=guardiafinance&repo=.github&show_icons=true&theme=github_dark#gh-dark-mode-only)](https://github.com/guardiafinance/.github#gh-dark-mode-only)
 
 ## Comunidade
 
