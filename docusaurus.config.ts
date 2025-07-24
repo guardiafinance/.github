@@ -111,6 +111,16 @@ const config: Config = {
           label: 'Tutorials',
         },
         {
+          href: EXTERNAL_LINKS.PRODUCT_ROADMAP,
+          position: 'right',
+          label: 'Product Roadmap',
+        },
+        {
+          href: EXTERNAL_LINKS.OPEN_ROADMAP,
+          position: 'right',
+          label: 'Issues Backlog',
+        },
+        {
           href: EXTERNAL_LINKS.GITHUB,
           label: 'GitHub',
           position: 'right',
