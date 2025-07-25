@@ -971,9 +971,6 @@ components:
         nature:
           type: string
           enum: [CREDITOR, DEBITOR]
-        ledger_identifier:
-          $ref: '#/components/schemas/EntityIdentifier'
-          description: "Identificador único `entity_id` do **ledger** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`."
         asset_identifier:
           $ref: '#/components/schemas/EntityIdentifier'
           description: "Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`."
@@ -983,8 +980,25 @@ components:
         - external_entity_id
         - name
         - nature
-        - ledger_identifier
         - asset_identifier
+
+    BookUpdateRequest:
+      type: object
+      properties:
+        external_entity_id:
+          $ref: '#/components/schemas/ExternalEntityID'
+        name:
+          type: string
+          minLength: 3
+          maxLength: 128
+        nature:
+          type: string
+          enum: [CREDITOR, DEBITOR]
+        asset_identifier:
+          $ref: '#/components/schemas/EntityIdentifier'
+          description: "Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`."
+        metadata:
+          $ref: '#/components/schemas/Metadata'
 
   responses:
     Error400:

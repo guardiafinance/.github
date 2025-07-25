@@ -6,7 +6,7 @@ sidebar_label: "BookCreateRequest"
 hide_title: true
 hide_table_of_contents: true
 schema: true
-sample: {"external_entity_id":"ext:123-456-789-ABCD","name":"string","nature":"CREDITOR","ledger_identifier":"{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e","asset_identifier":"{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e","metadata":{"foo":"bar"}}
+sample: {"external_entity_id":"ext:123-456-789-ABCD","name":"string","nature":"CREDITOR","asset_identifier":"{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e","metadata":{"foo":"bar"}}
 custom_edit_url: null
 ---
 
@@ -31,7 +31,7 @@ import Heading from "@theme/Heading";
 
 
 <Schema
-  schema={{"type":"object","properties":{"external_entity_id":{"type":"string","description":"Identificador externo da entidade para interoperabilidade com outros sistemas.","minLength":1,"maxLength":36,"example":"ext:123-456-789-ABCD","nullable":true,"title":"ExternalEntityID"},"name":{"type":"string","minLength":3,"maxLength":128},"nature":{"type":"string","enum":["CREDITOR","DEBITOR"]},"ledger_identifier":{"description":"Identificador único `entity_id` do **ledger** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.","type":"string","pattern":"^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$","example":"{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e","title":"EntityIdentifier"},"asset_identifier":{"description":"Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.","type":"string","pattern":"^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$","example":"{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e","title":"EntityIdentifier"},"metadata":{"type":"object","description":"Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.","additionalProperties":{"type":"string"},"maxProperties":10,"example":{"foo":"bar"},"title":"Metadata"}},"required":["external_entity_id","name","nature","ledger_identifier","asset_identifier"],"title":"BookCreateRequest"}}
+  schema={{"type":"object","properties":{"external_entity_id":{"type":"string","description":"Identificador externo da entidade para interoperabilidade com outros sistemas.","minLength":1,"maxLength":36,"example":"ext:123-456-789-ABCD","nullable":true,"title":"ExternalEntityID"},"name":{"type":"string","minLength":3,"maxLength":128},"nature":{"type":"string","enum":["CREDITOR","DEBITOR"]},"asset_identifier":{"description":"Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.","type":"string","pattern":"^(([a-zA-Z_-]+:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})|(ext:[a-zA-Z0-9_-]{1,32}))$","example":"{entity_type}:018f74a6e3b270ccbf248a4b012f5f3e","title":"EntityIdentifier"},"metadata":{"type":"object","description":"Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.","additionalProperties":{"type":"string"},"maxProperties":10,"example":{"foo":"bar"},"title":"Metadata"}},"required":["external_entity_id","name","nature","asset_identifier"],"title":"BookCreateRequest"}}
   schemaType={"response"}
 >
   

@@ -103,14 +103,20 @@ const sidebar: SidebarsConfig = {
         {
           type: "doc",
           id: "api/lke/list-ledger-assets",
-          label: "Lista assets associados ao ledger",
+          label: "Lista todos os assets do ledger",
           className: "api-method get",
         },
         {
           type: "doc",
           id: "api/lke/add-asset-to-ledger",
-          label: "Adiciona um asset ao ledger",
+          label: "Vincula um asset ao ledger",
           className: "api-method put",
+        },
+        {
+          type: "doc",
+          id: "api/lke/get-ledger-asset",
+          label: "Obtém um asset específico",
+          className: "api-method get",
         },
         {
           type: "doc",
@@ -132,31 +138,31 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api/lke/create-chapter",
+          id: "api/lke/create-ledger-chapter",
           label: "Cria um novo chapter",
           className: "api-method post",
         },
         {
           type: "doc",
-          id: "api/lke/list-chapters",
-          label: "Lista todos os chapters",
+          id: "api/lke/list-ledger-chapters",
+          label: "Lista todos os chapters do ledger",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api/lke/get-chapter",
+          id: "api/lke/get-ledger-chapter",
           label: "Obtém um chapter específico",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api/lke/update-chapter",
+          id: "api/lke/update-ledger-chapter",
           label: "Atualiza um chapter específico",
           className: "api-method patch",
         },
         {
           type: "doc",
-          id: "api/lke/delete-chapter",
+          id: "api/lke/delete-ledger-chapter",
           label: "Descarta um chapter específico",
           className: "api-method delete",
         },
@@ -174,31 +180,31 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api/lke/create-book",
+          id: "api/lke/create-ledger-book",
           label: "Cria um novo book",
           className: "api-method post",
         },
         {
           type: "doc",
-          id: "api/lke/list-books",
-          label: "Lista todos os books",
+          id: "api/lke/list-ledger-books",
+          label: "Lista todos os books do ledger",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api/lke/get-book",
+          id: "api/lke/get-ledger-book",
           label: "Obtém um book específico",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api/lke/update-book",
+          id: "api/lke/update-ledger-book",
           label: "Atualiza um book específico",
           className: "api-method patch",
         },
         {
           type: "doc",
-          id: "api/lke/delete-book",
+          id: "api/lke/delete-ledger-book",
           label: "Descarta um book específico",
           className: "api-method delete",
         },
@@ -216,7 +222,7 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api/lke/list-book-positions",
+          id: "api/lke/list-ledger-book-positions",
           label: "Lista positions de um book específico",
           className: "api-method get",
         },
@@ -394,6 +400,12 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api/lke/schemas/bookcreaterequest",
           label: "BookCreateRequest",
+          className: "schema",
+        },
+        {
+          type: "doc",
+          id: "api/lke/schemas/bookupdaterequest",
+          label: "BookUpdateRequest",
           className: "schema",
         },
         {

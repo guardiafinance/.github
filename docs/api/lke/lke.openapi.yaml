@@ -416,8 +416,8 @@ paths:
       x-run-in-apidog: https://app.apidog.com/web/project/719079/apis/api-11718082-run
   /v1/ledgers/{ledger_identifier}/assets:
     get:
-      summary: Lista assets associados ao ledger
-      description: Obtém uma lista de assets associados ao ledger especificado, com filtros por código, número e identificadores.
+      summary: Lista todos os assets do ledger
+      description: Obtém uma lista de assets disponíveis no ledger especificado, incluindo tanto assets criados quanto assets associados ao ledger.
       operationId: list_ledger_assets
       tags:
         - Bound Assets
@@ -487,14 +487,14 @@ paths:
       security: []
   /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}:
     put:
-      summary: Adiciona um asset ao ledger
-      description: Associa um asset existente ao ledger especificado através do código do asset.
+      summary: Vincula um asset ao ledger
+      description: Vincula um asset existente ao ledger especificado, podendo sobrescrever a denominação do asset.
       operationId: add_asset_to_ledger
       tags:
         - Bound Assets
       parameters:
         - $ref: "#/components/parameters/LedgerIdentifierParam"
-        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/AssetIdentifierParam"
         - $ref: "#/components/parameters/Accept"
         - $ref: "#/components/parameters/AcceptLanguage"
         - $ref: "#/components/parameters/ContentType"
@@ -570,6 +570,70 @@ paths:
         "500":
           $ref: "#/components/responses/Error500"
       security: []
+    get:
+      summary: Obtém um asset específico
+      deprecated: false
+      description: |
+        Obtém os detalhes de um asset específico usando seu `entity_id` ou `external_entity_id`.
+        O asset pode ser um ativo fiduciário (baseado na ISO 4712) ou não fiduciário.
+      operationId: get_ledger_asset
+      tags:
+        - Bound Assets
+      parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
+        - $ref: "#/components/parameters/AssetIdentifierParam"
+        - $ref: "#/components/parameters/Accept"
+        - $ref: "#/components/parameters/AcceptLanguage"
+        - $ref: "#/components/parameters/ContentType"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: Dados do asset.
+          content:
+            application/vnd.guardia.v1+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Asset"
+          headers:
+            Cache-Control:
+              $ref: "#/components/headers/Cache-Control"
+            Content-Language:
+              $ref: "#/components/headers/Content-Language"
+            Content-Length:
+              $ref: "#/components/headers/Content-Length"
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Strict-Transport-Security:
+              $ref: "#/components/headers/Strict-Transport-Security"
+            X-Grd-Correlation-Id:
+              $ref: "#/components/headers/X-Grd-Correlation-Id"
+            X-Grd-Trace-Id:
+              $ref: "#/components/headers/X-Grd-Trace-Id"
+            X-RateLimit-Limit:
+              $ref: "#/components/headers/X-RateLimit-Limit"
+            X-RateLimit-Remaining:
+              $ref: "#/components/headers/X-RateLimit-Remaining"
+            X-RateLimit-Reset:
+              $ref: "#/components/headers/X-RateLimit-Reset"
+        "400":
+          $ref: "#/components/responses/Error400"
+        "401":
+          $ref: "#/components/responses/Error401"
+        "403":
+          $ref: "#/components/responses/Error403"
+        "404":
+          $ref: "#/components/responses/Error404"
+        "409":
+          $ref: "#/components/responses/Error409"
+        "422":
+          $ref: "#/components/responses/Error422"
+        "429":
+          $ref: "#/components/responses/Error429"
+        "500":
+          $ref: "#/components/responses/Error500"
+      security: []
     delete:
       summary: Remove um asset do ledger
       description: Remove a associação de um asset existente do ledger especificado através do identificador do asset.
@@ -624,7 +688,7 @@ paths:
         "500":
           $ref: "#/components/responses/Error500"
       security: []
-  /v1/chapters:
+  /v1/ledgers/{ledger_identifier}/chapters:
     post:
       summary: Cria um novo chapter
       deprecated: false
@@ -633,10 +697,11 @@ paths:
         organizando transações e saldos por critérios específicos, como unidade
         de negócio ou centro de custo, para facilitar análises, relatórios e
         auditorias com maior precisão e flexibilidade.
-      operationId: create_chapter
+      operationId: create_ledger_chapter
       tags:
         - Chapters
       parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/IdempotencyKey"
         - $ref: "#/components/parameters/Accept"
         - $ref: "#/components/parameters/AcceptLanguage"
@@ -651,7 +716,6 @@ paths:
               external_entity_id: fff78a0d3b5146a1ae80007e3d316714
               name: Investimentos
               description: Unidade de Negócio voltada para produtos de Investimentos.
-              ledger_entity_id: f636cb1c46c4468e93c384a12530ee30
               metadata:
                 foo: bar
       responses:
@@ -724,13 +788,14 @@ paths:
       x-apidog-maintainer: Fernando Seguim
       x-run-in-apidog: https://app.apidog.com/web/project/719079/apis/api-11718084-run
     get:
-      summary: Lista todos os chapters
+      summary: Lista todos os chapters do ledger
       deprecated: false
-      description: ""
-      operationId: list_chapters
+      description: Obtém uma lista de chapters do ledger especificado.
+      operationId: list_ledger_chapters
       tags:
         - Chapters
       parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/ListOfChapterIds"
         - $ref: "#/components/parameters/ListOfExternalEntityIds"
         - $ref: "#/components/parameters/MetadataFilter"
@@ -745,7 +810,7 @@ paths:
         - $ref: "#/components/parameters/CorrelationId"
       responses:
         "200":
-          description: Lista de chapters.
+          description: Lista de chapters do ledger.
           content:
             application/vnd.guardia.v1+json:
               schema:
@@ -795,15 +860,16 @@ paths:
       x-apidog-status: developing
       x-apidog-maintainer: Fernando Seguim
       x-run-in-apidog: https://app.apidog.com/web/project/719079/apis/api-11718083-run
-  /v1/chapters/{chapter_identifier}:
+  /v1/ledgers/{ledger_identifier}/chapters/{chapter_identifier}:
     get:
       summary: Obtém um chapter específico
       deprecated: false
-      description: ""
-      operationId: get_chapter
+      description: Obtém os detalhes de um chapter específico do ledger.
+      operationId: get_ledger_chapter
       tags:
         - Chapters
       parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/ChapterIdentifierParam"
         - $ref: "#/components/parameters/Accept"
         - $ref: "#/components/parameters/AcceptLanguage"
@@ -869,10 +935,11 @@ paths:
         :::warning
         Ao atualizar um metadata, quando o valor for `null`, caso a propriedade exista, ela será considerada para remoção, conforme a especificação do Json Merge Patch [RFC 7386](https://datatracker.ietf.org/doc/html/rfc7386).
         :::
-      operationId: update_chapter
+      operationId: update_ledger_chapter
       tags:
         - Chapters
       parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/ChapterIdentifierParam"
         - $ref: "#/components/parameters/Accept"
         - $ref: "#/components/parameters/AcceptLanguage"
@@ -888,7 +955,6 @@ paths:
               external_entity_id: fff78a0d3b5146a1ae80007e3d316714
               name: Investimentos
               description: Unidade de Negócio voltada para produtos de Investimentos.
-              ledger_entity_id: f636cb1c46c4468e93c384a12530ee30
               tags:
                 - guardia
               metadata:
@@ -971,10 +1037,11 @@ paths:
         :::note
         Se o chapter possuir transações, o descarte não será permitido.
         :::
-      operationId: delete_chapter
+      operationId: delete_ledger_chapter
       tags:
         - Chapters
       parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/ChapterIdentifierParam"
         - $ref: "#/components/parameters/Accept"
         - $ref: "#/components/parameters/AcceptLanguage"
@@ -1423,7 +1490,7 @@ paths:
       x-apidog-folder: Assets
       x-apidog-status: developing
       x-apidog-maintainer: Fernando Seguim
-  /v1/books:
+  /v1/ledgers/{ledger_identifier}/books:
     post:
       summary: Cria um novo book
       description: |
@@ -1438,10 +1505,11 @@ paths:
         Todo Book deve estar vinculado a um Asset, que representa a moeda utilizada
         (seja fiduciária ou não) nas transações. Além disso, pode ser associado a um
         Chapter do Ledger para otimizar a gestão e o controle financeiro.
-      operationId: create_book
+      operationId: create_ledger_book
       tags:
         - Books
       parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/IdempotencyKey"
         - $ref: "#/components/parameters/Accept"
         - $ref: "#/components/parameters/AcceptLanguage"
@@ -1507,12 +1575,13 @@ paths:
       security:
         - BearerAuth: []
     get:
-      summary: Lista todos os books
-      description: Obtém uma lista de books disponíveis para a organização filtrando por metadata, moeda (asset_codes) ou chapters (chapter_ids), além de incluir itens descartados.
-      operationId: list_books
+      summary: Lista todos os books do ledger
+      description: Obtém uma lista de books disponíveis no ledger especificado filtrando por metadata, moeda (asset_codes) ou chapters (chapter_ids), além de incluir itens descartados.
+      operationId: list_ledger_books
       tags:
         - Books
       parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/ListOfEntityIds"
         - $ref: "#/components/parameters/ListOfExternalEntityIds"
         - $ref: "#/components/parameters/ListOfDenominationCodes"
@@ -1583,14 +1652,15 @@ paths:
       x-apidog-status: developing
       x-apidog-maintainer: Fernando Seguim
       x-run-in-apidog: https://app.apidog.com/web/project/719079/apis/api-14888487-run
-  /v1/books/{book_identifier}:
+  /v1/ledgers/{ledger_identifier}/books/{book_identifier}:
     get:
       summary: Obtém um book específico
       description: Obtém os detalhes de um book específico usando seu entity_id ou external_entity_id.
-      operationId: get_book
+      operationId: get_ledger_book
       tags:
         - Books
       parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/BookIdentifierParam"
         - $ref: "#/components/parameters/Accept"
         - $ref: "#/components/parameters/AcceptLanguage"
@@ -1652,10 +1722,11 @@ paths:
         :::warning
         Ao atualizar um metadata, quando o valor for `null`, caso a propriedade exista, ela será considerada para remoção, conforme a especificação do Json Merge Patch [RFC 7386](https://datatracker.ietf.org/doc/html/rfc7386).
         :::
-      operationId: update_book
+      operationId: update_ledger_book
       tags:
         - Books
       parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/BookIdentifierParam"
         - $ref: "#/components/parameters/IdempotencyKey"
         - $ref: "#/components/parameters/Accept"
@@ -1667,27 +1738,7 @@ paths:
         content:
           application/vnd.guardia.v1+json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  minLength: 3
-                  maxLength: 128
-                nature:
-                  type: string
-                  enum:
-                    - CREDITOR
-                    - DEBITOR
-                asset:
-                  type: string
-                  minLength: 3
-                  maxLength: 3
-                  description: Código do ativo (aka. moeda) ao qual o book está associado.
-                chapter:
-                  $ref: "#/components/schemas/EntityID"
-                  description: UUIDv7 do chapter ao qual o book pertence.
-                metadata:
-                  $ref: "#/components/schemas/Metadata"
+              $ref: "#/components/schemas/BookUpdateRequest"
       responses:
         "200":
           description: Book atualizado com sucesso.
@@ -1748,10 +1799,11 @@ paths:
         :::note
         Se o book possuir transações, o descarte não será permitido.
         :::
-      operationId: delete_book
+      operationId: delete_ledger_book
       tags:
         - Books
       parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/BookIdentifierParam"
         - $ref: "#/components/parameters/Accept"
         - $ref: "#/components/parameters/AcceptLanguage"
@@ -1805,16 +1857,17 @@ paths:
       x-apidog-folder: Books
       x-apidog-status: developing
       x-apidog-maintainer: Fernando Seguim
-  /v1/books/{book_identifier}/positions:
+  /v1/ledgers/{ledger_identifier}/books/{book_identifier}/positions:
     get:
       summary: Lista positions de um book específico
       description: |
         Obtém as positions (posições de saldo) de um book específico com filtros temporais flexíveis.
         Permite consultar saldos em pontos específicos no tempo ou intervalos de tempo.
-      operationId: list_book_positions
+      operationId: list_ledger_book_positions
       tags:
         - Positions
       parameters:
+        - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/BookIdentifierParam"
         - $ref: "#/components/parameters/AsOfDate"
         - $ref: "#/components/parameters/FromDate"
@@ -2791,9 +2844,6 @@ components:
           enum:
             - CREDITOR
             - DEBITOR
-        ledger_identifier:
-          $ref: "#/components/schemas/EntityIdentifier"
-          description: Identificador único `entity_id` do **ledger** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
         asset_identifier:
           $ref: "#/components/schemas/EntityIdentifier"
           description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
@@ -2803,8 +2853,26 @@ components:
         - external_entity_id
         - name
         - nature
-        - ledger_identifier
         - asset_identifier
+    BookUpdateRequest:
+      type: object
+      properties:
+        external_entity_id:
+          $ref: "#/components/schemas/ExternalEntityID"
+        name:
+          type: string
+          minLength: 3
+          maxLength: 128
+        nature:
+          type: string
+          enum:
+            - CREDITOR
+            - DEBITOR
+        asset_identifier:
+          $ref: "#/components/schemas/EntityIdentifier"
+          description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
+        metadata:
+          $ref: "#/components/schemas/Metadata"
   responses:
     $ref: "#/components/responses"
     Error400:
