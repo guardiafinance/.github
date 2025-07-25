@@ -165,6 +165,10 @@ const sidebar: SidebarsConfig = {
     {
       type: "category",
       label: "Books",
+      link: {
+        type: "doc",
+        id: "api/lke/books",
+      },
       collapsible: true,
       collapsed: true,
       items: [
@@ -197,6 +201,24 @@ const sidebar: SidebarsConfig = {
           id: "api/lke/delete-book",
           label: "Descarta um book específico",
           className: "api-method delete",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Positions",
+      link: {
+        type: "doc",
+        id: "api/lke/positions",
+      },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        {
+          type: "doc",
+          id: "api/lke/list-book-positions",
+          label: "Lista positions de um book específico",
+          className: "api-method get",
         },
       ],
     },
@@ -352,8 +374,26 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api/lke/schemas/book",
+          label: "Book",
+          className: "schema",
+        },
+        {
+          type: "doc",
+          id: "api/lke/schemas/listofbooks",
+          label: "ListOfBooks",
+          className: "schema",
+        },
+        {
+          type: "doc",
           id: "api/lke/schemas/entityidentifier",
           label: "EntityIdentifier",
+          className: "schema",
+        },
+        {
+          type: "doc",
+          id: "api/lke/schemas/bookcreaterequest",
+          label: "BookCreateRequest",
           className: "schema",
         },
         {
@@ -370,20 +410,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api/lke/schemas/book",
-          label: "Book",
-          className: "schema",
-        },
-        {
-          type: "doc",
-          id: "api/lke/schemas/listofbooks",
-          label: "ListOfBooks",
-          className: "schema",
-        },
-        {
-          type: "doc",
-          id: "api/lke/schemas/bookcreaterequest",
-          label: "BookCreateRequest",
+          id: "api/lke/schemas/listofpositions",
+          label: "ListOfPositions",
           className: "schema",
         },
         {

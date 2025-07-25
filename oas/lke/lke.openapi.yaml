@@ -46,6 +46,13 @@ tags:
   - name: Transactions
     description: |
       Registre transações financeiras relacionadas a um livro razão ou capítulo.
+  - name: Books
+    description: |
+      Gerencie os books (contas contábeis) da sua empresa. Crie, atualize e exclua books,
+      além de consultar informações detalhadas sobre cada um e suas posições de saldo.
+  - name: Positions
+    description: |
+      Acesse as posições de saldo de um book.
 
 paths:
   /v1/ledgers:
@@ -1798,6 +1805,83 @@ paths:
       x-apidog-folder: Books
       x-apidog-status: developing
       x-apidog-maintainer: Fernando Seguim
+  /v1/books/{book_identifier}/positions:
+    get:
+      summary: Lista positions de um book específico
+      description: |
+        Obtém as positions (posições de saldo) de um book específico com filtros temporais flexíveis.
+        Permite consultar saldos em pontos específicos no tempo ou intervalos de tempo.
+      operationId: list_book_positions
+      tags:
+        - Positions
+      parameters:
+        - $ref: './components.openapi.yaml#/components/parameters/BookIdentifierParam'
+        - $ref: './components.openapi.yaml#/components/parameters/AsOfDate'
+        - $ref: './components.openapi.yaml#/components/parameters/FromDate'
+        - $ref: './components.openapi.yaml#/components/parameters/ToDate'
+        - $ref: './components.openapi.yaml#/components/parameters/BetweenDates'
+        - $ref: './components.openapi.yaml#/components/parameters/ContainedInDates'
+        - $ref: './components.openapi.yaml#/components/parameters/Scope'
+        - $ref: './components.openapi.yaml#/components/parameters/PageSize'
+        - $ref: './components.openapi.yaml#/components/parameters/PageToken'
+        - $ref: './components.openapi.yaml#/components/parameters/OrderBy'
+        - $ref: './components.openapi.yaml#/components/parameters/Sort'
+        - $ref: './components.openapi.yaml#/components/parameters/Accept'
+        - $ref: './components.openapi.yaml#/components/parameters/AcceptLanguage'
+        - $ref: './components.openapi.yaml#/components/parameters/ContentType'
+        - $ref: './components.openapi.yaml#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Lista de positions do book
+          content:
+            application/vnd.guardia.v1+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: './components.openapi.yaml#/components/schemas/ListOfPositions'
+                  pagination:
+                    $ref: './components.openapi.yaml#/components/schemas/Pagination'
+          headers:
+            Cache-Control:
+              $ref: './components.openapi.yaml#/components/headers/Cache-Control'
+            Content-Language:
+              $ref: './components.openapi.yaml#/components/headers/Content-Language'
+            Content-Length:
+              $ref: './components.openapi.yaml#/components/headers/Content-Length'
+            Content-Type:
+              $ref: './components.openapi.yaml#/components/headers/Content-Type'
+            Link:
+              $ref: './components.openapi.yaml#/components/headers/Link'
+            Strict-Transport-Security:
+              $ref: './components.openapi.yaml#/components/headers/Strict-Transport-Security'
+            X-Grd-Correlation-Id:
+              $ref: './components.openapi.yaml#/components/headers/X-Grd-Correlation-Id'
+            X-Grd-Trace-Id:
+              $ref: './components.openapi.yaml#/components/headers/X-Grd-Trace-Id'
+            X-RateLimit-Limit:
+              $ref: './components.openapi.yaml#/components/headers/X-RateLimit-Limit'
+            X-RateLimit-Remaining:
+              $ref: './components.openapi.yaml#/components/headers/X-RateLimit-Remaining'
+            X-RateLimit-Reset:
+              $ref: './components.openapi.yaml#/components/headers/X-RateLimit-Reset'
+        '400':
+          $ref: './components.openapi.yaml#/components/responses/Error400'
+        '401':
+          $ref: './components.openapi.yaml#/components/responses/Error401'
+        '403':
+          $ref: './components.openapi.yaml#/components/responses/Error403'
+        '404':
+          $ref: './components.openapi.yaml#/components/responses/Error404'
+        '409':
+          $ref: './components.openapi.yaml#/components/responses/Error409'
+        '422':
+          $ref: './components.openapi.yaml#/components/responses/Error422'
+        '429':
+          $ref: './components.openapi.yaml#/components/responses/Error429'
+        '500':
+          $ref: './components.openapi.yaml#/components/responses/Error500'
+      security: []
 
 components:
   parameters:
