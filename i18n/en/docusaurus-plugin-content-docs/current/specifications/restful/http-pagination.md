@@ -43,7 +43,7 @@ Systems that expose paginable resources MUST implement the following pagination 
 #### `order_by`
 - MUST be a string indicating the base property for ordering results.
 - WHEN not informed, MUST assume the default value `created_at`.
-- ALLOWED values include `created_at`, `updated_at` and `reference_date`.
+- ALLOWED values include `created_at`, `updated_at` and `reference_at`.
 - ANY other value provided MUST be rejected with a validation error.
 
 #### `sort`

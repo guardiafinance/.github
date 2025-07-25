@@ -87,7 +87,7 @@ import MermaidDiagram from '@site/src/components/MermaidDiagram';
 | `external_entity_id` | `string` | `até 36 caracteres` | - | - | Request/Response | Identificador externo da entidade para interoperabilidade com outros sistemas. |
 | `entity_type` | `string` | - | `ENTRY` | `ENTRY` | Response | Tipo da entidade. |
 | `version` | `integer` | `1 byte` | - | `1` | Response | Versão da entidade (incrementada a cada atualização) |
-| `reference_date` | `datetime` | - | - | `created_at` | Request/Response | Data de referência (data da transação) |
+| `reference_at` | `datetime` | - | - | `created_at` | Request/Response | Data de referência (Data e hora de referência da transação) |
 | `direction` | `string` | - | `CREDIT, DEBIT` | - | Request/Response | Direção da entry. |
 | `status` | `string` | - | `PENDING, POSTED, DISCARDED` | `PENDING` | Response | Status da entry. |
 | `detail_account` | [`Book`](#book) | - | - | - | Response | Conta detalhada. |
@@ -107,7 +107,7 @@ import MermaidDiagram from '@site/src/components/MermaidDiagram';
 | `external_entity_id` | `string` | `até 36 caracteres` | - | - | Request/Response | Identificador externo da entidade para interoperabilidade com outros sistemas. |
 | `entity_type` | `string` | - | `TRANSACTION` | `TRANSACTION` | Response | Tipo da entidade. |
 | `version` | `integer` | `1 byte` | - | `1` | Response | Versão da entidade (incrementada a cada atualização). |
-| `reference_date` | `datetime` | - | - | `created_at` | Request/Response | Data de referência (data da transação). |
+| `reference_at` | `datetime` | - | - | `created_at` | Request/Response | Data de referência (Data e hora de referência da transação). |
 | `ledger` | [`Ledger`](#ledger) | - | - | - | Response | Relacionamento com o ledger. |
 | `status` | `string` | - | `PENDING, POSTED, DISCARDED` | `PENDING` | Response | Status da transação. |
 | `entries` | [`Entry[]`](#entry) | - | - | - | Request/Response | Relacionamento com lançamentos. |
@@ -127,7 +127,7 @@ import MermaidDiagram from '@site/src/components/MermaidDiagram';
 | `external_entity_id` | `string` | `até 36 caracteres` | - | - | Request/Response | Identificador externo da entidade para interoperabilidade com outros sistemas. |
 | `entity_type` | `string` | - | `POSITION` | `POSITION` | Response | Tipo da entidade. |
 | `version` | `integer` | `1 byte` | - | `1` | Response | Versão da entidade (incrementada a cada atualização). |
-| `reference_date` | `datetime` | - | - | `created_at` | Request/Response | Data de referência (data da transação). |
+| `reference_at` | `datetime` | - | - | `created_at` | Request/Response | Data de referência (Data e hora de referência da transação). |
 | `asset` | [`Asset`](#asset) | - | - | - | Response | Relacionamento com ASSET. |
 | `posted` | [`Balance`](#balance) | - | - | - | Response | Posição do saldo lançado. |
 | `confirmable` | [`Balance`](#balance) | - | - | - | Response | Posição do saldo confirmável. |

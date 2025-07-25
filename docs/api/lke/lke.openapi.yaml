@@ -1912,7 +1912,7 @@ components:
         enum:
           - created_at
           - updated_at
-          - reference_date
+          - reference_at
         default: created_at
     Sort:
       name: sort
@@ -2586,7 +2586,7 @@ components:
             - POSITION
         version:
           $ref: "#/components/schemas/Version"
-        reference_date:
+        reference_at:
           $ref: "#/components/schemas/DateTime"
           description: Data de referência da posição de saldo. Quando não informada durante uma transação, será a data de criação da transação.
         entry_reference:
@@ -2615,7 +2615,7 @@ components:
       required:
         - entity_id
         - entity_type
-        - reference_date
+        - reference_at
         - posted
         - confirmable
         - provisioned

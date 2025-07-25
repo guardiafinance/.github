@@ -7,7 +7,7 @@ query:
   - name: order_by
     type: string
     required: optional
-    allowed: [created_at, updated_at, reference_date]
+    allowed: [created_at, updated_at, reference_at]
     default: created_at
     description: Field used for ordering results. Only temporal fields are allowed. Invalid values must trigger 400 error with `ORDER_BY_INVALID`.
 
@@ -43,7 +43,7 @@ errors:
 
 examples:
   - request: GET /api/v1/ledgers?order_by=created_at
-  - request: GET /api/v1/ledgers?order_by=reference_date&sort=desc
+  - request: GET /api/v1/ledgers?order_by=reference_at&sort=desc
   - request: GET /api/v1/ledgers?sort=DESC
 
 notes:

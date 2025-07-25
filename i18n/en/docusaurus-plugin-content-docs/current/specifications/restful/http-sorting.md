@@ -12,7 +12,7 @@ Sorting will be done through the `order_by` and `sort` parameters, provided in t
 
 Sorting MUST:
 
-- Be limited to the following temporal properties such as: `created_at`, `updated_at` or `reference_date`.
+- Be limited to the following temporal properties such as: `created_at`, `updated_at` or `reference_at`.
 - Use available **indexes** in the database to optimize performance and avoid full scans.
 - Consider temporal range partitioning, when applicable, for performance gains with large volumes.
 - Be **stable**: records with the same value in `order_by` MUST maintain consistent relative order (e.g., by `entity_id` as a secondary criterion).
@@ -24,7 +24,7 @@ These guidelines reduce ambiguities between consumer systems, promote predictabi
 
 | Parameter  | Required | Allowed values                          | Default       |
 |------------|----------|-----------------------------------------|---------------|
-| `order_by` | No       | `created_at`, `updated_at`, `reference_date` | `created_at` |
+| `order_by` | No       | `created_at`, `updated_at`, `reference_at` | `created_at` |
 | `sort`     | No       | `asc`, `desc`                           | `asc`         |
 
 > **NOTE:** Both parameters are optional. In their absence, the `created_at asc` sorting is applied.
@@ -38,8 +38,8 @@ GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=created_at&sort=
 ```
 
 ```http
-GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=reference_date&sort=desc // assumes descending order
-GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=reference_date&sort=DESC // case insensitive
+GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=reference_at&sort=desc // assumes descending order
+GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=reference_at&sort=DESC // case insensitive
 ```
 
 ### Expected behaviors

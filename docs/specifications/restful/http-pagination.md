@@ -43,7 +43,7 @@ Os sistemas que expõem recursos pagináveis DEVEM implementar os seguintes par�
 #### `order_by`
 - DEVE ser uma string indicando o modo de ordenação dos resultados.
 - QUANDO não informado, DEVE assumir o valor padrão `created_at`.
-- VALORES permitidos incluem `created_at`, `updated_at` e `reference_date`.
+- VALORES permitidos incluem `created_at`, `updated_at` e `reference_at`.
 - QUALQUER outro valor informado DEVE ser rejeitado com erro de validação.
 
 #### `sort`

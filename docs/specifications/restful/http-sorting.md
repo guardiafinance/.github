@@ -12,7 +12,7 @@ A ordenação será feita por meio dos parâmetros `order_by` e `sort`, fornecid
 
 A ordenação DEVE:
 
-- Ser limitada aos seguintes propriedades temporais como por exemplo: `created_at`, `updated_at` ou `reference_date`.
+- Ser limitada aos seguintes propriedades temporais como por exemplo: `created_at`, `updated_at` ou `reference_at`.
 - Utilizar **índices** disponíveis no banco de dados para otimizar desempenho e evitar varreduras completas (full scan).
 - Considerar particionamento por faixa temporal, quando aplicável, para ganhos de performance em grandes volumes.
 - Ser **estável**: registros com o mesmo valor em `order_by` DEVEM manter ordem relativa consistente (ex: por `entity_id` como critério secundário).
@@ -24,7 +24,7 @@ Essas diretrizes reduzem ambiguidades entre sistemas consumidores, promovem prev
 
 | Parâmetro  | Obrigatório | Valores permitidos                          | Padrão       |
 |------------|-------------|----------------------------------------------|--------------|
-| `order_by` | Não         | `created_at`, `updated_at`, `reference_date` | `created_at` |
+| `order_by` | Não         | `created_at`, `updated_at`, `reference_at` | `created_at` |
 | `sort`     | Não         | `asc`, `desc`                                | `asc`        |
 
 > **NOTA:** Ambos os parâmetros são opcionais. Em sua ausência, aplica-se a ordenação `created_at asc`.
@@ -38,8 +38,8 @@ GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=created_at&sort=
 ```
 
 ```http
-GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=reference_date&sort=desc // assume a ordenação descendente
-GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=reference_date&sort=DESC // case insensitive
+GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=reference_at&sort=desc // assume a ordenação descendente
+GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=reference_at&sort=DESC // case insensitive
 ```
 
 ### Comportamentos esperados

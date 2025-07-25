@@ -12,7 +12,7 @@ El ordenamiento se realizará a través de los parámetros `order_by` y `sort`, 
 
 El ordenamiento DEBE:
 
-- Estar limitado a las siguientes propiedades temporales como: `created_at`, `updated_at` o `reference_date`.
+- Estar limitado a las siguientes propiedades temporales como: `created_at`, `updated_at` o `reference_at`.
 - Utilizar **índices** disponibles en la base de datos para optimizar el rendimiento y evitar escaneos completos (full scan).
 - Considerar particionamiento por rango temporal, cuando sea aplicable, para ganancias de rendimiento en grandes volúmenes.
 - Ser **estable**: los registros con el mismo valor en `order_by` DEBEN mantener un orden relativo consistente (ej: por `entity_id` como criterio secundario).
@@ -24,7 +24,7 @@ Estas directrices reducen ambigüedades entre sistemas consumidores, promueven p
 
 | Parámetro  | Obligatorio | Valores permitidos                          | Predeterminado       |
 |------------|-------------|----------------------------------------------|----------------------|
-| `order_by` | No          | `created_at`, `updated_at`, `reference_date` | `created_at`         |
+| `order_by` | No          | `created_at`, `updated_at`, `reference_at` | `created_at`         |
 | `sort`     | No          | `asc`, `desc`                                | `asc`                |
 
 > **NOTA:** Ambos parámetros son opcionales. En su ausencia, se aplica el ordenamiento `created_at asc`.
@@ -38,8 +38,8 @@ GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=created_at&sort=
 ```
 
 ```http
-GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=reference_date&sort=desc // asume el ordenamiento descendente
-GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=reference_date&sort=DESC // insensible a mayúsculas/minúsculas
+GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=reference_at&sort=desc // asume el ordenamiento descendente
+GET https://{tenant_id}.guardia.finance/api/v1/ledgers?order_by=reference_at&sort=DESC // insensible a mayúsculas/minúsculas
 ```
 
 ### Comportamientos esperados

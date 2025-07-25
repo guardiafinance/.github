@@ -32,7 +32,7 @@ query:
   - name: order_by
     type: string
     default: created_at
-    allowed: [created_at, updated_at, reference_date]
+    allowed: [created_at, updated_at, reference_at]
     required: optional
     description: Defines the field used for sorting. Any other value must result in a 400 error.
 

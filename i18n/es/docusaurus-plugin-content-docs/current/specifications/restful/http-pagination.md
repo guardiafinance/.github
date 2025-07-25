@@ -43,7 +43,7 @@ Los sistemas que exponen recursos paginables DEBEN implementar los siguientes pa
 #### `order_by`
 - DEBE ser una cadena que indique la propiedad base para la ordenación de resultados.
 - CUANDO no se informe, DEBE asumir el valor predeterminado `created_at`.
-- VALORES permitidos incluyen `created_at`, `updated_at` y `reference_date`.
+- VALORES permitidos incluyen `created_at`, `updated_at` y `reference_at`.
 - CUALQUIER otro valor informado DEBE ser rechazado con error de validación.
 
 #### `sort`

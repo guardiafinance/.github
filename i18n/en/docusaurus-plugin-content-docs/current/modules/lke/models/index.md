@@ -87,7 +87,7 @@ import MermaidDiagram from '@site/src/components/MermaidDiagram';
 | `external_entity_id` | `string` | `up to 36 characters` | - | - | Request/Response | External entity identifier for interoperability with other systems. |
 | `entity_type` | `string` | - | `ENTRY` | `ENTRY` | Response | Entity type. |
 | `version` | `integer` | `1 byte` | - | `1` | Response | Entity version (incremented with each update) |
-| `reference_date` | `datetime` | - | - | `created_at` | Request/Response | Reference date (transaction date) |
+| `reference_at` | `datetime` | - | - | `created_at` | Request/Response | Reference date (transaction date) |
 | `direction` | `string` | - | `CREDIT, DEBIT` | - | Request/Response | Entry direction. |
 | `status` | `string` | - | `PENDING, POSTED, DISCARDED` | `PENDING` | Response | Entry status. |
 | `detail_account` | [`Book`](#book) | - | - | - | Response | Detail account. |
@@ -107,7 +107,7 @@ import MermaidDiagram from '@site/src/components/MermaidDiagram';
 | `external_entity_id` | `string` | `up to 36 characters` | - | - | Request/Response | External entity identifier for interoperability with other systems. |
 | `entity_type` | `string` | - | `TRANSACTION` | `TRANSACTION` | Response | Entity type. |
 | `version` | `integer` | `1 byte` | - | `1` | Response | Entity version (incremented with each update). |
-| `reference_date` | `datetime` | - | - | `created_at` | Request/Response | Reference date (transaction date). |
+| `reference_at` | `datetime` | - | - | `created_at` | Request/Response | Reference date (transaction date). |
 | `ledger` | [`Ledger`](#ledger) | - | - | - | Response | Relationship with ledger. |
 | `status` | `string` | - | `PENDING, POSTED, DISCARDED` | `PENDING` | Response | Transaction status. |
 | `entries` | [`Entry[]`](#entry) | - | - | - | Request/Response | Relationship with entries. |
@@ -127,7 +127,7 @@ import MermaidDiagram from '@site/src/components/MermaidDiagram';
 | `external_entity_id` | `string` | `up to 36 characters` | - | - | Request/Response | External entity identifier for interoperability with other systems. |
 | `entity_type` | `string` | - | `POSITION` | `POSITION` | Response | Entity type. |
 | `version` | `integer` | `1 byte` | - | `1` | Response | Entity version (incremented with each update). |
-| `reference_date` | `datetime` | - | - | `created_at` | Request/Response | Reference date (transaction date). |
+| `reference_at` | `datetime` | - | - | `created_at` | Request/Response | Reference date (transaction date). |
 | `asset` | [`Asset`](#asset) | - | - | - | Response | Relationship with ASSET. |
 | `posted` | [`Balance`](#balance) | - | - | - | Response | Position of the posted balance. |
 | `confirmable` | [`Balance`](#balance) | - | - | - | Response | Position of the confirmable balance. |
