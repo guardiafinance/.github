@@ -777,12 +777,13 @@ components:
         metadata:
           $ref: '#/components/schemas/Metadata'
       required:
-        - external_entity_id
         - name
 
     LedgerUpdateRequest:
       type: object
       properties:
+        external_entity_id:
+          $ref: '#/components/schemas/ExternalEntityID'
         name:
           type: string
           minLength: 3
@@ -803,14 +804,10 @@ components:
           type: string
         description:
           type: string
-        ledger_entity_id:
-          type: string
         metadata:
           $ref: '#/components/schemas/Metadata'
       required:
-        - external_entity_id
         - name
-        - ledger_entity_id
 
     ChapterUpdateRequest:
       type: object
@@ -966,10 +963,12 @@ components:
           $ref: '#/components/schemas/ExternalEntityID'
         name:
           type: string
+          description: Nome único do book dentro do ledger.
           minLength: 3
           maxLength: 128
         nature:
           type: string
+          description: Define se o book é um credor ou devedor.
           enum: [CREDITOR, DEBITOR]
         asset_identifier:
           $ref: '#/components/schemas/EntityIdentifier'
@@ -991,14 +990,18 @@ components:
           type: string
           minLength: 3
           maxLength: 128
+          nullable: true
         nature:
           type: string
           enum: [CREDITOR, DEBITOR]
+          nullable: true
         asset_identifier:
           $ref: '#/components/schemas/EntityIdentifier'
           description: "Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`."
+          nullable: true
         metadata:
           $ref: '#/components/schemas/Metadata'
+          nullable: true
 
   responses:
     Error400:

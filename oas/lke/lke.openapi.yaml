@@ -273,6 +273,8 @@ paths:
     patch:
       summary: Atualize um ledger específico
       description: |
+        Atualiza os dados como Nome, Descrição e Metadata de um ledger existente.
+        Se o valor do campo for `null`, o campo não será atualizado.
         :::warning
         Ao atualizar um metadata, quando o valor for `null`, caso a propriedade exista, ela será considerada para remoção, conforme a especificação do Json Merge Patch [RFC 7386](https://datatracker.ietf.org/doc/html/rfc7386).
         :::
@@ -490,7 +492,10 @@ paths:
   /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}:
     put:
       summary: Vincula um asset ao ledger
-      description: Vincula um asset existente ao ledger especificado, podendo sobrescrever a denominação do asset.
+      description: |
+        Vincula um asset existente ao ledger especificado, podendo sobrescrever a denominação do asset.
+        Caso sobrescreva a denominação do asset, esta será a denominação padrão do asset vinculado ao ledger.
+        Um bound asset não pode ser atualizado se já estiver associado a um book ativo, isto é, com transações.
       operationId: add_asset_to_ledger
       tags:
         - 'Bound Assets'
@@ -639,7 +644,9 @@ paths:
       security: []
     delete:
       summary: Remove um asset do ledger
-      description: Remove a associação de um asset existente do ledger especificado através do identificador do asset.
+      description: |
+        Remove a associação de um asset existente do ledger especificado através do identificador do asset.
+        Se o bound asset estiver associado a um book ativo, isto é, com transações, o descarte será realizado de forma lógica, inativando-o para que não seja mais possível associá-lo a novos books.
       operationId: remove_asset_from_ledger
       tags:
         - 'Bound Assets'
@@ -935,6 +942,8 @@ paths:
       summary: Atualiza um chapter específico
       deprecated: false
       description: |
+        Atualiza os dados como Nome, Descrição e Metadata de um chapter existente.
+        Se o valor do campo for `null`, o campo não será atualizado.
         :::warning
         Ao atualizar um metadata, quando o valor for `null`, caso a propriedade exista, ela será considerada para remoção, conforme a especificação do Json Merge Patch [RFC 7386](https://datatracker.ietf.org/doc/html/rfc7386).
         :::
@@ -1354,6 +1363,7 @@ paths:
       summary: Atualiza um asset específico
       description: |
         Atualiza os dados como Nome, Classificação, Denominação e Metadata de um asset existente.
+        Se o valor do campo for `null`, o campo não será atualizado.
         Essa atualização não afeta os `BoundAssets` existentes, apenas os novos que forem criados após a atualização.
         <br />
         :::warning
@@ -1434,7 +1444,7 @@ paths:
       deprecated: false
       description: |
         :::note
-        Se o asset estiver sendo utilizado em transações, o descarte não será permitido.
+        Se o asset estiver associado a um ledger ativo, isto é, com transações, o descarte será realizado de forma lógica, inativando-o para que não seja mais possível associá-lo a novos ledgers.
         :::
       operationId: delete_asset
       tags:
@@ -1720,7 +1730,8 @@ paths:
     patch:
       summary: Atualiza um book específico
       description: |
-        Atualiza os dados como Nome, Natureza, Ativo, Chapter e Metadata de um book existente.
+        Atualiza os dados como Nome, Natureza, Ativo vinculado e Metadata de um book existente.
+        Se o valor do campo for `null`, o campo não será atualizado.
         <br />
         :::warning
         Ao atualizar um metadata, quando o valor for `null`, caso a propriedade exista, ela será considerada para remoção, conforme a especificação do Json Merge Patch [RFC 7386](https://datatracker.ietf.org/doc/html/rfc7386).
