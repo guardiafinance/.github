@@ -952,6 +952,12 @@ components:
           enum: [POSITION]
         version:
           $ref: '#/components/schemas/Version'
+        book_entity_id:
+          $ref: '#/components/schemas/EntityID'
+          description: "Identificador único `entity_id` do **book** no formato UUIDv7."
+        asset_entity_id:
+          $ref: '#/components/schemas/EntityID'
+          description: "Identificador único `entity_id` do **asset** no formato UUIDv7."
         reference_at:
           $ref: '#/components/schemas/DateTime'
           description: Data e hora de referência da posição de saldo. Quando não informada durante uma transação, será a data de criação da transação.
@@ -971,9 +977,6 @@ components:
         available:
           $ref: '#/components/schemas/Balance'
           description: Posição do saldo disponível.
-        asset_entity_id:
-          $ref: '#/components/schemas/EntityID'
-          description: "Identificador único `entity_id` do **asset** no formato UUIDv7."
         created_at:
           $ref: '#/components/schemas/DateTime'
         updated_at:

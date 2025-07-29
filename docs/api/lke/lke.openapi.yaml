@@ -1875,7 +1875,7 @@ paths:
         Obtém as positions (posições de saldo) de um book específico com filtros temporais flexíveis.
 
         O campo `scope` define o escopo do filtro de referência temporal.
-        - `current`: Retorna a posição de saldo atual do book. Valor padrão.
+        - `current`: Retorna a posição de saldo atual do book. **Valor padrão**.
         - `historical`: Retorna a posição de saldo histórico do book.
         - `all`: Retorna a posição de saldo atual e histórico do book.
 
@@ -2840,6 +2840,12 @@ components:
             - POSITION
         version:
           $ref: "#/components/schemas/Version"
+        book_entity_id:
+          $ref: "#/components/schemas/EntityID"
+          description: Identificador único `entity_id` do **book** no formato UUIDv7.
+        asset_entity_id:
+          $ref: "#/components/schemas/EntityID"
+          description: Identificador único `entity_id` do **asset** no formato UUIDv7.
         reference_at:
           $ref: "#/components/schemas/DateTime"
           description: Data e hora de referência da posição de saldo. Quando não informada durante uma transação, será a data de criação da transação.
@@ -2859,9 +2865,6 @@ components:
         available:
           $ref: "#/components/schemas/Balance"
           description: Posição do saldo disponível.
-        asset_entity_id:
-          $ref: "#/components/schemas/EntityID"
-          description: Identificador único `entity_id` do **asset** no formato UUIDv7.
         created_at:
           $ref: "#/components/schemas/DateTime"
         updated_at:
