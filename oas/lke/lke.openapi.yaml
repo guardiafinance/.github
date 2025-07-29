@@ -1886,6 +1886,10 @@ paths:
         - `lte`: Menor ou igual à data e hora especificada
         - `eq`: Igual à data e hora especificada
 
+        :::note
+        Caso não seja informado um filtro temporal, será retornado a posição de saldo atual do book.
+        :::
+
       operationId: list_ledger_book_positions
       tags:
         - Positions

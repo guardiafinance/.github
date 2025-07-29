@@ -500,6 +500,15 @@ components:
           $ref: '#/components/schemas/ExternalEntityID'
         version:
           $ref: '#/components/schemas/Version'
+        # code:
+        #   type: string
+        #   description: >
+        #     Código único de identificação do book.
+        #     Pode seguir padrões como IFRS COA, COSIF, GAAP ou uma convenção interna da instituição.
+        #     Utilizado para estruturar o plano de contas e facilitar classificações contábeis.
+        #   minLength: 3
+        #   maxLength: 128
+        #   example: '1.1.2.01.0001'
         name:
           type: string
         description:
@@ -866,6 +875,15 @@ components:
           $ref: '#/components/schemas/ExternalEntityID'
         version:
           $ref: '#/components/schemas/Version'
+        # code:
+        #   type: string
+        #   description: >
+        #     Código único de identificação do book.
+        #     Pode seguir padrões como IFRS COA, COSIF, GAAP ou uma convenção interna da instituição.
+        #     Utilizado para estruturar o plano de contas e facilitar classificações contábeis.
+        #   minLength: 3
+        #   maxLength: 128
+        #   example: '1.1.2.01.0001'
         name:
           type: string
           minLength: 3
