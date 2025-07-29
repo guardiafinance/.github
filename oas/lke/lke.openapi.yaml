@@ -1877,6 +1877,11 @@ paths:
       description: |
         Obtém as positions (posições de saldo) de um book específico com filtros temporais flexíveis.
 
+        O campo `scope` define o escopo do filtro de referência temporal.
+        - `current`: Retorna a posição de saldo atual do book. Valor padrão.
+        - `historical`: Retorna a posição de saldo histórico do book.
+        - `all`: Retorna a posição de saldo atual e histórico do book.
+
         Os filtros temporais permitem selecionar o campo de referência temporal e aplicar operadores de comparação:
 
         - `filter_by`: Define o campo de referência temporal (created_at, posted_at, reference_at)
@@ -1887,7 +1892,7 @@ paths:
         - `eq`: Igual à data e hora especificada
 
         :::note
-        Caso não seja informado um filtro temporal, será retornado a posição de saldo atual do book.
+        Caso o campo `scope` seja `current`, os filtros temporais não serão aplicados.
         :::
 
       operationId: list_ledger_book_positions
@@ -1896,6 +1901,7 @@ paths:
       parameters:
         - $ref: './components.openapi.yaml#/components/parameters/LedgerIdentifierParam'
         - $ref: './components.openapi.yaml#/components/parameters/BookIdentifierParam'
+        - $ref: './components.openapi.yaml#/components/parameters/Scope'
         - $ref: './components.openapi.yaml#/components/parameters/FilterBy'
         - $ref: './components.openapi.yaml#/components/parameters/GreaterThan'
         - $ref: './components.openapi.yaml#/components/parameters/GreaterThanOrEqual'

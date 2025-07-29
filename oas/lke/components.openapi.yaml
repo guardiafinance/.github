@@ -242,6 +242,18 @@ components:
       schema:
         $ref: '#/components/schemas/EntityID'
 
+    Scope:
+      name: scope
+      in: query
+      description: |
+        Define o escopo do filtro de referência temporal.
+      required: false
+      schema:
+        type: string
+        enum: [current, historical, all]
+        default: current
+        example: current
+
     FilterBy:
       name: filter_by
       in: query
