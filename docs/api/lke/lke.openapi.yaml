@@ -38,13 +38,6 @@ tags:
   - name: Bound Assets
     description: |
       Gerencie o vínculo entre um asset e um ledger.
-  - name: Chapters
-    description: |
-      Organize os livros razão em capítulos para facilitar a gestão e análise.
-      Crie, atualize e exclua capítulos, além de consultar informações detalhadas sobre cada um.
-  - name: Transactions
-    description: |
-      Registre transações financeiras relacionadas a um livro razão ou capítulo.
   - name: Books
     description: |
       Gerencie os books (contas contábeis) da sua empresa. Crie, atualize e exclua books,
@@ -52,6 +45,13 @@ tags:
   - name: Positions
     description: |
       Acesse as posições de saldo de um book.
+  - name: Chapters
+    description: |
+      Organize os livros razão em capítulos para facilitar a gestão e análise.
+      Crie, atualize e exclua capítulos, além de consultar informações detalhadas sobre cada um.
+  - name: Transactions
+    description: |
+      Registre transações financeiras relacionadas a um livro razão ou capítulo.
 paths:
   /v1/ledgers:
     post:
@@ -271,6 +271,8 @@ paths:
     patch:
       summary: Atualize um ledger específico
       description: |
+        Atualiza os dados como Nome, Descrição e Metadata de um ledger existente.
+        Se o valor do campo for `null`, o campo não será atualizado.
         :::warning
         Ao atualizar um metadata, quando o valor for `null`, caso a propriedade exista, ela será considerada para remoção, conforme a especificação do Json Merge Patch [RFC 7386](https://datatracker.ietf.org/doc/html/rfc7386).
         :::
@@ -488,7 +490,10 @@ paths:
   /v1/ledgers/{ledger_identifier}/assets/{asset_identifier}:
     put:
       summary: Vincula um asset ao ledger
-      description: Vincula um asset existente ao ledger especificado, podendo sobrescrever a denominação do asset.
+      description: |
+        Vincula um asset existente ao ledger especificado, podendo sobrescrever a denominação do asset.
+        Caso sobrescreva a denominação do asset, esta será a denominação padrão do asset vinculado ao ledger.
+        Um bound asset não pode ser atualizado se já estiver associado a um book ativo, isto é, com transações.
       operationId: add_asset_to_ledger
       tags:
         - Bound Assets
@@ -636,7 +641,9 @@ paths:
       security: []
     delete:
       summary: Remove um asset do ledger
-      description: Remove a associação de um asset existente do ledger especificado através do identificador do asset.
+      description: |
+        Remove a associação de um asset existente do ledger especificado através do identificador do asset.
+        Se o bound asset estiver associado a um book ativo, isto é, com transações, o descarte será realizado de forma lógica, inativando-o para que não seja mais possível associá-lo a novos books.
       operationId: remove_asset_from_ledger
       tags:
         - Bound Assets
@@ -932,6 +939,8 @@ paths:
       summary: Atualiza um chapter específico
       deprecated: false
       description: |
+        Atualiza os dados como Nome, Descrição e Metadata de um chapter existente.
+        Se o valor do campo for `null`, o campo não será atualizado.
         :::warning
         Ao atualizar um metadata, quando o valor for `null`, caso a propriedade exista, ela será considerada para remoção, conforme a especificação do Json Merge Patch [RFC 7386](https://datatracker.ietf.org/doc/html/rfc7386).
         :::
@@ -1351,6 +1360,7 @@ paths:
       summary: Atualiza um asset específico
       description: |
         Atualiza os dados como Nome, Classificação, Denominação e Metadata de um asset existente.
+        Se o valor do campo for `null`, o campo não será atualizado.
         Essa atualização não afeta os `BoundAssets` existentes, apenas os novos que forem criados após a atualização.
         <br />
         :::warning
@@ -1431,7 +1441,7 @@ paths:
       deprecated: false
       description: |
         :::note
-        Se o asset estiver sendo utilizado em transações, o descarte não será permitido.
+        Se o asset estiver associado a um ledger ativo, isto é, com transações, o descarte será realizado de forma lógica, inativando-o para que não seja mais possível associá-lo a novos ledgers.
         :::
       operationId: delete_asset
       tags:
@@ -1717,7 +1727,8 @@ paths:
     patch:
       summary: Atualiza um book específico
       description: |
-        Atualiza os dados como Nome, Natureza, Ativo, Chapter e Metadata de um book existente.
+        Atualiza os dados como Nome, Natureza, Ativo vinculado e Metadata de um book existente.
+        Se o valor do campo for `null`, o campo não será atualizado.
         <br />
         :::warning
         Ao atualizar um metadata, quando o valor for `null`, caso a propriedade exista, ela será considerada para remoção, conforme a especificação do Json Merge Patch [RFC 7386](https://datatracker.ietf.org/doc/html/rfc7386).
@@ -1859,22 +1870,30 @@ paths:
       x-apidog-maintainer: Fernando Seguim
   /v1/ledgers/{ledger_identifier}/books/{book_identifier}/positions:
     get:
-      summary: Lista positions de um book específico
+      summary: Obtém posições de saldo de um book
       description: |
         Obtém as positions (posições de saldo) de um book específico com filtros temporais flexíveis.
-        Permite consultar saldos em pontos específicos no tempo ou intervalos de tempo.
+
+        Os filtros temporais permitem selecionar o campo de referência temporal e aplicar operadores de comparação:
+
+        - `filter_by`: Define o campo de referência temporal (created_at, posted_at, reference_at)
+        - `gt`: Maior que a data e hora especificada
+        - `gte`: Maior ou igual à data e hora especificada
+        - `lt`: Menor que a data e hora especificada
+        - `lte`: Menor ou igual à data e hora especificada
+        - `eq`: Igual à data e hora especificada
       operationId: list_ledger_book_positions
       tags:
         - Positions
       parameters:
         - $ref: "#/components/parameters/LedgerIdentifierParam"
         - $ref: "#/components/parameters/BookIdentifierParam"
-        - $ref: "#/components/parameters/AsOfDate"
-        - $ref: "#/components/parameters/FromDate"
-        - $ref: "#/components/parameters/ToDate"
-        - $ref: "#/components/parameters/BetweenDates"
-        - $ref: "#/components/parameters/ContainedInDates"
-        - $ref: "#/components/parameters/Scope"
+        - $ref: "#/components/parameters/FilterBy"
+        - $ref: "#/components/parameters/GreaterThan"
+        - $ref: "#/components/parameters/GreaterThanOrEqual"
+        - $ref: "#/components/parameters/LessThan"
+        - $ref: "#/components/parameters/LessThanOrEqual"
+        - $ref: "#/components/parameters/Equal"
         - $ref: "#/components/parameters/PageSize"
         - $ref: "#/components/parameters/PageToken"
         - $ref: "#/components/parameters/OrderBy"
@@ -1885,7 +1904,7 @@ paths:
         - $ref: "#/components/parameters/CorrelationId"
       responses:
         "200":
-          description: Lista de positions do book
+          description: Lista de posições de saldo do book
           content:
             application/vnd.guardia.v1+json:
               schema:
@@ -2049,6 +2068,7 @@ components:
         enum:
           - created_at
           - updated_at
+          - posted_at
           - reference_at
         default: created_at
     Sort:
@@ -2157,75 +2177,81 @@ components:
       required: false
       schema:
         $ref: "#/components/schemas/EntityID"
-    AsOfDate:
-      name: as_of
+    FilterBy:
+      name: filter_by
       in: query
       description: |
-        Consulta a posição de saldo em um ponto específico no tempo.
-        Formato: Data e hora no formato ISO 8601 / RFC 3339 (UTC).
+        Define qual será a base do filtro de referência temporal.
+        Deve ser utilizado em conjunto com os operadores de comparação (gt, gte, lt, lte).
       required: false
       schema:
         type: string
-        format: date-time
-        example: 2025-06-01T12:00:00Z
-    FromDate:
-      name: from
+        enum:
+          - created_at
+          - posted_at
+          - reference_at
+        default: created_at
+        example: posted_at
+    GreaterThan:
+      name: gt
       in: query
       description: |
-        Data de início para filtro de período.
-        Deve ser usado em conjunto com o parâmetro 'to'.
+        Filtro de data e hora maior que a data e hora especificada.
+        Utilizado em conjunto com o parâmetro `filter_by`.
         Formato: Data e hora no formato ISO 8601 / RFC 3339 (UTC).
       required: false
       schema:
         type: string
         format: date-time
         example: 2025-01-01T00:00:00Z
-    ToDate:
-      name: to
+    GreaterThanOrEqual:
+      name: gte
       in: query
       description: |
-        Data de fim para filtro de período.
-        Deve ser usado em conjunto com o parâmetro 'from'.
+        Filtro de data e hora maior ou igual à data e hora especificada.
+        Utilizado em conjunto com o parâmetro `filter_by`.
         Formato: Data e hora no formato ISO 8601 / RFC 3339 (UTC).
       required: false
       schema:
         type: string
         format: date-time
-        example: 2025-04-01T00:00:00Z
-    BetweenDates:
-      name: between
+        example: 2025-01-01T00:00:00Z
+    LessThan:
+      name: lt
       in: query
       description: |
-        Consulta posições entre duas datas específicas.
-        Formato: duas datas separadas por vírgula em formato ISO 8601 / RFC 3339 (UTC).
+        Filtro de data e hora menor que a data e hora especificada.
+        Utilizado em conjunto com o parâmetro `filter_by`.
+        Formato: Data e hora no formato ISO 8601 / RFC 3339 (UTC).
       required: false
       schema:
         type: string
-        pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z,[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$
-        example: 2025-01-01T00:00:00Z,2025-06-01T00:00:00Z
-    ContainedInDates:
-      name: contained_in
+        format: date-time
+        example: 2025-12-31T23:59:59Z
+    LessThanOrEqual:
+      name: lte
       in: query
       description: |
-        Consulta posições contidas dentro de um período específico.
-        Formato: duas datas separadas por vírgula em formato ISO 8601 / RFC 3339 (UTC).
+        Filtro de data e hora menor ou igual à data e hora especificada.
+        Utilizado em conjunto com o parâmetro `filter_by`.
+        Formato: Data e hora no formato ISO 8601 / RFC 3339 (UTC).
       required: false
       schema:
         type: string
-        pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z,[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$
-        example: 2025-01-01T00:00:00Z,2025-06-30T00:00:00Z
-    Scope:
-      name: scope
+        format: date-time
+        example: 2025-12-31T23:59:59Z
+    Equal:
+      name: eq
       in: query
       description: |
-        Define o escopo da consulta de positions.
+        Filtro de data e hora igual à data e hora especificada.
+        Utilizado em conjunto com o parâmetro `filter_by`.
+        Formato: Data e hora no formato ISO 8601 / RFC 3339 (UTC).
       required: false
       schema:
         type: string
-        enum:
-          - all
-        default: all
-        example: all
+        format: date-time
+        example: 2025-12-31T23:59:59Z
   headers:
     $ref: "#/components/headers"
     X-Grd-Trace-Id:
@@ -2653,11 +2679,12 @@ components:
         metadata:
           $ref: "#/components/schemas/Metadata"
       required:
-        - external_entity_id
         - name
     LedgerUpdateRequest:
       type: object
       properties:
+        external_entity_id:
+          $ref: "#/components/schemas/ExternalEntityID"
         name:
           type: string
           minLength: 3
@@ -2677,14 +2704,10 @@ components:
           type: string
         description:
           type: string
-        ledger_entity_id:
-          type: string
         metadata:
           $ref: "#/components/schemas/Metadata"
       required:
-        - external_entity_id
         - name
-        - ledger_entity_id
     ChapterUpdateRequest:
       type: object
       properties:
@@ -2835,12 +2858,21 @@ components:
       properties:
         external_entity_id:
           $ref: "#/components/schemas/ExternalEntityID"
+        code:
+          type: string
+          description: |
+            Código único de identificação do book. Pode seguir padrões como IFRS COA, COSIF, GAAP ou uma convenção interna da instituição. Utilizado para estruturar o plano de contas e facilitar classificações contábeis. Quando não informado, será usado o EntityID do book.
+          minLength: 1
+          maxLength: 128
+          example: 1.1.2.01.0001
         name:
           type: string
+          description: Nome único do book dentro do ledger.
           minLength: 3
           maxLength: 128
         nature:
           type: string
+          description: Define se o book é um credor ou devedor.
           enum:
             - CREDITOR
             - DEBITOR
@@ -2850,7 +2882,7 @@ components:
         metadata:
           $ref: "#/components/schemas/Metadata"
       required:
-        - external_entity_id
+        - code
         - name
         - nature
         - asset_identifier
@@ -2863,16 +2895,20 @@ components:
           type: string
           minLength: 3
           maxLength: 128
+          nullable: true
         nature:
           type: string
           enum:
             - CREDITOR
             - DEBITOR
+          nullable: true
         asset_identifier:
           $ref: "#/components/schemas/EntityIdentifier"
           description: Identificador único `entity_id` do **asset** no formato UUIDv7. Alternativamente pode ser utilizado o `external_entity_id`.
+          nullable: true
         metadata:
           $ref: "#/components/schemas/Metadata"
+          nullable: true
   responses:
     $ref: "#/components/responses"
     Error400:

@@ -39,13 +39,6 @@ tags:
   - name: 'Bound Assets'
     description: |
       Gerencie o vínculo entre um asset e um ledger.
-  - name: Chapters
-    description: |
-      Organize os livros razão em capítulos para facilitar a gestão e análise.
-      Crie, atualize e exclua capítulos, além de consultar informações detalhadas sobre cada um.
-  - name: Transactions
-    description: |
-      Registre transações financeiras relacionadas a um livro razão ou capítulo.
   - name: Books
     description: |
       Gerencie os books (contas contábeis) da sua empresa. Crie, atualize e exclua books,
@@ -53,6 +46,13 @@ tags:
   - name: Positions
     description: |
       Acesse as posições de saldo de um book.
+  - name: Chapters
+    description: |
+      Organize os livros razão em capítulos para facilitar a gestão e análise.
+      Crie, atualize e exclua capítulos, além de consultar informações detalhadas sobre cada um.
+  - name: Transactions
+    description: |
+      Registre transações financeiras relacionadas a um livro razão ou capítulo.
 
 paths:
   /v1/ledgers:
@@ -1873,22 +1873,31 @@ paths:
       x-apidog-maintainer: Fernando Seguim
   /v1/ledgers/{ledger_identifier}/books/{book_identifier}/positions:
     get:
-      summary: Lista positions de um book específico
+      summary: Obtém posições de saldo de um book
       description: |
         Obtém as positions (posições de saldo) de um book específico com filtros temporais flexíveis.
-        Permite consultar saldos em pontos específicos no tempo ou intervalos de tempo.
+
+        Os filtros temporais permitem selecionar o campo de referência temporal e aplicar operadores de comparação:
+
+        - `filter_by`: Define o campo de referência temporal (created_at, posted_at, reference_at)
+        - `gt`: Maior que a data e hora especificada
+        - `gte`: Maior ou igual à data e hora especificada
+        - `lt`: Menor que a data e hora especificada
+        - `lte`: Menor ou igual à data e hora especificada
+        - `eq`: Igual à data e hora especificada
+
       operationId: list_ledger_book_positions
       tags:
         - Positions
       parameters:
         - $ref: './components.openapi.yaml#/components/parameters/LedgerIdentifierParam'
         - $ref: './components.openapi.yaml#/components/parameters/BookIdentifierParam'
-        - $ref: './components.openapi.yaml#/components/parameters/AsOfDate'
-        - $ref: './components.openapi.yaml#/components/parameters/FromDate'
-        - $ref: './components.openapi.yaml#/components/parameters/ToDate'
-        - $ref: './components.openapi.yaml#/components/parameters/BetweenDates'
-        - $ref: './components.openapi.yaml#/components/parameters/ContainedInDates'
-        - $ref: './components.openapi.yaml#/components/parameters/Scope'
+        - $ref: './components.openapi.yaml#/components/parameters/FilterBy'
+        - $ref: './components.openapi.yaml#/components/parameters/GreaterThan'
+        - $ref: './components.openapi.yaml#/components/parameters/GreaterThanOrEqual'
+        - $ref: './components.openapi.yaml#/components/parameters/LessThan'
+        - $ref: './components.openapi.yaml#/components/parameters/LessThanOrEqual'
+        - $ref: './components.openapi.yaml#/components/parameters/Equal'
         - $ref: './components.openapi.yaml#/components/parameters/PageSize'
         - $ref: './components.openapi.yaml#/components/parameters/PageToken'
         - $ref: './components.openapi.yaml#/components/parameters/OrderBy'
@@ -1899,7 +1908,7 @@ paths:
         - $ref: './components.openapi.yaml#/components/parameters/CorrelationId'
       responses:
         '200':
-          description: Lista de positions do book
+          description: Lista de posições de saldo do book
           content:
             application/vnd.guardia.v1+json:
               schema:

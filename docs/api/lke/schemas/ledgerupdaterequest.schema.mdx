@@ -6,7 +6,7 @@ sidebar_label: "LedgerUpdateRequest"
 hide_title: true
 hide_table_of_contents: true
 schema: true
-sample: {"name":"string","description":"string","metadata":{"foo":"bar"}}
+sample: {"external_entity_id":"ext:123-456-789-ABCD","name":"string","description":"string","metadata":{"foo":"bar"}}
 custom_edit_url: null
 ---
 
@@ -31,7 +31,7 @@ import Heading from "@theme/Heading";
 
 
 <Schema
-  schema={{"type":"object","properties":{"name":{"type":"string","minLength":3,"maxLength":128},"description":{"type":"string","minLength":3,"maxLength":256},"metadata":{"type":"object","description":"Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.","additionalProperties":{"type":"string"},"maxProperties":10,"example":{"foo":"bar"},"title":"Metadata"}},"title":"LedgerUpdateRequest"}}
+  schema={{"type":"object","properties":{"external_entity_id":{"type":"string","description":"Identificador externo da entidade para interoperabilidade com outros sistemas.","minLength":1,"maxLength":36,"example":"ext:123-456-789-ABCD","nullable":true,"title":"ExternalEntityID"},"name":{"type":"string","minLength":3,"maxLength":128},"description":{"type":"string","minLength":3,"maxLength":256},"metadata":{"type":"object","description":"Os metadados a serem adicionados à entidade devem ser fornecidos como pares de chave-valor em um formato de objeto JSON, com chave e valor como strings. O tamanho maximo do objeto deve ser 1MB.","additionalProperties":{"type":"string"},"maxProperties":10,"example":{"foo":"bar"},"title":"Metadata"}},"title":"LedgerUpdateRequest"}}
   schemaType={"response"}
 >
   

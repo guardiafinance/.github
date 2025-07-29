@@ -128,48 +128,6 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Chapters",
-      link: {
-        type: "doc",
-        id: "api/lke/chapters",
-      },
-      collapsible: true,
-      collapsed: true,
-      items: [
-        {
-          type: "doc",
-          id: "api/lke/create-ledger-chapter",
-          label: "Cria um novo chapter",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api/lke/list-ledger-chapters",
-          label: "Lista todos os chapters do ledger",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api/lke/get-ledger-chapter",
-          label: "Obtém um chapter específico",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api/lke/update-ledger-chapter",
-          label: "Atualiza um chapter específico",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api/lke/delete-ledger-chapter",
-          label: "Descarta um chapter específico",
-          className: "api-method delete",
-        },
-      ],
-    },
-    {
-      type: "category",
       label: "Books",
       link: {
         type: "doc",
@@ -223,8 +181,50 @@ const sidebar: SidebarsConfig = {
         {
           type: "doc",
           id: "api/lke/list-ledger-book-positions",
-          label: "Lista positions de um book específico",
+          label: "Obtém posições de saldo de um book",
           className: "api-method get",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Chapters",
+      link: {
+        type: "doc",
+        id: "api/lke/chapters",
+      },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        {
+          type: "doc",
+          id: "api/lke/create-ledger-chapter",
+          label: "Cria um novo chapter",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api/lke/list-ledger-chapters",
+          label: "Lista todos os chapters do ledger",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api/lke/get-ledger-chapter",
+          label: "Obtém um chapter específico",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api/lke/update-ledger-chapter",
+          label: "Atualiza um chapter específico",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api/lke/delete-ledger-chapter",
+          label: "Descarta um chapter específico",
+          className: "api-method delete",
         },
       ],
     },
