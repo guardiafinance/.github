@@ -1,0 +1,99 @@
+---
+description: Accounting specs for the accounting rules
+globs: *.md
+alwaysApply: false
+---
+
+- Always reference IASB and IFRS standards using this links:
+
+🧾 IAS Standards
+
+[IAS 1 Presentation of Financial Statements](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-1-presentation-of-financial-statements.pdf?bypass=on)
+
+[IAS 2 Inventories](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-2-inventories.pdf?bypass=on)        
+
+[IAS 7 Statement of Cash Flows (previously Cash Flow Statements)](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-7-statement-of-cash-flows.pdf?bypass=on)
+
+
+[IAS 8 Accounting Policies, Changes in Accounting Estimates and Errors](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-8-accounting-policies-changes-in-accounting-estimates-and-errors.pdf?bypass=on)
+
+[IAS 10 Events after the Reporting Period](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2024/issued/part-a/ias-10-events-after-the-reporting-period.pdf?bypass=on)
+
+[IAS 12 Income Taxes](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2023/issued/part-a/ias-12-income-taxes.pdf?bypass=on)
+
+[IAS 16 Property, Plant and Equipment](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2021/issued/part-a/ias-16-property-plant-and-equipment.pdf?bypass=on)
+
+[IAS 19 Employee Benefits](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-19-employee-benefits.pdf?bypass=on)
+
+[IAS 20 Government Grants and Disclosure of Government Assistance](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2021/issued/part-a/ias-20-accounting-for-government-grants-and-disclosure-of-government-assistance.pdf?bypass=on)
+
+[IAS 21 The Effects of Changes in Foreign Exchange Rates](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-21-the-effects-of-changes-in-foreign-exchange-rates.pdf?bypass=on)
+
+[IAS 23 Borrowing Costs](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-23-borrowing-costs.pdf?bypass=on)
+
+[IAS 24 Related Party Disclosures](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-24-related-party-disclosures.pdf?bypass=on)
+
+[IAS 26 Accounting and Reporting by Retirement Benefit Plans](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-26-accounting-and-reporting-by-retirement-benefit-plans.pdf?bypass=on)
+
+[IAS 27 Separate Financial Statements](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2021/issued/part-a/ias-27-separate-financial-statements.pdf?bypass=on)
+
+[IAS 28 Investments in Associates and Joint Ventures](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-28-investments-in-associates-and-joint-ventures.pdf?bypass=on)
+
+[IAS 29 Financial Reporting in Hyperinflationary Economies](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2021/issued/part-a/ias-29-financial-reporting-in-hyperinflationary-economies.pdf?bypass=on)
+
+[IAS 32 Financial Instruments: Presentation](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-32-financial-instruments-presentation.pdf?bypass=on)
+
+[IAS 33 Earnings Per Share](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-33-earnings-per-share.pdf?bypass=on)
+
+[IAS 34 Interim Financial Reporting](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-34-interim-financial-reporting.pdf?bypass=on)
+
+[IAS 36 Impairment of Assets](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-36-impairment-of-assets.pdf?bypass=on)
+
+[IAS 37 Provisions, Contingent Liabilities and Contingent Assets](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-37-provisions-contingent-liabilities-and-contingent-assets.pdf?bypass=on)
+
+[IAS 38 Intangible Assets](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-38-intangible-assets.pdf?bypass=on)
+
+[IAS 40 Investment Property](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-40-investment-property.pdf?bypass=on)
+
+[IAS 41 Agriculture](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ias-41-agriculture.pdf?bypass=on)
+
+
+IFRS
+
+[IFRS 1 First-time Adoption of IFRS](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-1-first-time-adoption-of-international-financial-reporting-standards.pdf?bypass=on)
+
+[IFRS 2 Share-based Payment](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-2-share-based-payment.pdf?bypass=on)
+
+[IFRS 3 Business Combinations](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-3-business-combinations.pdf?bypass=on)
+
+[IFRS 5 Non-current Assets Held for Sale and Discontinued Operations](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-5-non-current-assets-held-for-sale-and-discontinued-operations.pdf?bypass=on)
+
+[IFRS 6 Exploration For and Evaluation of Mineral Resources](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-6-exploration-for-and-evaluation-of-mineral-resources.pdf?bypass=on)
+
+[IFRS 7 Financial Instruments: Disclosures](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-7-financial-instruments-disclosures.pdf?bypass=on)
+
+[IFRS 8 Operating Segments](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-8-operating-segments.pdf?bypass=on)
+
+[IFRS 9 Financial Instruments](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-9-financial-instruments.pdf?bypass=on)
+
+[IFRS 10 Consolidated Financial Statements](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-10-consolidated-financial-statements.pdf?bypass=on)
+
+[IFRS 11 Joint Arrangements](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-11-joint-arrangements.pdf?bypass=on)
+
+[IFRS 12 Disclosure of Interests in Other Entities](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-12-disclosure-of-interests-in-other-entities.pdf?bypass=on)
+
+[IFRS 13 Fair Value Measurement](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-13-fair-value-measurement.pdf?bypass=on)
+
+[IFRS 14 Regulatory Deferral Accounts](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-14-regulatory-deferral-accounts.pdf?bypass=on)
+
+[IFRS 15 Revenue from Contracts with Customers](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-15-revenue-from-contracts-with-customers.pdf?bypass=on)
+
+[IFRS 16 Leases](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-16-leases.pdf?bypass=on)
+
+[IFRS 17 Insurance Contracts](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-17-insurance-contracts.pdf?bypass=on)
+
+[IFRS 18 Presentation and Disclosure in Financial Statements](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-18-presentation-and-disclosure-in-financial-statements.pdf?bypass=on)
+
+[IFRS 19 Subsidiaries without Public Accountability: Disclosures](https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-19-subsidiaries-without-public-accountability-disclosures.pdf?bypass=on)
+
+[IFRS for SMEs](https://www.ifrs.org/content/dam/ifrs/publications/ifrs-for-smes/english/2025/ifrs-for-smes.pdf?bypass=on)
