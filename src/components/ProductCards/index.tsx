@@ -72,27 +72,15 @@ export default function ProductCards() {
     <div className={styles.container}>
       <div className={styles.grid}>
         <ProductCard
-          title={<><i className="fas fa-book"></i> LKE (Ledger Kernel Engine)</>}
-          description={products.lke.description}
+          title={<><i className="fas fa-layer-group"></i> Arkee</>}
+          description={products.arkee.description}
           status={products.status.development}
           version="v0.1.0-alpha"
           links={{
             github: EXTERNAL_LINKS.GITHUB,
-            api: '/docs/reference/lke',
+            api: '/docs/reference/arkee',
             docker: EXTERNAL_LINKS.DOCKER_HUB,
-            docs: "/docs/modules/lke/",
-          }}
-        />
-        <ProductCard
-          title={<><i className="fas fa-wallet"></i> BASE (Banking System Engine)</>}
-          description={products.base.description}
-          status={products.status.planning}
-          version="v0.0.0"
-          links={{
-            github: EXTERNAL_LINKS.GITHUB,
-            api: '/docs/reference/base',
-            docker: EXTERNAL_LINKS.DOCKER_HUB,
-            docs: "/docs/modules/base/",
+            docs: "/docs/modules/arkee/",
           }}
         />
       </div>

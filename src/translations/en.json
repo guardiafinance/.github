@@ -33,11 +33,8 @@
         "planning": "In planning"
       },
       "documentation": "Documentation",
-      "lke": {
-        "description": "Multi-tenant accounting engine for advanced financial management. Organize accounting books in multiple ledgers, segment them into books and chapters, make transactions with Triple-entry Bookkeeping, Multi-signing and Cross-ledger in multiple currencies, ensuring transparency and compliance with immutable records."
-      },
-      "base": {
-        "description": "Banking platform core with integration to LKE or external ledgers via low code contracts. Manage accounts with multiple holders, balances in fiat and non-fiat currencies, displayed in aggregate or individual form. Transact through various rails, manage counterparties and connect to multiple banking providers with multi-routing."
+      "arkee": {
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
       }
     },
     "resources": {

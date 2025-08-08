@@ -33,11 +33,8 @@
         "planning": "En planificación"
       },
       "documentation": "Documentación",
-      "lke": {
-        "description": "Motor de contabilidad multi-tenant para gestión financiera avanzada. Organice libros contables en múltiples ledgers, segméntelos en books y chapters, realice transacciones con Triple-entry Bookkeeping, Multi-signing y Cross-ledger en múltiples monedas, garantizando transparencia y conformidad con registros inmutables."
-      },
-      "base": {
-        "description": "Core de plataforma bancaria con integración a LKE o ledgers externos a través de contratos low code. Gestione cuentas con múltiples titulares, saldos en monedas fiat y no-fiat, mostrados de forma agregada o individual. Opere a través de diversos rails, gestione contrapartes y conéctese a múltiples proveedores bancarios con multi-enrutamiento."
+      "arkee": {
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
       }
     },
     "resources": {
